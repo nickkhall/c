@@ -4,8 +4,9 @@ class Game
 {
 private:
 	bool IsGameOver;
-	std::string Intro;
 
+protected:
+	const std::string Intro;
 
 public:
 	Game();

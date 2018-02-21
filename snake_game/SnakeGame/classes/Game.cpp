@@ -1,5 +1,10 @@
 #include <iostream>
 #include "../headers/Game.hpp"
+#include "../headers/Map.hpp"
+
+Map *MapInstance = new Map;
+int MapInstanceHeight = MapInstance->GetMapHeight();
+int MapInstanceWidth = MapInstance->GetMapWidth();
 
 Game::Game()
 {
@@ -19,7 +24,11 @@ bool Game::GetIsGameOver()
 
 void Game::SetIntro()
 {
-  Intro = "\u250C\u2500\u2500\u2500\u2500\u2500\n\u2502            Welcome to the Snake Game!\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\n";
+  // Intro = "\u250C\u2500\u2500\u2500\u2500\u2500\n\u2502            Welcome to the Snake Game!\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\n";
+  for (int i = 0; i <= MapInstanceWidth; i++)
+  {
+    std::cout << "fuck you" << std::endl;
+  }
   return;
 }
 

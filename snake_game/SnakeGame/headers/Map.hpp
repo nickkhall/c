@@ -11,4 +11,6 @@ public:
 
   // Setters
   void RenderMap();
+  int GetMapHeight();
+  int GetMapWidth();
 };

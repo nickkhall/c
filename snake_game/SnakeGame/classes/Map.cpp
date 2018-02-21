@@ -7,6 +7,16 @@ Map::Map()
   MapWidth = 50;
 }
 
+int Map::GetMapHeight()
+{
+  return MapHeight;
+}
+
+int Map::GetMapWidth()
+{
+  return MapWidth;
+}
+
 void Map::RenderMap()
 {
   // Output map ceiling
