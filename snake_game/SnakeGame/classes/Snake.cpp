@@ -15,7 +15,7 @@ bool Snake::GetGameStatus()
 
 std::string Snake::SetIntro()
 {
-  Intro = "--------------------------\nWelcome to the Snake Game!\n--------------------------\n";
+  Intro = "\u250C\u2500\u2500\u2500\u2500\u2500\n\u2502            Welcome to the Snake Game!\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\n";
   return Intro;
 }
 

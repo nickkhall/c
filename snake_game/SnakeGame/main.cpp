@@ -7,7 +7,7 @@ int main()
 	Snake *SnakeGame = new Snake;
 	SnakeGame->SetIntro();
 
-	std::cout << SnakeGame->PrintIntro() << std::endl;
+	std::cout << SnakeGame->PrintIntro();
 	SnakeGame->RenderMap();
 
 	return 0;

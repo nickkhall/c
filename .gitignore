@@ -1,5 +1,6 @@
-# Compiled Snake Game
+# Snake Game Items
 snake_game/bin
+snake_game/architecture
 
 # Prerequisites
 *.d
