@@ -9,12 +9,17 @@ int main()
 	// Create new game
 	Game *NewGame = new Game;
 	// Create new map
-	// Map *MapInstance = new Map;
+	Map *MapInstance = new Map;
 
 	// Set the game intro
 	NewGame->SetIntro();
 	// Print game intro
 	std::cout << NewGame->PrintIntro() << std::endl;
 
+	// Set map
+	MapInstance->GenerateMap();
+
+	// Print map
+	std::cout << MapInstance->PrintMap() << std::endl;
 	return 0;
 };

@@ -12,6 +12,12 @@ public:
 
   // Setters
   void GenerateMap();
+  void RenderMapCeiling();
+  void RenderMapContent();
+  void RenderMapFloor();
+
+  // Getters
+  std::string PrintMap();
   int GetMapHeight();
   int GetMapWidth();
 };

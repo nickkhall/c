@@ -83,6 +83,7 @@ void Game::SetIntro()
   RenderIntroCeiling();
   RenderIntroText();
   RenderIntroFloor();
+  return;
 }
 
 std::string Game::PrintIntro()

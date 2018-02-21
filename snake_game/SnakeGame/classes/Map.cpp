@@ -18,11 +18,8 @@ int Map::GetMapWidth()
   return MapWidth;
 }
 
-void Map::GenerateMap()
+void Map::RenderMapCeiling()
 {
-  // MapStr = "u2500\u2500\u2500\u2500\u2500\n\u2502
-  // Welcome to the Snake Game!\n";
-
   // Render top corners and ceiling of map
   for (int i = 0; i <= MapWidth; i++)
   {
@@ -36,7 +33,11 @@ void Map::GenerateMap()
   }
 
   MapStr += "\n";
+  return;
+}
 
+void Map::RenderMapContent()
+{
   // Render walls of map
   for (int walls = 0; walls <= MapHeight / 3; walls ++)
   {
@@ -50,7 +51,11 @@ void Map::GenerateMap()
     }
     MapStr += "\n";
   }
+  return;
+}
 
+void Map::RenderMapFloor()
+{
   // Render the floor of the map
   for (int floor = 0; floor <= MapWidth; floor++)
   {
@@ -63,4 +68,16 @@ void Map::GenerateMap()
     }
   }
   return;
+}
+
+void Map::GenerateMap()
+{
+  RenderMapCeiling();
+  RenderMapContent();
+  RenderMapFloor();
+}
+
+std::string Map::PrintMap()
+{
+  return MapStr;
 }

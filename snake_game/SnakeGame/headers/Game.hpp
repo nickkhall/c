@@ -15,6 +15,7 @@ public:
 	void RenderIntroCeiling();
 	void RenderIntroText();
 	void RenderIntroFloor();
+
 	bool SetIsGameOver();
 
 	// Getters
