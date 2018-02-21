@@ -24,7 +24,7 @@ bool Game::GetIsGameOver()
 }
 
 // Render top corners and ceiling of intro
-void Game::RenderMapCeiling()
+void Game::RenderIntroCeiling()
 {
   for (int i = 0; i <= MapInstanceWidth; i++)
   {
@@ -41,7 +41,7 @@ void Game::RenderMapCeiling()
   return;
 }
 
-void Game::RenderMapWalls()
+void Game::RenderIntroText()
 {
   // Render walls and text of intro
   for (int walls = 0; walls <= MapInstanceHeight / 100; walls ++)
@@ -62,7 +62,7 @@ void Game::RenderMapWalls()
   return;
 }
 
-void Game::RenderMapFloor()
+void Game::RenderIntroFloor()
 {
   // Render the floor of the intro
   for (int floor = 0; floor <= MapInstanceWidth; floor++)
@@ -80,9 +80,9 @@ void Game::RenderMapFloor()
 
 void Game::SetIntro()
 {
-  RenderMapCeiling();
-  RenderMapWalls();
-  RenderMapFloor();
+  RenderIntroCeiling();
+  RenderIntroText();
+  RenderIntroFloor();
 }
 
 std::string Game::PrintIntro()

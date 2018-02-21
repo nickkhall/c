@@ -12,9 +12,9 @@ public:
 
 	// Setters
 	void SetIntro();
-	void RenderMapCeiling();
-	void RenderMapWalls();
-	void RenderMapFloor();
+	void RenderIntroCeiling();
+	void RenderIntroText();
+	void RenderIntroFloor();
 	bool SetIsGameOver();
 
 	// Getters
