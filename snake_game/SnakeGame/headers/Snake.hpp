@@ -3,20 +3,9 @@
 class Snake
 {
 private:
-	bool IsGameOver;
-	int MapHeight;
-	int MapWidth;
-	std::string Intro;
+	int x;
+	int y;
 
 public:
 	Snake();
-
-	bool GetGameStatus();
-
-	// Getters
-	std::string PrintIntro();
-
-	// Setters
-	std::string SetIntro();
-	void RenderMap();
 };
