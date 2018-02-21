@@ -5,52 +5,79 @@ Map::Map()
 {
   MapHeight = 50;
   MapWidth = 50;
+  MapStr = "";
 }
 
-void Map::RenderMap()
+int Map::GetMapHeight()
 {
-  // Output map ceiling
-  for (int ceiling = 0; ceiling <= MapWidth; ceiling++)
-  {
-    if (ceiling == 0) {
-      std::cout << "\u250C";
-    } else if (ceiling == MapWidth) {
-      std::cout << "\u2510";
-    } else {
-      std::cout << "\u2500";
-    }
+  return MapHeight;
+}
 
+int Map::GetMapWidth()
+{
+  return MapWidth;
+}
+
+void Map::RenderMapCeiling()
+{
+  // Render top corners and ceiling of map
+  for (int i = 0; i <= MapWidth; i++)
+  {
+    if (i == 0) {
+      MapStr += "\u250C";
+    } else if (i == MapWidth) {
+      MapStr += "\u2511";
+    } else {
+      MapStr += "\u2500";
+    }
   }
 
-  std::cout << std::endl;
+  MapStr += "\n";
+  return;
+}
 
-  // Output map walls
-  for (int walls = 0; walls <= MapHeight / 2.5; walls++)
+void Map::RenderMapContent()
+{
+  // Render walls of map
+  for (int walls = 0; walls <= MapHeight / 3; walls ++)
   {
     for (int w = 0; w <= MapHeight; w++)
     {
-      if (w == 0 || w == MapHeight)
-      {
-        std::cout << "\u2502";
-        if (w == MapHeight) {
-          std::cout << std::endl;
-        }
-      } else
-      {
-        std::cout << " ";
+      if (w == 0 || w == MapHeight) {
+        MapStr += "\u2502";
+      } else {
+        MapStr += " ";
       }
     }
+    MapStr += "\n";
   }
+  return;
+}
 
-  // Output map floor
+void Map::RenderMapFloor()
+{
+  // Render the floor of the map
   for (int floor = 0; floor <= MapWidth; floor++)
   {
     if (floor == 0) {
-      std::cout << "\u2514";
+      MapStr += "\u2514";
     } else if (floor == MapWidth) {
-      std::cout << "\u2518";
+      MapStr += "\u2518";
     } else {
-      std::cout << "\u2500";
+      MapStr += "\u2501";
     }
   }
+  return;
+}
+
+void Map::GenerateMap()
+{
+  RenderMapCeiling();
+  RenderMapContent();
+  RenderMapFloor();
+}
+
+std::string Map::PrintMap()
+{
+  return MapStr;
 }
