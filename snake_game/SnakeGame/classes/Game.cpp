@@ -23,12 +23,9 @@ bool Game::GetIsGameOver()
   return IsGameOver;
 }
 
-void Game::SetIntro()
+// Render top corners and ceiling of intro
+void Game::RenderMapCeiling()
 {
-  // Intro = "u2500\u2500\u2500\u2500\u2500\n\u2502
-  // Welcome to the Snake Game!\n";
-
-  // Render top corners and ceiling of intro
   for (int i = 0; i <= MapInstanceWidth; i++)
   {
     if (i == 0) {
@@ -41,7 +38,11 @@ void Game::SetIntro()
   }
 
   Intro += "\n";
+  return;
+}
 
+void Game::RenderMapWalls()
+{
   // Render walls and text of intro
   for (int walls = 0; walls <= MapInstanceHeight / 100; walls ++)
   {
@@ -55,9 +56,14 @@ void Game::SetIntro()
         Intro += " ";
       }
     }
+
     Intro += "\n";
   }
+  return;
+}
 
+void Game::RenderMapFloor()
+{
   // Render the floor of the intro
   for (int floor = 0; floor <= MapInstanceWidth; floor++)
   {
@@ -70,6 +76,13 @@ void Game::SetIntro()
     }
   }
   return;
+}
+
+void Game::SetIntro()
+{
+  RenderMapCeiling();
+  RenderMapWalls();
+  RenderMapFloor();
 }
 
 std::string Game::PrintIntro()
