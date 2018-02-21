@@ -1,30 +1,13 @@
 #include <iostream>
-#include "Snake.hpp"
+#include "../headers/Map.hpp"
 
-Snake::Snake()
+Map::Map()
 {
-  IsGameOver = false;
   MapHeight = 50;
   MapWidth = 50;
 }
 
-bool Snake::GetGameStatus()
-{
-  return IsGameOver;
-}
-
-std::string Snake::SetIntro()
-{
-  Intro = "--------------------------\nWelcome to the Snake Game!\n--------------------------\n";
-  return Intro;
-}
-
-std::string Snake::PrintIntro()
-{
-  return Intro;
-}
-
-void Snake::RenderMap()
+void Map::RenderMap()
 {
   // Output map ceiling
   for (int ceiling = 0; ceiling <= MapWidth; ceiling++)
@@ -42,7 +25,7 @@ void Snake::RenderMap()
   std::cout << std::endl;
 
   // Output map walls
-  for (int walls = 0; walls <= MapHeight / 3; walls++)
+  for (int walls = 0; walls <= MapHeight / 2.5; walls++)
   {
     for (int w = 0; w <= MapHeight; w++)
     {
