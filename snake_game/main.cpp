@@ -8,7 +8,7 @@ int main()
 	SnakeGame->SetIntro();
 
 	std::cout << SnakeGame->PrintIntro() << std::endl;
-	SnakeGame->GenerateMap();
+	SnakeGame->RenderMap();
 
 	return 0;
 };

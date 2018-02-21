@@ -24,7 +24,7 @@ std::string Snake::PrintIntro()
   return Intro;
 }
 
-void Snake::GenerateMap()
+void Snake::RenderMap()
 {
   // Output map ceiling
   for (int ceiling = 0; ceiling <= MapWidth; ceiling++)

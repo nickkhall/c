@@ -15,9 +15,8 @@ public:
 
 	// Getters
 	std::string PrintIntro();
-	std::string RenderMap();
 
 	// Setters
 	std::string SetIntro();
-	void GenerateMap();
+	void RenderMap();
 };
