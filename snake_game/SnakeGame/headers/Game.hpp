@@ -1,12 +1,12 @@
 #include <iostream>
+#include <array>
 
 class Game
 {
 private:
 	bool IsGameOver;
-
-protected:
-	const std::string Intro;
+	std::string Intro;
+	array IntroArray;
 
 public:
 	Game();

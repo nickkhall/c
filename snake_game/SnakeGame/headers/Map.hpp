@@ -5,12 +5,13 @@ class Map
 private:
   int MapHeight;
   int MapWidth;
+  std::string MapStr;
 
 public:
   Map();
 
   // Setters
-  void RenderMap();
+  void GenerateMap();
   int GetMapHeight();
   int GetMapWidth();
 };
