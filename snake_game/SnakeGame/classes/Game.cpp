@@ -10,7 +10,6 @@ Game::Game()
 {
   IsGameOver = false;
   Intro = "";
-  IntroArray = ['W','e','l','c','o','m','e',' ','t','o',' ','t','h','e',' ','S','n','a','k','e',' ','G','a','m','e'];
 }
 
 bool Game::SetIsGameOver()
@@ -50,11 +49,10 @@ void Game::SetIntro()
     {
       if (w == 0 || w == MapInstanceHeight) {
         Intro += "\u2502";
+      } else if (w == (MapInstanceHeight / 2) / 2) {
+        Intro += "Welcome to the Snake Game";
       } else {
-        for (int letter = 0; letter <= IntroArray.length; letter++)
-        {
-          Intro += IntroArray[letter];
-        }
+        Intro += " ";
       }
     }
     Intro += "\n";

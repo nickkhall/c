@@ -6,7 +6,6 @@ class Game
 private:
 	bool IsGameOver;
 	std::string Intro;
-	array IntroArray;
 
 public:
 	Game();
