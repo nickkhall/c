@@ -47,7 +47,7 @@ void Game::SetIntro()
   {
     for (int w = 0; w <= MapInstanceHeight; w++)
     {
-      if (w == 0 || w == MapInstanceHeight) {
+      if (w == 0 || w == MapInstanceHeight - 24) {
         Intro += "\u2502";
       } else if (w == (MapInstanceHeight / 2) / 2) {
         Intro += "Welcome to the Snake Game";
