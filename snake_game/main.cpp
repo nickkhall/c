@@ -3,6 +3,10 @@
 
 int main()
 {
-  std::cout << "welcome to the snake game" << std::endl;
-  return 0;
+	Snake *SnakeGame = new Snake;
+	SnakeGame->SetIntro();
+	
+	std::cout << SnakeGame->PrintIntro() << std::endl;
+
+	return 0;
 };
