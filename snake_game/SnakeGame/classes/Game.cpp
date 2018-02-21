@@ -90,3 +90,11 @@ std::string Game::PrintIntro()
 {
   return Intro;
 }
+
+std::string Game::StartGame()
+{
+  SetIntro();
+  std::cout << PrintIntro() << std::endl;
+  MapInstance->GenerateMap();
+  return MapInstance->PrintMap();
+}
