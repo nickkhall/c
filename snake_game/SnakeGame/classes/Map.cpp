@@ -26,7 +26,7 @@ void Map::RenderMapCeiling()
     if (i == 0) {
       MapStr += "\u250C";
     } else if (i == MapWidth) {
-      MapStr += "\u2511";
+      MapStr += "\u2510";
     } else {
       MapStr += "\u2500";
     }
@@ -64,7 +64,7 @@ void Map::RenderMapFloor()
     } else if (floor == MapWidth) {
       MapStr += "\u2518";
     } else {
-      MapStr += "\u2501";
+      MapStr += "\u2500";
     }
   }
   return;

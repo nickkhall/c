@@ -31,7 +31,7 @@ void Game::RenderIntroCeiling()
     if (i == 0) {
       Intro += "\u250C";
     } else if (i == MapInstanceWidth) {
-      Intro += "\u2511";
+      Intro += "\u2510";
     } else {
       Intro += "\u2500";
     }
@@ -72,7 +72,7 @@ void Game::RenderIntroFloor()
     } else if (floor == MapInstanceWidth) {
       Intro += "\u2518";
     } else {
-      Intro += "\u2501";
+      Intro += "\u2500";
     }
   }
   return;
