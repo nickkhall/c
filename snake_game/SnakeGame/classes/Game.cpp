@@ -41,9 +41,9 @@ void Game::RenderIntroCeiling()
   return;
 }
 
+// Render walls and text of intro
 void Game::RenderIntroText()
 {
-  // Render walls and text of intro
   for (int walls = 0; walls <= MapInstanceHeight / 100; walls ++)
   {
     for (int w = 0; w <= MapInstanceHeight; w++)
@@ -62,9 +62,9 @@ void Game::RenderIntroText()
   return;
 }
 
+// Render the floor of the intro
 void Game::RenderIntroFloor()
 {
-  // Render the floor of the intro
   for (int floor = 0; floor <= MapInstanceWidth; floor++)
   {
     if (floor == 0) {
