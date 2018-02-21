@@ -42,7 +42,7 @@ void Snake::RenderMap()
   std::cout << std::endl;
 
   // Output map walls
-  for (int walls = 0; walls <= MapHeight / 3; walls++)
+  for (int walls = 0; walls <= MapHeight / 2.5; walls++)
   {
     for (int w = 0; w <= MapHeight; w++)
     {
