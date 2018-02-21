@@ -16,6 +16,12 @@ int main()
 	// 	std::cout << NewGame->StartGame() << std::endl;
 	// } while (NewGame->GetIsGameOver() != true);
 
-		std::cout << NewGame->StartGame() << std::endl;
+	// Set game intro
+	NewGame->SetIntro();
+	// Print game intro
+  std::cout << NewGame->PrintIntro() << std::endl;
+
+  // Start game (temporary way)
+	std::cout << NewGame->StartGame() << std::endl;
 	return 0;
 };

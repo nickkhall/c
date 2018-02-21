@@ -49,6 +49,7 @@ void Map::RenderMapContent()
         MapStr += " ";
       }
     }
+		
     MapStr += "\n";
   }
   return;

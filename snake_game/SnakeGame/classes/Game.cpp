@@ -93,8 +93,6 @@ std::string Game::PrintIntro()
 
 std::string Game::StartGame()
 {
-  SetIntro();
-  std::cout << PrintIntro() << std::endl;
   MapInstance->GenerateMap();
   return MapInstance->PrintMap();
 }
