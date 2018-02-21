@@ -12,11 +12,12 @@ public:
 	Snake();
 
 	bool GetGameStatus();
-	// void RenderMap();
 
 	// Getters
 	std::string PrintIntro();
+	std::string RenderMap();
 
 	// Setters
 	std::string SetIntro();
+	void GenerateMap();
 };
