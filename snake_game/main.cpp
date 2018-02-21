@@ -3,6 +3,12 @@
 
 int main()
 {
-  std::cout << "welcome to the snake game" << std::endl;
-  return 0;
+	system("clear");
+	Snake *SnakeGame = new Snake;
+	SnakeGame->SetIntro();
+
+	std::cout << SnakeGame->PrintIntro() << std::endl;
+	SnakeGame->RenderMap();
+
+	return 0;
 };
