@@ -2,15 +2,10 @@
 #include "../headers/Map.hpp"
 #include "../headers/Snake.hpp"
 
-// New Snake instance
-Snake *NewSnake = new Snake;
-int NewSnakeX = NewSnake->GetSnakeX();
-int NewSnakeY = NewSnake->GetSnakeY();
-
-Map::Map()
+Map::Map(Snake Snake)
 {
-  MapHeight = 51;
-  MapWidth = 51;
+  MapHeight = 21;
+  MapWidth = 100;
   MapStr = "";
 }
 
@@ -44,14 +39,19 @@ void Map::RenderMapCeiling()
 
 void Map::RenderMapContent()
 {
+	// Local Snake coordinates variables
+	Snake->Init(MapHeight, MapWidth);
+	int snakeX = Snake->GetSnakeX();
+	int snakeY = Snake->GetSnakeY();
+
   // Render walls of map
   for (int y = 0; y <= MapHeight; y ++)
   {
     for (int x = 0; x <= MapWidth; x++)
     {
-      if (x == 0 || x == MapHeight) {
+      if (x == 0 || x == MapWidth) {
         MapStr += "\u2502";
-      } else if (x == NewSnakeX && y == NewSnakeY) {
+      } else if (x == snakeX && y == snakeY) {
 				MapStr += "\u014C";
 			} else {
         MapStr += " ";

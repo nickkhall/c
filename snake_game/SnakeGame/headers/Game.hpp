@@ -1,5 +1,7 @@
 #include <iostream>
 #include <array>
+#ifndef GAME
+#define GAME
 
 class Game
 {
@@ -23,3 +25,5 @@ public:
 	std::string PrintIntro();
 	std::string StartGame();
 };
+
+#endif

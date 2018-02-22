@@ -1,16 +1,17 @@
 #include <iostream>
 #include "../headers/Game.hpp"
 #include "../headers/Map.hpp"
-
-// Create a new map
-Map *MapInstance = new Map;
-int MapInstanceHeight = MapInstance->GetMapHeight();
-int MapInstanceWidth = MapInstance->GetMapWidth();
+#include "../headers/Snake.hpp"
 
 Game::Game()
 {
   IsGameOver = false;
   Intro = "";
+
+	// Create a new Snake
+	Snake NewSnake = new Snake;
+	// Create new map
+	Map MapInstance = new Map(NewSnake);
 }
 
 bool Game::SetIsGameOver()
@@ -47,11 +48,11 @@ void Game::RenderIntroText()
 {
   for (int walls = 0; walls <= MapInstanceHeight / 100; walls ++)
   {
-    for (int w = 0; w <= MapInstanceHeight; w++)
+    for (int w = 0; w <= MapInstanceWidth; w++)
     {
-      if (w == 0 || w == MapInstanceHeight - 24) {
+      if (w == 0 || w == MapInstanceWidth - 24) {
         Intro += "\u2502";
-      } else if (w == (MapInstanceHeight / 2) / 2) {
+      } else if (w == MapInstanceWidth / 3) {
         Intro += "Welcome to the Snake Game";
       } else {
         Intro += " ";

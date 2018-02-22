@@ -1,15 +1,11 @@
 #include <iostream>
-#include "headers/Game.hpp"
-#include "headers/Map.hpp"
-#include "headers/Snake.hpp"
+#include "classes/Game.cpp"
 
 int main()
 {
 	system("clear");
 	// Create new game
-	Game *NewGame = new Game;
-	// Create new map
-	Map *MapInstance = new Map;
+	Game NewGame = new Game;
 
 	// Start a new game
 	// do {

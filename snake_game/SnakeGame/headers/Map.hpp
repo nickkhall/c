@@ -1,4 +1,7 @@
 #include <iostream>
+#include "Snake.hpp"
+#ifndef MAP
+#define MAP
 
 class Map
 {
@@ -8,7 +11,7 @@ private:
   std::string MapStr;
 
 public:
-  Map();
+  Map(Snake Snake);
 
   // Setters
   void GenerateMap();
@@ -21,3 +24,5 @@ public:
   int GetMapHeight();
   int GetMapWidth();
 };
+
+#endif
