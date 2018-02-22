@@ -19,9 +19,9 @@ int main()
 	// Set game intro
 	NewGame->SetIntro();
 	// Print game intro
-  std::cout << NewGame->PrintIntro() << std::endl;
+	std::cout << NewGame->PrintIntro() << std::endl;
 
-  // Start game (temporary way)
+	// Start game (temporary way)
 	std::cout << NewGame->StartGame() << std::endl;
 	return 0;
 };
