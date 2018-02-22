@@ -11,15 +11,17 @@ int main()
 	// Create new map
 	Map *MapInstance = new Map;
 
-	// Set the game intro
+	// Start a new game
+	// do {
+	// 	std::cout << NewGame->StartGame() << std::endl;
+	// } while (NewGame->GetIsGameOver() != true);
+
+	// Set game intro
 	NewGame->SetIntro();
 	// Print game intro
-	std::cout << NewGame->PrintIntro() << std::endl;
+  std::cout << NewGame->PrintIntro() << std::endl;
 
-	// Set map
-	MapInstance->GenerateMap();
-
-	// Print map
-	std::cout << MapInstance->PrintMap() << std::endl;
+  // Start game (temporary way)
+	std::cout << NewGame->StartGame() << std::endl;
 	return 0;
 };

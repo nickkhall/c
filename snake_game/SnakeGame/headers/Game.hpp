@@ -21,4 +21,5 @@ public:
 	// Getters
 	bool GetIsGameOver();
 	std::string PrintIntro();
+	std::string StartGame();
 };

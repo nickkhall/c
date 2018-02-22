@@ -2,6 +2,7 @@
 #include "../headers/Game.hpp"
 #include "../headers/Map.hpp"
 
+// Create a new map
 Map *MapInstance = new Map;
 int MapInstanceHeight = MapInstance->GetMapHeight();
 int MapInstanceWidth = MapInstance->GetMapWidth();
@@ -31,7 +32,7 @@ void Game::RenderIntroCeiling()
     if (i == 0) {
       Intro += "\u250C";
     } else if (i == MapInstanceWidth) {
-      Intro += "\u2511";
+      Intro += "\u2510";
     } else {
       Intro += "\u2500";
     }
@@ -41,9 +42,9 @@ void Game::RenderIntroCeiling()
   return;
 }
 
+// Render walls and text of intro
 void Game::RenderIntroText()
 {
-  // Render walls and text of intro
   for (int walls = 0; walls <= MapInstanceHeight / 100; walls ++)
   {
     for (int w = 0; w <= MapInstanceHeight; w++)
@@ -62,9 +63,9 @@ void Game::RenderIntroText()
   return;
 }
 
+// Render the floor of the intro
 void Game::RenderIntroFloor()
 {
-  // Render the floor of the intro
   for (int floor = 0; floor <= MapInstanceWidth; floor++)
   {
     if (floor == 0) {
@@ -72,7 +73,7 @@ void Game::RenderIntroFloor()
     } else if (floor == MapInstanceWidth) {
       Intro += "\u2518";
     } else {
-      Intro += "\u2501";
+      Intro += "\u2500";
     }
   }
   return;
@@ -89,4 +90,10 @@ void Game::SetIntro()
 std::string Game::PrintIntro()
 {
   return Intro;
+}
+
+std::string Game::StartGame()
+{
+  MapInstance->GenerateMap();
+  return MapInstance->PrintMap();
 }
