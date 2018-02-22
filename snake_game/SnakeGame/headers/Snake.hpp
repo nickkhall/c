@@ -8,4 +8,7 @@ private:
 
 public:
 	Snake();
+
+	int GetSnakeX();
+	int GetSnakeY();
 };

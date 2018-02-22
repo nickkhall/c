@@ -1,10 +1,16 @@
 #include <iostream>
 #include "../headers/Map.hpp"
+#include "../headers/Snake.hpp"
+
+// New Snake instance
+Snake *NewSnake = new Snake;
+int NewSnakeX = NewSnake->GetSnakeX();
+int NewSnakeY = NewSnake->GetSnakeY();
 
 Map::Map()
 {
-  MapHeight = 50;
-  MapWidth = 50;
+  MapHeight = 51;
+  MapWidth = 51;
   MapStr = "";
 }
 
@@ -39,17 +45,19 @@ void Map::RenderMapCeiling()
 void Map::RenderMapContent()
 {
   // Render walls of map
-  for (int walls = 0; walls <= MapHeight / 3; walls ++)
+  for (int y = 0; y <= MapHeight; y ++)
   {
-    for (int w = 0; w <= MapHeight; w++)
+    for (int x = 0; x <= MapWidth; x++)
     {
-      if (w == 0 || w == MapHeight) {
+      if (x == 0 || x == MapHeight) {
         MapStr += "\u2502";
-      } else {
+      } else if (x == NewSnakeX && y == NewSnakeY) {
+				MapStr += "\u014C";
+			} else {
         MapStr += " ";
       }
     }
-		
+
     MapStr += "\n";
   }
   return;

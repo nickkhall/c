@@ -3,6 +3,16 @@
 
 Snake::Snake()
 {
-  x = 0;
-  y = 0;
+  x = 2;
+  y = 3;
+}
+
+int Snake::GetSnakeX()
+{
+  return x;
+}
+
+int Snake::GetSnakeY()
+{
+  return y;
 }

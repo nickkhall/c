@@ -2,6 +2,7 @@
 #include "../headers/Game.hpp"
 #include "../headers/Map.hpp"
 
+// Create a new map
 Map *MapInstance = new Map;
 int MapInstanceHeight = MapInstance->GetMapHeight();
 int MapInstanceWidth = MapInstance->GetMapWidth();
