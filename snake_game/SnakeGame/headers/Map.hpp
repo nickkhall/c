@@ -9,9 +9,10 @@ private:
   int MapHeight;
   int MapWidth;
   std::string MapStr;
+	Snake NewSnake;
 
 public:
-  Map(Snake Snake);
+	Map(Snake &GameSnake);
 
   // Setters
   void GenerateMap();

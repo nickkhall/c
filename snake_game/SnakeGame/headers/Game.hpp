@@ -1,5 +1,8 @@
 #include <iostream>
 #include <array>
+#include "../headers/Map.hpp"
+#include "../headers/Snake.hpp"
+
 #ifndef GAME
 #define GAME
 
@@ -8,9 +11,12 @@ class Game
 private:
 	bool IsGameOver;
 	std::string Intro;
+	Snake NewSnake;
+	Map MapInstance;
 
 public:
 	Game();
+	Game(Snake &MainSnake, Map &MainMap);
 
 	// Setters
 	void SetIntro();

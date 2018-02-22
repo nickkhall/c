@@ -1,5 +1,7 @@
 #include <iostream>
 #include "../headers/Snake.hpp"
+#ifndef SNAKE_CLASS
+#define SNAKE_CLASS
 
 Snake::Snake()
 {
@@ -49,3 +51,5 @@ void Snake::MoveRight()
   x = x + 1;
   return;
 }
+
+#endif

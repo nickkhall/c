@@ -5,13 +5,17 @@
 
 Game::Game()
 {
+	return;
+}
+
+Game::Game(Snake &MainSnake, Map &MainMap)
+{
   IsGameOver = false;
   Intro = "";
 
 	// Create a new Snake
-	Snake NewSnake = new Snake;
-	// Create new map
-	Map MapInstance = new Map(NewSnake);
+	NewSnake = MainSnake;
+	MapInstance = MainMap;
 }
 
 bool Game::SetIsGameOver()
@@ -28,11 +32,13 @@ bool Game::GetIsGameOver()
 // Render top corners and ceiling of intro
 void Game::RenderIntroCeiling()
 {
-  for (int i = 0; i <= MapInstanceWidth; i++)
+	int MapWidth = MapInstance.GetMapWidth();
+
+  for (int i = 0; i <= MapWidth; i++)
   {
     if (i == 0) {
       Intro += "\u250C";
-    } else if (i == MapInstanceWidth) {
+    } else if (i == MapWidth) {
       Intro += "\u2510";
     } else {
       Intro += "\u2500";
@@ -46,13 +52,16 @@ void Game::RenderIntroCeiling()
 // Render walls and text of intro
 void Game::RenderIntroText()
 {
-  for (int walls = 0; walls <= MapInstanceHeight / 100; walls ++)
+	int MapHeight = MapInstance.GetMapHeight();
+	int MapWidth = MapInstance.GetMapWidth();
+
+  for (int walls = 0; walls <= MapHeight / 100; walls ++)
   {
-    for (int w = 0; w <= MapInstanceWidth; w++)
+    for (int w = 0; w <= MapWidth; w++)
     {
-      if (w == 0 || w == MapInstanceWidth - 24) {
+      if (w == 0 || w == MapWidth - 24) {
         Intro += "\u2502";
-      } else if (w == MapInstanceWidth / 3) {
+      } else if (w == MapWidth / 3) {
         Intro += "Welcome to the Snake Game";
       } else {
         Intro += " ";
@@ -67,11 +76,14 @@ void Game::RenderIntroText()
 // Render the floor of the intro
 void Game::RenderIntroFloor()
 {
-  for (int floor = 0; floor <= MapInstanceWidth; floor++)
+	int MapWidth = MapInstance.GetMapWidth();
+
+
+  for (int floor = 0; floor <= MapWidth; floor++)
   {
     if (floor == 0) {
       Intro += "\u2514";
-    } else if (floor == MapInstanceWidth) {
+    } else if (floor == MapWidth) {
       Intro += "\u2518";
     } else {
       Intro += "\u2500";
@@ -95,6 +107,6 @@ std::string Game::PrintIntro()
 
 std::string Game::StartGame()
 {
-  MapInstance->GenerateMap();
-  return MapInstance->PrintMap();
+  MapInstance.GenerateMap();
+  return MapInstance.PrintMap();
 }

@@ -2,8 +2,9 @@
 #include "../headers/Map.hpp"
 #include "../headers/Snake.hpp"
 
-Map::Map(Snake Snake)
+Map::Map(Snake &GameSnake)
 {
+	NewSnake = GameSnake;
   MapHeight = 21;
   MapWidth = 100;
   MapStr = "";
@@ -40,9 +41,9 @@ void Map::RenderMapCeiling()
 void Map::RenderMapContent()
 {
 	// Local Snake coordinates variables
-	Snake->Init(MapHeight, MapWidth);
-	int snakeX = Snake->GetSnakeX();
-	int snakeY = Snake->GetSnakeY();
+	NewSnake.Init(MapHeight, MapWidth);
+	int snakeX = NewSnake.GetSnakeX();
+	int snakeY = NewSnake.GetSnakeY();
 
   // Render walls of map
   for (int y = 0; y <= MapHeight; y ++)
