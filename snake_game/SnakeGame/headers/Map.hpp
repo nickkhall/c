@@ -12,8 +12,8 @@ private:
 	Snake& NewSnake;
 
 public:
-	Map(Snake& GameSnake)
-		: NewSnake(GameSnake) {
+	Map(Snake& GameSnake) : NewSnake(GameSnake)
+	{
 	  MapHeight = 21;
 	  MapWidth = 100;
 	  MapStr = "";
