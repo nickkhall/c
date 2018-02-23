@@ -7,14 +7,16 @@ class Snake
 private:
 	int x;
 	int y;
-	bool inited = false;
+	bool inited;
 
 public:
-	Snake() {};
+	Snake() {
+		inited = FALSE;
+	};
 
 	void Init(int MapHeight, int MapWidth)
 	{
-		if (inited == true) return;
+		if (inited == TRUE) return;
 		inited = true;
 
 		x = MapWidth / 2;
