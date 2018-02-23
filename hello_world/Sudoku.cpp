@@ -2,10 +2,10 @@
 
 Sudoku::Sudoku()
 {
-    word = "Hello world!";
+		word = "Hello world!";
 }
 
 std::string Sudoku::GetWord()
 {
-    return word;
+		return word;
 }
