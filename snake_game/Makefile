@@ -1,2 +1,2 @@
 compile:
-	g++ -o bin/SnakeGame SnakeGame/main.cpp
+	g++ -o bin/SnakeGame -I /usr/include/ncurses.h SnakeGame/main.cpp -lncurses

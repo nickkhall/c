@@ -15,13 +15,14 @@ int main()
 	std::cout << NewGame.PrintIntro() << std::endl;
 
 	// Start a new game
-	do {
-		std::cout << NewGame.StartGame() << std::endl;
-		// NewGame.SetKeyPressed(std::cin);
-		NewGame.SetKeyPressed();
-	} while (NewGame.GetIsGameOver() != true);
+	// do {
+	// 	std::cout << NewGame.StartGame() << std::endl;
+	// 	// NewGame.SetKeyPressed(std::cin);
+	// 	NewGame.SetKeyPressed();
+	// } while (NewGame.GetIsGameOver() != true);
 
 	// Start game (temporary way)
-	// std::cout << NewGame.StartGame() << std::endl;
+	std::cout << NewGame.StartGame() << std::endl;
+	NewGame.SetKeyPressed();
 	return 0;
 };
