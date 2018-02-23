@@ -15,7 +15,7 @@ Game::Game(Snake &MainSnake, Map &MainMap)
 
 	// Create a new Snake
 	NewSnake = MainSnake;
-	MapInstance = MainMap;
+	MapInstance(NewSnake) = MainMap;
 }
 
 bool Game::SetIsGameOver()

@@ -12,7 +12,7 @@ private:
 	bool IsGameOver;
 	std::string Intro;
 	Snake NewSnake;
-	Map MapInstance;
+	Map MapInstance(Snake NewSnake);
 
 public:
 	Game();
