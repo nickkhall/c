@@ -7,7 +7,7 @@ class Snake
 private:
 	int x;
 	int y;
-	bool inited;
+	bool inited = false;
 
 public:
 	Snake() {};
@@ -16,6 +16,7 @@ public:
 	{
 		if (inited == true) return;
 		inited = true;
+
 		x = MapWidth / 2;
 		y = MapHeight / 2;
 		return;

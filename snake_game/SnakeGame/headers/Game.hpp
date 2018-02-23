@@ -12,10 +12,10 @@
 #define GAME
 
 // Key Definitions
-const int UpKey = 119; // 87
-const int DownKey = 100; // 83
-const int LeftKey = 115; // 65
-const int RightKey = 97; // 68
+const int UpKey = 119;
+const int DownKey = 100;
+const int LeftKey = 115;
+const int RightKey = 97;
 const int EscapeKey = 27;
 
 class Game
@@ -130,6 +130,15 @@ public:
 	std::string StartGame()
 	{
 		MapInstance->GenerateMap();
+
+		// initscr();
+    //
+		// cbreak();
+		// noecho();
+		// nodelay(stdscr, TRUE);
+    //
+		// scrollok(stdscr, TRUE);
+
 		return MapInstance->PrintMap();
 	}
 
@@ -137,18 +146,6 @@ public:
 	{
 		return KeyPressed;
 	}
-
-	// int KeyHit(void)
-	// {
-	// 	KeyPlayerPressed = getch();
-  //
-	// 	if (KeyPlayerPressed != ERR) {
-	// 		ungetch(KeyPlayerPressed);
-	// 		return 1;
-	// 	} else {
-	// 		return 0;
-	// 	}
-	// }
 
 	void SetKeyPressed()
 	{
@@ -160,26 +157,43 @@ public:
 				switch (KeyPlayerPressed)
 				{
 					case UpKey:
-						// NewSnake.MoveUp();
-						std::cout << "UP_KEY" << std::endl;
+						if(KeyPlayerPressed == UpKey)
+						{
+							// NewSnake.MoveUp();
+							std::cout << "We have a match!" << std::endl;
+							std::cout << "KeyPlayerPressed: " << KeyPlayerPressed << std::endl;
+						}
 						break;
 					case DownKey:
-						// NewSnake.MoveDown();
-						std::cout << "DOWN_KEY" << std::endl;
+						if(KeyPlayerPressed == DownKey)
+						{
+							// NewSnake.MoveDown();
+							std::cout << "We have a match!" << std::endl;
+							std::cout << "KeyPlayerPressed: " << KeyPlayerPressed << std::endl;
+						}
 						break;
 					case LeftKey:
-						// NewSnake.MoveLeft();
-						std::cout << "LEFT_KEY" << std::endl;
+						if(KeyPlayerPressed == LeftKey)
+						{
+							// NewSnake.MoveLeft();
+							std::cout << "We have a match!" << std::endl;
+							std::cout << "KeyPlayerPressed: " << KeyPlayerPressed << std::endl;
+						}
 						break;
 					case RightKey:
-						// NewSnake.MoveRight();
-						std::cout << "RIGHT_KEY" << std::endl;
+						if(KeyPlayerPressed == RightKey)
+						{
+							// NewSnake.MoveRight();
+							std::cout << "We have a match!" << std::endl;
+							std::cout << "KeyPlayerPressed: " << KeyPlayerPressed << std::endl;
+						}
 						break;
 					case EscapeKey:
 						SetIsGameOver();
 						break;
 
 					default:
+						refresh();
 						break;
 				}
 			} else {

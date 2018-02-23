@@ -13,14 +13,6 @@ int main()
 	// Set game intro
 	NewGame.SetIntro();
 
-	initscr();
-
-  cbreak();
-  noecho();
-  nodelay(stdscr, TRUE);
-
-  scrollok(stdscr, TRUE);
-
 	// Print game intro
 	std::cout << NewGame.PrintIntro() << std::endl;
 

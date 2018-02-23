@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Snake.hpp"
+
 #ifndef MAP
 #define MAP
 
