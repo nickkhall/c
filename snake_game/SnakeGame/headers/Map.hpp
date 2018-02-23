@@ -100,6 +100,12 @@ public:
 	{
 		return MapStr;
 	}
+
+	bool AutoMoveSnake()
+	{
+		NewSnake.MoveLeft();
+		return NewSnake.GetSnakeX();
+	}
 };
 
 #endif
