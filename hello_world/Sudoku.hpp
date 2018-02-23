@@ -7,12 +7,12 @@
 class Sudoku
 {
 private:
-    std::string word;
+		std::string word;
 
 public:
-    Sudoku();
-    
-    std::string GetWord();
+		Sudoku();
+		
+		std::string GetWord();
 };
 
 #endif /* Sudoku_hpp */

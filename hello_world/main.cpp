@@ -3,7 +3,7 @@
 
 int main()
 {
-    Sudoku * testSudoku = new Sudoku;
-    std::cout << testSudoku->GetWord() << std::endl;
-    return 0;
+		Sudoku * testSudoku = new Sudoku;
+		std::cout << testSudoku->GetWord() << std::endl;
+		return 0;
 }
