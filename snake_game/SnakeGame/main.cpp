@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ncurses.h>
 #include "headers/Game.hpp"
 #include "headers/Map.hpp"
 #include "headers/Snake.hpp"
@@ -11,18 +12,27 @@ int main()
 
 	// Set game intro
 	NewGame.SetIntro();
+
+	initscr();
+
+  cbreak();
+  noecho();
+  nodelay(stdscr, TRUE);
+
+  scrollok(stdscr, TRUE);
+
 	// Print game intro
 	std::cout << NewGame.PrintIntro() << std::endl;
 
-	// Start a new game
-	// do {
-	// 	std::cout << NewGame.StartGame() << std::endl;
-	// 	// NewGame.SetKeyPressed(std::cin);
-	// 	NewGame.SetKeyPressed();
-	// } while (NewGame.GetIsGameOver() != true);
 
 	// Start game (temporary way)
 	std::cout << NewGame.StartGame() << std::endl;
-	NewGame.SetKeyPressed();
+	// Start a new game
+	do {
+		NewGame.SetKeyPressed();
+	} while (NewGame.GetIsGameOver() != true);
+
+	std::cout << "Game Over." << std::endl;
+
 	return 0;
 };

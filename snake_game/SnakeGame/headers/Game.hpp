@@ -1,6 +1,9 @@
 #include <iostream>
 #include <array>
 #include <ncurses.h>
+#include <unistd.h>
+
+// Headers
 #include "../headers/Map.hpp"
 #include "../headers/Snake.hpp"
 #include "../headers/Player.hpp"
@@ -8,11 +11,12 @@
 #ifndef GAME
 #define GAME
 
-#define UP_KEY 72;
-#define DOWN_KEY 80;
-#define LEFT_KEY 75;
-#define RIGHT_KEY 77;
-#define ESCAPE_KEY 27;
+// Key Definitions
+const int UpKey = 119; // 87
+const int DownKey = 100; // 83
+const int LeftKey = 115; // 65
+const int RightKey = 97; // 68
+const int EscapeKey = 27;
 
 class Game
 {
@@ -87,6 +91,7 @@ public:
 
 			Intro += "\n";
 		}
+
 		return;
 	}
 
@@ -133,37 +138,54 @@ public:
 		return KeyPressed;
 	}
 
-	// void SetKeyPressed(int PassedKeyPressed)
+	// int KeyHit(void)
+	// {
+	// 	KeyPlayerPressed = getch();
+  //
+	// 	if (KeyPlayerPressed != ERR) {
+	// 		ungetch(KeyPlayerPressed);
+	// 		return 1;
+	// 	} else {
+	// 		return 0;
+	// 	}
+	// }
+
 	void SetKeyPressed()
 	{
-		// Get key pressed
-		KeyPlayerPressed = getch();
+		while (IsGameOver != true)
+		{
+			if (getch()) {
+				KeyPlayerPressed = getch();
 
-		std::cout << KeyPlayerPressed << std::endl;
+				switch (KeyPlayerPressed)
+				{
+					case UpKey:
+						// NewSnake.MoveUp();
+						std::cout << "UP_KEY" << std::endl;
+						break;
+					case DownKey:
+						// NewSnake.MoveDown();
+						std::cout << "DOWN_KEY" << std::endl;
+						break;
+					case LeftKey:
+						// NewSnake.MoveLeft();
+						std::cout << "LEFT_KEY" << std::endl;
+						break;
+					case RightKey:
+						// NewSnake.MoveRight();
+						std::cout << "RIGHT_KEY" << std::endl;
+						break;
+					case EscapeKey:
+						SetIsGameOver();
+						break;
 
-		// printf(std::endl, std::end, "-----------------", );
-
-		// switch (KeyPlayerPressed)
-		// {
-		// 	case UP_KEY
-		// 		NewSnake.MoveUp();
-		// 		break;
-		// 	case DOWN_KEY:
-		// 		NewSnake.MoveDown();
-		// 		break;
-		// 	case LEFT_KEY:
-		// 		NewSnake.MoveLeft();
-		// 		break;
-		// 	case RIGHT_KEY:
-		// 		NewSnake.MoveRight();
-		// 		break;
-		// 	case ESCAPE_KEY:
-		// 		SetIsGameOver();
-		// 		break;
-    //
-		// 	default:
-		// 		break;
-		// }
+					default:
+						break;
+				}
+			} else {
+				refresh();
+			}
+		}
 
 		return;
 	}
