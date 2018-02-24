@@ -53,12 +53,9 @@ public:
 
 	void RenderMapContent()
 	{
-		// Local Snake coordinates variables
 		NewSnake.Init(MapHeight, MapWidth);
-		Tail[] snakeTails = NewSnake.GetSnakeTails();
 		bool rendered = FALSE;
 		int snakeLength = NewSnake.GetSnakeLength();
-		Tail* currentTail;
 		int tailY, tailX;
 
 		// Render walls of map
@@ -79,9 +76,8 @@ public:
 				{
 					if (rendered != TRUE)
 					{
-						currentTail = snakeTails[t];
-						tailX = currentTail.GetTailX();
-						tailY = currentTail.GetTailY();
+						tailX = NewSnake.GetTailX(t);
+						tailY = NewSnake.GetTailY(t);
 
 						if (x == tailX && y == tailY)
 						{
@@ -129,15 +125,7 @@ public:
 
 	std::string PrintMap()
 	{
-		// std::cout << MapHeight << std::endl;
-		// std::cout << MapWidth << std::endl;
 		return MapStr;
-	}
-
-	bool AutoMoveSnake()
-	{
-		NewSnake.MoveLeft();
-		return NewSnake.GetSnakeX();
 	}
 };
 

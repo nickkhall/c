@@ -184,10 +184,17 @@ public:
 
 	void ReRenderMap()
 	{
+		IncrementGameCounter();
+
 		getmaxyx(stdscr, row, col);
 		refresh();
 
 		MapInstance->GenerateMap(row, col);
+
+		if(GetGameCounter() == 100) {
+			ResetGameCounter();
+			NewSnake.Move();
+		}
 
 		return;
 	}
@@ -200,6 +207,12 @@ public:
 	void IncrementGameCounter()
 	{
 		GameCounter = GameCounter + 1;
+		return;
+	}
+
+	void ResetGameCounter()
+	{
+		GameCounter = 0;
 		return;
 	}
 

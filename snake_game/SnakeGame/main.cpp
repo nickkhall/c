@@ -16,14 +16,6 @@ int main()
 	// Start a new game
 	do {
 		NewGame.SetKeyPressed();
-		// Start game
-		if ( NewGame.GetGameCounter() == 2000 )
-		{
-			NewGame.MoveSnake();
-		}
-
-		// Print game intro
-		// std::cout << NewGame.PrintIntro() << std::endl;
 		NewGame.ReRenderMap();
 	} while (NewGame.GetIsGameOver() != true);
 
