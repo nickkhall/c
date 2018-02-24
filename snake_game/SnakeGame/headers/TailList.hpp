@@ -5,16 +5,27 @@
 class TailList
 {
 private:
-	int TailCount;
-  Tail *TailListArray;
+	std::vector(Tail) TailsArray;
 
 public:
-  Tail& operator[] (const int index);
+	int[] operator[] (const int &index);
+
+	TailList() {}
 };
 
-Tail& TailList::operator[] (const int index)
+TailList::operator[] (const int &index)
 {
-	return TailListArray[index];
-}
+	for (auto &tail : TailsArray)
+	{
+		if (tail.index == index)
+		{
+			return tail;
+		}
+	}
+};
+
+// @TODO: Create static method for
+	// - Get length
+	// - Push
 
 #endif

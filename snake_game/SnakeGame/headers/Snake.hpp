@@ -5,10 +5,12 @@
 #ifndef SNAKE
 #define SNAKE
 
+// @TODO: Refactor to use TailList
+
 class Snake
 {
 private:
-	Tail *TailsArray;
+	std::vector<Tail> TailsArray;
 	int TailCount;
 	bool inited;
 
