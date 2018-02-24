@@ -43,8 +43,10 @@ public:
 		Intro = "";
 		GameOverText = "Game Over";
 
+		setlocale(LC_ALL, "");
 		initscr();
 		cbreak();
+		curs_set(0);
 		noecho();
 		nodelay(stdscr, TRUE);
 		scrollok(stdscr, FALSE);

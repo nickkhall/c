@@ -45,6 +45,9 @@ public:
 				addstr("\u2500");
 			}
 		}
+
+		move(0, 3);
+		addstr(" Snake Game ");
 		return;
 	}
 
