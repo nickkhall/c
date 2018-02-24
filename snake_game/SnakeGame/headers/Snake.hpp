@@ -1,57 +1,141 @@
 #include <iostream>
+
+#include "Tails.hpp"
+
 #ifndef SNAKE
 #define SNAKE
+
+// @TODO: Refactor to use TailList
+
+enum Direction { UP, DOWN, LEFT, RIGHT };
 
 class Snake
 {
 private:
-	int x;
-	int y;
+	Direction Dir;
+	int TailX[100], TailY[100];
+	int TailIndex;
 	bool inited;
 
 public:
-	Snake() {};
+	Snake() {
+		inited = FALSE;
+		TailIndex = -1;
+		Dir = LEFT;
+	};
 
 	void Init(int MapHeight, int MapWidth)
 	{
-		if (inited == true) return;
+		if (inited == TRUE) return;
 		inited = true;
-		x = MapWidth / 2;
-		y = MapHeight / 2;
+
+		TailIndex = 0;
+
+		TailX[0] = MapWidth / 2;
+		TailY[0] = MapHeight / 2;
+
 		return;
 	}
 
-	int GetSnakeX()
+	// void AddTail()
+	// {
+	// 	int endX = GetEndX();
+	// 	int endY = GetEndY();
+	// 	int prevX = TailX[TailIndex - 2];
+	// 	int prevY = TailY[TailIndex - 2];
+  //
+	// 	TailIndex += 1;
+  //
+	// 	TailX[TailIndex] = endX + (endX - prevX);
+	// 	TailY[TailIndex] = endY + (endY - prevY);
+	// }
+
+	// int GetHeadX()
+	// {
+	// 	return TailX[0];
+	// }
+  //
+	// int GetHeadY()
+	// {
+	// 	return TailY[0];
+	// }
+  //
+	// int GetEndX()
+	// {
+	// 	return TailX[TailIndex];
+	// }
+  //
+	// int GetEndY()
+	// {
+	// 	return TailY[TailIndex];
+	// }
+
+	int GetTailX(int index)
 	{
-		return x;
+		return TailX[index];
 	}
 
-	int GetSnakeY()
+	int GetTailY(int index)
 	{
-		return y;
+		return TailY[index];
+	}
+
+	int GetSnakeLength()
+	{
+		return TailIndex + 1;
+	}
+
+	void Move() {
+		int prevX = TailX[0];
+		int prevY = TailY[0];
+
+		switch(Dir)
+		{
+			case UP:
+				TailY[0] -= 1;
+				break;
+			case DOWN:
+				TailY[0] += 1;
+				break;
+			case LEFT:
+				TailX[0] -= 1;
+				break;
+			case RIGHT:
+				TailX[0] += 1;
+				break;
+		}
+
+		for(int i=0;i<TailIndex - 1;i--) {
+			TailX[i+1] = TailX[i];
+			TailY[i+1] = TailY[i];
+			if (i != 0) {
+				TailX[i] = prevX;
+				TailY[i] = prevY;
+			}
+		}
 	}
 
 	void MoveUp()
 	{
-		y = y - 1;
+		Dir = UP;
 		return;
 	}
 
 	void MoveDown()
 	{
-		y = y + 1;
+		Dir = DOWN;
 		return;
 	}
 
 	void MoveLeft()
 	{
-		x = x - 1;
+		Dir = LEFT;
 		return;
 	}
 
 	void MoveRight()
 	{
-		x = x + 1;
+		Dir = RIGHT;
 		return;
 	}
 };

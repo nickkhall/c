@@ -1,34 +1,66 @@
 #include <iostream>
 #include <array>
+#include <ncurses.h>
+#include <unistd.h>
+
+// Headers
 #include "../headers/Map.hpp"
 #include "../headers/Snake.hpp"
+#include "../headers/Player.hpp"
 
 #ifndef GAME
 #define GAME
+
+// Key Definitions
+const int UpKey = 119;
+const int DownKey = 115;
+const int LeftKey = 97;
+const int RightKey = 100;
+const int EscapeKey = 27;
 
 class Game
 {
 private:
 	bool IsGameOver;
 	std::string Intro;
+	std::string KeyPressed;
+	int KeyPlayerPressed;
+	int GameCounter;
+	std::string GameOverText;
+	int col;
+	int row;
+
 	Snake NewSnake;
+	Player NewPlayer;
 	Map *MapInstance;
 
 public:
 	Game() {
+		KeyPlayerPressed = 0;
+		GameCounter = 0;
 		MapInstance = new Map(NewSnake);
 		IsGameOver = false;
 		Intro = "";
+		GameOverText = "Game Over";
+
+		setlocale(LC_ALL, "");
+		initscr();
+		cbreak();
+		curs_set(0);
+		noecho();
+		nodelay(stdscr, TRUE);
+		scrollok(stdscr, FALSE);
+		clearok(stdscr, TRUE);
 	};
+
+	bool GetIsGameOver()
+	{
+		return IsGameOver;
+	}
 
 	bool SetIsGameOver()
 	{
 		IsGameOver = true;
-		return IsGameOver;
-	}
-
-	bool GetIsGameOver()
-	{
 		return IsGameOver;
 	}
 
@@ -73,6 +105,7 @@ public:
 
 			Intro += "\n";
 		}
+
 		return;
 	}
 
@@ -108,10 +141,90 @@ public:
 		return Intro;
 	}
 
-	std::string StartGame()
+	std::string GetKeyPressed()
 	{
-		MapInstance->GenerateMap();
-		return MapInstance->PrintMap();
+		return KeyPressed;
+	}
+
+	void SetKeyPressed()
+	{
+		KeyPlayerPressed = getch();
+
+
+		if (KeyPlayerPressed > -1) {
+			std::cout << "KPP: " << KeyPlayerPressed << std::endl;
+			switch (KeyPlayerPressed)
+			{
+				case UpKey:
+					NewSnake.MoveUp();
+					break;
+				case DownKey:
+					NewSnake.MoveDown();
+					break;
+				case LeftKey:
+					NewSnake.MoveLeft();
+					break;
+				case RightKey:
+					NewSnake.MoveRight();
+					break;
+				case EscapeKey:
+					SetIsGameOver();
+					break;
+
+				default:
+					// refresh();
+					break;
+			}
+		} else {
+			// refresh();
+		}
+
+		return;
+	}
+
+	void ReRenderMap()
+	{
+		IncrementGameCounter();
+
+		getmaxyx(stdscr, row, col);
+		refresh();
+
+		MapInstance->GenerateMap(row, col);
+
+		if(GetGameCounter() == 100) {
+			ResetGameCounter();
+			NewSnake.Move();
+		}
+
+		return;
+	}
+
+	int GetGameCounter()
+	{
+		return GameCounter;
+	}
+
+	void IncrementGameCounter()
+	{
+		GameCounter = GameCounter + 1;
+		return;
+	}
+
+	void ResetGameCounter()
+	{
+		GameCounter = 0;
+		return;
+	}
+
+	void MoveSnake()
+	{
+		NewSnake.MoveLeft();
+		return;
+	}
+
+	std::string GetGameOverText()
+	{
+		return GameOverText;
 	}
 };
 
