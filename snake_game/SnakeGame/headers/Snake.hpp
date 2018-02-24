@@ -1,17 +1,21 @@
 #include <iostream>
+
+#include "Tails.hpp"
+
 #ifndef SNAKE
 #define SNAKE
 
 class Snake
 {
 private:
-	int x;
-	int y;
+	Tail *TailsArray;
+	int TailCount;
 	bool inited;
 
 public:
 	Snake() {
 		inited = FALSE;
+		TailCount = 1;
 	};
 
 	void Init(int MapHeight, int MapWidth)
@@ -19,19 +23,46 @@ public:
 		if (inited == TRUE) return;
 		inited = true;
 
-		x = MapWidth / 2;
-		y = MapHeight / 2;
+		int x = MapWidth / 2;
+		int y = MapHeight / 2;
+
+		TailsArray = new Tail[1];
+		TailsArray[0].Init(x,y);
+
 		return;
 	}
 
-	int GetSnakeX()
+	void AddTail(int newX, int newY)
 	{
-		return x;
+		TailCount = TailCount + 1;
+		Tail TempTailsArray = *TailsArray;
+		delete [] TailsArray;
+
+		TailsArray = new Tail[TailCount];
+
+		int tempX, tempY;
+
+		for (int i = 0; i < TailCount; i++)
+		{
+			tempX = TempTailsArray[i].GetTailX();
+			tempY = TempTailsArray[i].GetTailY();
+			TailsArray[i].Init(tempX, tempY);
+			delete TempTailsArray[i];
+		}
+
+		TailsArray[TailCount].Init(newX, newY);
+
+		delete [] TempTailsArray;
 	}
 
-	int GetSnakeY()
+	Tail GetSnakeTails()
 	{
-		return y;
+		return TailsArray;
+	}
+
+	int GetSnakeLength()
+	{
+		return TailCount;
 	}
 
 	void MoveUp()

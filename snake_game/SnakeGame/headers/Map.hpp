@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Snake.hpp"
+#include "Tails.hpp"
 
 #ifndef MAP
 #define MAP
@@ -36,7 +37,6 @@ public:
 		for (int i = 0; i < MapWidth; i++)
 		{
 			move(0, i);
-			// refresh();
 			if (i == 0) {
 				addstr("\u250C");
 			} else if (i == MapWidth - 1) {
@@ -55,21 +55,44 @@ public:
 	{
 		// Local Snake coordinates variables
 		NewSnake.Init(MapHeight, MapWidth);
-		int snakeX = NewSnake.GetSnakeX();
-		int snakeY = NewSnake.GetSnakeY();
+		Tail[] snakeTails = NewSnake.GetSnakeTails();
+		bool rendered = FALSE;
+		int snakeLength = NewSnake.GetSnakeLength();
+		Tail* currentTail;
+		int tailY, tailX;
 
 		// Render walls of map
 		for (int y = 1; y < MapHeight - 1; y ++)
 		{
 			for (int x = 0; x < MapWidth; x++)
 			{
+				rendered = FALSE;
 				move(y, x);
-				// refresh();
-				if (x == 0 || x == MapWidth - 1) {
+
+				if (x == 0 || x == MapWidth - 1)
+				{
 					addstr("\u2502");
-				} else if (x == snakeX && y == snakeY) {
-					addstr("\u014C");
-				} else {
+					rendered = TRUE;
+				}
+
+				for (int t = 0; t < snakeLength; t++)
+				{
+					if (rendered != TRUE)
+					{
+						currentTail = snakeTails[t];
+						tailX = currentTail.GetTailX();
+						tailY = currentTail.GetTailY();
+
+						if (x == tailX && y == tailY)
+						{
+							addstr("\u014C");
+							rendered = TRUE;
+						}
+					}
+				}
+
+				if (rendered == FALSE)
+				{
 					addstr(" ");
 				}
 			}
@@ -83,7 +106,6 @@ public:
 		for (int floor = 0; floor < MapWidth; floor++)
 		{
 			move(MapHeight, floor);
-			// refresh();
 			if (floor == 0) {
 				addstr("\u2514");
 			} else if (floor == MapWidth - 1) {
