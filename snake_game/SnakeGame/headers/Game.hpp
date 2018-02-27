@@ -150,9 +150,7 @@ public:
 	{
 		KeyPlayerPressed = getch();
 
-
 		if (KeyPlayerPressed > -1) {
-			std::cout << "KPP: " << KeyPlayerPressed << std::endl;
 			switch (KeyPlayerPressed)
 			{
 				case UpKey:
