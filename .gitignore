@@ -34,3 +34,6 @@ snake_game/architecture
 *.exe
 *.out
 *.app
+
+# Mac bullcrap
+.DS_Store
