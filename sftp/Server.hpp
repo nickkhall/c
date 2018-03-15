@@ -1,7 +1,7 @@
 #ifndef Server_hpp
 #define Server_hpp
 
-#include <stdio.h>
+#include <iostream>
 
 class Server
 {

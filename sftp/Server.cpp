@@ -1,3 +1,7 @@
+#include <sys/socket.h>
+// #include <netdb.h>
+// #include <arpa/inet.h>
+
 #include "Server.hpp"
 
 void Server::SetHost()
