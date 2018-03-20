@@ -9,13 +9,24 @@ Server::Server()
 
 }
 
-void Server::SetHost()
+void Server::SetHost(std::string hostParam)
 {
-	host = "127.0.0.0";
+	host = hostParam;
 	return;
 }
 
 std::string Server::GetHost()
 {
 	return host;
+}
+
+void Server::SetPort(int portParam)
+{
+	port = portParam;
+	return;
+}
+
+int Server::GetPort()
+{
+	return port;
 }
