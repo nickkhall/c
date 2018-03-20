@@ -4,5 +4,8 @@ Server: main.o Server.o
 main.o: main.cpp
 	g++ -c main.cpp
 
+Server.o: Server.cpp
+	g++ -c Server.cpp
+
 clean:
 	rm *.o Server
