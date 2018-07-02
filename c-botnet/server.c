@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
   scanf("%s", &pass);
 
 	// Compare user entered password
-  if (strcmp(pass, "BRO_THIS_IS_MY_PASSWORD") != 0) {
+  if (strcmp(pass, "temppassword") != 0) {
       printf("\n\nAuthentication failure.\n\n " );
       exit(0);
   }
@@ -115,36 +115,38 @@ int main(int argc, char *argv[]) {
       testfds = readfds;
       select(FD_SETSIZE, &testfds, NULL, NULL, NULL);
 
-      /* If there is activity, find which descriptor it's on using FD_ISSET */
+      // If there is activity, find which descriptor it's on using FD_ISSET
 
       for (fd = 0; fd < FD_SETSIZE; fd++) {
           if (FD_ISSET(fd, &testfds)) {
-              if (fd == server_sockfd) {  /* Accept a new connection request */
+              if (fd == server_sockfd) {
+									// Accept a new connection request
                   client_sockfd = accept(server_sockfd, NULL, NULL);
                   if (num_clients < MAX_CLIENTS) {
                       FD_SET(client_sockfd, &readfds);
-                      fd_array[num_clients]=client_sockfd;
+                      fd_array[num_clients] = client_sockfd;
 
                       /*Client ID*/
 
-                      printf("\n -> Bot No. %d standby for orders\n",++num_clients);
+                      printf("\n -> Bot No. %d standby for orders\n", ++num_clients);
                       printf("\n >> ");
                       fflush(stdout);
                       send(client_sockfd,msg,strlen(msg),0);
                   }
                   else{
-                      sprintf(msg, "XSorry, too many clients.  Try again later.\n");
+                      sprintf(msg, "Sorry, too many clients.  Try again later.\n");
                       write(client_sockfd, msg, strlen(msg));
                       close(client_sockfd);
                   }
               }
               else
                   if (fd == 0) {
-                      printf(" >> ");       /* Process keyboard activity */
+                      printf(" >> ");
+											// Process keyboard activity
                       fgets(kb_msg, MESSAGE_SIZE + 1, stdin);
-                      if (strcmp(kb_msg, "quit\n")==0) {
-                          sprintf(msg, "iBot Server is shutting down.\n");
-                          for (i = 0; i < num_clients ; i++) {
+                      if (strcmp(kb_msg, "quit\n") == 0) {
+                          sprintf(msg, "Shutting down ABotC Server...\n");
+                          for (i = 0; i < num_clients; i++) {
                               write(fd_array[i], msg, strlen(msg));
                               close(fd_array[i]);
                           }
@@ -152,49 +154,48 @@ int main(int argc, char *argv[]) {
                           exit(0);
                       }
                       else{
-                          sprintf(msg, "M%s", kb_msg);
-                          for (i = 0; i < num_clients ; i++)
+                          sprintf(msg, "%s", kb_msg);
+                          for (i = 0; i < num_clients; i++)
                               write(fd_array[i], msg, strlen(msg));
                       }
                   }
                   else
                       if (fd) {
-                          result = read(fd, msg, MESSAGE_SIZE);   /*read data from open socket*/
-                          if (result==-1)
+                          result = read(fd, msg, MESSAGE_SIZE);
+													// Read data from open socket
+                          if (result == -1)
                               perror("read()");
                           else
-                              if (result>0) {
-                                  sprintf(kb_msg,"MClient CID %2d",fd);   /*read 2 bytes client id*/
-                                  msg[result]='\0';
+                              if (result > 0) {
+                                  sprintf(kb_msg,"MClient CID %2d",fd);
+																	// Read 2 bytes client id
+                                  msg[result] = '\0';
 
-                          /*concatinate the client id with the client's message*/
-
+															// Concatinate the client id with the client's message
                               strcat(kb_msg," ");
                               strcat(kb_msg,msg+1);
 
-                          /*print to other clients*/
-
-                              for(i=0;i<num_clients;i++) {
-                                  if (fd_array[i] != fd)                     /*dont write msg to same client*/
-                                      write(fd_array[i],kb_msg,strlen(kb_msg));
+															// Print to other clients
+                              for(i = 0; i < num_clients; i++) {
+                                  if (fd_array[i] != fd)
+																		// Do not write msg to same client
+                                    write(fd_array[i],kb_msg,strlen(kb_msg));
                               }
 
-                          /*print to server  */
+															// Print to server
+                              printf("%s",kb_msg+1);/
 
-                              printf("%s",kb_msg+1);
-
-                          /*Exit Client*/
-
+															// Exit Client
                               if (msg[0] == 'X') {
                                   exit_client(fd,&readfds, fd_array,&num_clients);
                               }
                           }
                       }
                       else{
-                          exit_client(fd,&readfds, fd_array,&num_clients);  /* A client is leaving */
+												// A client is leaving
+                        exit_client(fd,&readfds, fd_array,&num_clients);
                       }
           }
       }
-  }
-  }
+  }}
 }
