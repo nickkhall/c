@@ -85,7 +85,8 @@ int main(int argc, char *argv[]) {
   }
 
 	// After password is authenticated, print and flush stdout
-  printf("\n*** Server waiting (enter \"quit\" to stop): \n");
+  printf("\n*** Server waiting (enter \"quit\" to stop): *** \n");
+
 	// Clear (or flush) the output buffer and move the buffered data to console
   fflush(stdout);
 
