@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
   char pass[1];
   int port, result;
   int num_clients = 0;
-  int server_sockfd, client_sockfd;
+  int server_socket_file_descriptor, client_socket_file_descriptor;
   struct sockaddr_in server_address;
   int addresslen = sizeof(struct sockaddr_in);
   int fd;
@@ -92,23 +92,21 @@ int main(int argc, char *argv[]) {
 
   /* Create and name a socket for the server */
 	// Create socket obj
-  server_sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  server_socket_file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
 	// Set socket obj family
   server_address.sin_family = AF_INET;
 	// htonl - converts the unsigned integer hostlong from host byte order to network byte order.
   server_address.sin_addr.s_addr = htonl(INADDR_ANY);
   server_address.sin_port = htons(port);
-  bind(server_sockfd, (struct sockaddr *)&server_address, addresslen);
+  bind(server_socket_file_descriptor, (struct sockaddr *)&server_address, addresslen);
 
   // Create a connection queue and initialize a file descriptor set
-  listen(server_sockfd, 1);
+  listen(server_socket_file_descriptor, 1);
 
 	// Initializes the file descriptor set fdset to have zero bits for all file descriptors.
   FD_ZERO(&readfds);
-
 	// Sets the bit for the file descriptor fd in the file descriptor set fdset.
-  FD_SET(server_sockfd, &readfds);
-
+  FD_SET(server_socket_file_descriptor, &readfds);
 	// Add keyboard to file descriptor set
   FD_SET(0, &readfds);
 
@@ -118,27 +116,27 @@ int main(int argc, char *argv[]) {
       select(FD_SETSIZE, &testfds, NULL, NULL, NULL);
 
       // If there is activity, find which descriptor it's on using FD_ISSET
-
       for (fd = 0; fd < FD_SETSIZE; fd++) {
           if (FD_ISSET(fd, &testfds)) {
-              if (fd == server_sockfd) {
+              if (fd == server_socket_file_descriptor) {
 									// Accept a new connection request
-                  client_sockfd = accept(server_sockfd, NULL, NULL);
+                  client_socket_file_descriptor = accept(server_socket_file_descriptor, NULL, NULL);
+
                   if (num_clients < MAX_CLIENTS) {
-                      FD_SET(client_sockfd, &readfds);
-                      fd_array[num_clients] = client_sockfd;
+                      FD_SET(client_socket_file_descriptor, &readfds);
+                      fd_array[num_clients] = client_socket_file_descriptor;
 
                       /*Client ID*/
 
                       printf("\n -> Bot No. %d standby for orders\n", ++num_clients);
-                      printf("\n >> ");
+                      printf("\n>> ");
                       fflush(stdout);
-                      send(client_sockfd,msg,strlen(msg),0);
+                      send(client_socket_file_descriptor,msg,strlen(msg),0);
                   }
                   else{
                       sprintf(msg, "Sorry, too many clients.  Try again later.\n");
-                      write(client_sockfd, msg, strlen(msg));
-                      close(client_sockfd);
+                      write(client_socket_file_descriptor, msg, strlen(msg));
+                      close(client_socket_file_descriptor);
                   }
               }
               else
@@ -152,7 +150,7 @@ int main(int argc, char *argv[]) {
                               write(fd_array[i], msg, strlen(msg));
                               close(fd_array[i]);
                           }
-                          close(server_sockfd);
+                          close(server_socket_file_descriptor);
                           exit(0);
                       }
                       else{

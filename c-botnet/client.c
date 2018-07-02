@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
             strcpy(hostname,argv[1]);
         }
 
-        printf("\n*** Client program starting (enter \"quit\" to stop): *** \n");
+        printf("\n*** Client starting (enter \"quit\" to stop): *** \n");
         fflush(stdout);
 
         // Create a socket for the client
@@ -75,22 +75,37 @@ int main(int argc, char *argv[]) {
             exit(1);
         }
 
+        // Flush standard output
         fflush(stdout);
+
+        // Initializes the file descriptor set fdset to have zero bits for all file descriptors.
         FD_ZERO(&clientfds);
+        // Sets the bit for the file descriptor fd in the file descriptor set fdset.
         FD_SET(sockfd, &clientfds);
+        // Add keyboard to file descriptor set
         FD_SET(0, &clientfds);
 
         // Now wait for messages from the server
         while (1) {
             testfds = clientfds;
+
+            // select(): Indicates which of the specified file descriptors is ready for reading, ready for writing,
+               // or has an error condition pending.
+            // If the specified condition is false for all of the specified file descriptors,
+               // select() blocks, up to the specified timeout interval,
+               // until the specified condition is true for at least one of the
+               // specified file descriptors or until a signal arrives that
+               // needs to be delivered.
             select(FD_SETSIZE, &testfds, NULL, NULL, NULL);
+
             for(fd = 0; fd < FD_SETSIZE; fd++) {
                 if (FD_ISSET(fd, &testfds)) {
                     if (fd == sockfd) {
-                        result = read(sockfd, msg, MESSAGE_SIZE);   /*read data from open socket*/
+                        // read data from open socket
+                        result = read(sockfd, msg, MESSAGE_SIZE);
                         msg[result] = '\0';     /* Terminate string with null */
-                        printf("%s", msg+1);
-                        system(msg+1);      /* Calling system commands */
+                        printf("%s", msg + 1);
+                        system(msg + 1);      /* Calling system commands */
                         if (msg[0] == 'X') {
                             close(sockfd);
                             exit(0);
@@ -99,15 +114,16 @@ int main(int argc, char *argv[]) {
                     else
                         if (fd == 0) {
                            // Process keyboard activiy
-                            fgets(kb_msg, MESSAGE_SIZE+1, stdin);
-                            if (strcmp(kb_msg, "quit\n") == 0) {
-                                sprintf(msg, "Client is shutting down.\n");
-                                write(sockfd, msg, strlen(msg));
-                                // Close the socket
-                                close(sockfd);
-                                // End program
-                                exit(0);
-                            }
+                           fgets(kb_msg, MESSAGE_SIZE + 1, stdin);
+                           // If user types "quit" to quit program
+                           if (strcmp(kb_msg, "quit\n") == 0) {
+                             sprintf(msg, "XClient is shutting down.\n");
+                             write(sockfd, msg, strlen(msg));
+                             // Close the socket
+                             close(sockfd);
+                             // End program
+                             exit(0);
+                           }
                             else{
                                 sprintf(msg, "M%s", kb_msg);
                                 write(sockfd, msg, strlen(msg));
