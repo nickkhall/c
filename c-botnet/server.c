@@ -84,13 +84,13 @@ int main(int argc, char *argv[]) {
       exit(0);
   }
 
-	// After password is authenticated, print and flush stdout
+	// After password is authenticated
   printf("\n*** Server waiting (enter \"quit\" to stop): *** \n");
 
 	// Clear (or flush) the output buffer and move the buffered data to console
   fflush(stdout);
 
-  /* Create and name a socket for the server */
+  // Create and name a socket for the server
 	// Create socket obj
   server_socket_file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
 	// Set socket obj family
