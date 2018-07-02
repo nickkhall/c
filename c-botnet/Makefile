@@ -1,8 +1,8 @@
 compile-server:
-	g++ -c -o bin/server server.c
+	g++ -x c++ -o bin/server server.c
 
 compile-client:
-	g++ -c -o bin/client client.c
+	g++ -x c++ -o bin/client client.c
 
 compile:
 	make compile-server compile-client

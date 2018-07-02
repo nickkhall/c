@@ -43,7 +43,7 @@ void exit_client(int file_descriptor, fd_set *read_fd_set, char fd_array[], int 
 int main(int argc, char *argv[]) {
   int i = 0;
   int count = 0;
-  char pass[50];
+  char pass[1];
   int port, result;
   int num_clients = 0;
   int server_sockfd, client_sockfd;
@@ -74,6 +74,7 @@ int main(int argc, char *argv[]) {
 
   printf("\n\t******************** ABotC Server ********************\n");
   printf("\n\nWhat's the password pussy: ");
+
 	// Grab user password from input and check if it's a string
   scanf("%s", &pass);
 
@@ -183,7 +184,7 @@ int main(int argc, char *argv[]) {
                               }
 
 															// Print to server
-                              printf("%s",kb_msg+1);/
+                              printf("%s",kb_msg+1);
 
 															// Exit Client
                               if (msg[0] == 'X') {
