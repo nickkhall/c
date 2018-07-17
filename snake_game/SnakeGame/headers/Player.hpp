@@ -10,7 +10,6 @@ private:
 
 public:
 	Player() {};
-
 };
 
 #endif

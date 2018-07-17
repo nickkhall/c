@@ -8,13 +8,15 @@ struct Tail
 	int y;
 	int index;
 
-	Tail() {
+	Tail()
+	{
 		x = y = index = -1;
 	}
-	Tail(int _x, int _y)
-		: x(_x), y(_y) {
-			index = -1;
-		}
+
+	Tail(int _x, int _y) : x(_x), y(_y)
+	{
+		index = -1;
+	}
 };
 
 #endif
