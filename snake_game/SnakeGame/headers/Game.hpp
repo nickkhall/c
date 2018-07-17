@@ -51,6 +51,22 @@ public:
 		nodelay(stdscr, TRUE);
 		scrollok(stdscr, FALSE);
 		clearok(stdscr, TRUE);
-	};
-}
+	}
+
+	bool GetIsGameOver();
+	bool SetIsGameOver();
+	void RenderIntroCeiling();
+	void RenderIntroText();
+	void RenderIntroFloor();
+	void SetIntro();
+	std::string PrintIntro();
+	std::string GetKeyPressed();
+	void SetKeyPressed();
+	void ReRenderMap();
+	int GetGameCounter();
+	void IncrementGameCounter();
+	void ResetGameCounter();
+	void MoveSnake();
+	std::string GetGameOverText();
+};
 #endif
