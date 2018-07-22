@@ -37,16 +37,16 @@ string GetCalendar(MonthData &NewMonth)
   int CurrentMonth { now->tm_mon + 1 };
   int CurrentDay { now->tm_mday};
 
+  // Print Month and Year
+  calendar += NewMonth.MonthsArray[CurrentMonth - 1];
+  calendar += " ";
+  calendar += to_string(now->tm_year + 1900);
+  calendar += "\n";
+  calendar += "----------------------\n";
+
+  // Determine how many days is in current month
   if (find(TODM.begin(), TODM.end(), CurrentMonth) != TODM.end())
   {
-    // Print Month and Year
-    calendar += NewMonth.MonthsArray[CurrentMonth - 1];
-    calendar += " ";
-    calendar += to_string(now->tm_year + 1900);
-    calendar += "\n";
-    calendar += "----------------------\n";
-
-    // Determine how many days is in current month
     // 31 Day Month
     for (int d = 1; d <= 31; d++)
     {
