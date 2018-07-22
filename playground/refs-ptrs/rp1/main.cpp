@@ -15,17 +15,22 @@ void increment(int *x, int x_amount, int *y, int y_amount)
 
 int main()
 {
-    Coords coords;
+    Coords coordsOne;
+    Coords coordsTwo;
     int counter {1};
 
-    cout << "beginning x: " << coords.x << endl;
-    cout << "beginning y: " << coords.y << endl;
+    cout << "beginning x: " << coordsOne.x << endl;
+    cout << "beginning y: " << coordsOne.y << endl;
     cout << "-----" << endl;
 
-    increment(&coords.x, counter, &coords.y, counter);
+    increment(&coordsOne.x, counter, &coordsOne.y, counter);
 
-    cout << "ending x: " << coords.x << endl;
-    cout << "ending y: " << coords.y << endl;
+    cout << "ending x: " << coordsOne.x << endl;
+    cout << "ending y: " << coordsOne.y << endl;
+
+    cout << "-----" << endl;
+    cout << "beginning x: " << coordsTwo.x << endl;
+    cout << "beginning y: " << coordsTwo.y << endl;
 
     return 0;
 }
