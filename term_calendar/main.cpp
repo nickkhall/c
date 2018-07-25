@@ -48,35 +48,35 @@ string PrintWeekdays(MonthData &NewMonth)
 
 string FormatString(string &calendar, int num_days, int CurrentDay)
 {
-  string formatted_string { "" };
+  string *temp_cal = &calendar;
 
-  cout << *calendar << endl;
+  for (int d = 1; d <= num_days; d++)
+  {
+    // if it's today, turn day red
+    if (d == CurrentDay) {
+      *temp_cal += "\033[1;31m";
+      *temp_cal += to_string(d);
+      *temp_cal += " \033[0m";
+    } else {
+      if (d <= 7)
+      {
+        *temp_cal += " ";
+      }
+      *temp_cal += to_string(d);
+      *temp_cal += " ";
+    }
 
-  // for (int d = 1; d <= num_days; d++)
-  // {
-  //   // if it's today, turn day red
-  //   if (d == CurrentDay) {
-  //     *calendar += "\033[1;31m";
-  //     *calendar += to_string(d);
-  //     *calendar += " \033[0m";
-  //   } else {
-  //     if (d <= 7)
-  //     {
-  //       *calendar += " ";
-  //     }
-  //     *calendar += to_string(d);
-  //     *calendar += " ";
-  //   }
-  //
-  //   // After 7 days, add a new line
-  //   if (d % 7 == 0)
-  //     *calendar += "\n";
-  // }
+    // After 7 days, add a new line
+    if (d % 7 == 0)
+      *temp_cal += "\n";
+  }
 
-  return formatted_string;
+  calendar = *temp_cal;
+
+  return calendar;
 }
 
-string GetCalendar(MonthData &NewMonth)
+void GetCalendar(MonthData &NewMonth)
 {
   string *temp_calendar = &NewMonth.Calendar;
   vector<int> TEM { 2 };
@@ -87,29 +87,27 @@ string GetCalendar(MonthData &NewMonth)
   int CurrentDay { now->tm_mday};
 
   // Print Month and Year
-  calendar += NewMonth.MonthsArray[CurrentMonth - 1];
-  calendar += " ";
-  calendar += to_string(now->tm_year + 1900);
-  calendar += "\n";
-  calendar += "----------------------\n";
+  *temp_calendar += NewMonth.MonthsArray[CurrentMonth - 1];
+  *temp_calendar += " ";
+  *temp_calendar += to_string(now->tm_year + 1900);
+  *temp_calendar += "\n";
+  *temp_calendar += "----------------------\n";
 
-  calendar += PrintWeekdays(NewMonth);
-  calendar += "\n";
+  *temp_calendar += PrintWeekdays(NewMonth);
+  *temp_calendar += "\n";
 
   // Determine how many days is in current month
   if (find(TODM.begin(), TODM.end(), CurrentMonth) != TODM.end())
   {
     // 31 Day Month
-    FormatString(calendar, 31, CurrentDay);
+    FormatString(*temp_calendar, 31, CurrentDay);
     // 30 Day Month
   } else if (find(TDM.begin(), TDM.end(), CurrentMonth) != TDM.end()) {
-    FormatString(calendar, 30, CurrentDay)
+    FormatString(*temp_calendar, 30, CurrentDay);
     // 28 Day Month
   } else {
-    FormatString(calendar, 28, CurrentDay);
+    FormatString(*temp_calendar, 28, CurrentDay);
   }
-
-  return calendar;
 }
 
 
@@ -121,7 +119,9 @@ int main(int argc, char *argv[])
 
   cout << "----------------------" << endl;
 
-  cout << GetCalendar(NewMonth) << endl;
+  GetCalendar(NewMonth);
+
+  cout << NewMonth.Calendar << endl;
 
   cout << "----------------------" << endl;
 
