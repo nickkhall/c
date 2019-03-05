@@ -34,3 +34,5 @@ snake_game/architecture
 *.exe
 *.out
 *.app
+
+.DS_Store
