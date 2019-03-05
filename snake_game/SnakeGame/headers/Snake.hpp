@@ -9,8 +9,7 @@
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
 
-class Snake
-{
+class Snake {
 private:
 	Direction Dir;
 	int TailX[100], TailY[100];

@@ -18,8 +18,7 @@ const int LeftKey = 97;
 const int RightKey = 100;
 const int EscapeKey = 27;
 
-class Game
-{
+class Game {
 private:
 	bool IsGameOver;
 	std::string Intro;

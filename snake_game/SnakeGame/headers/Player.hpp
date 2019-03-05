@@ -4,8 +4,7 @@
 #ifndef PLAYER
 #define PLAYER
 
-class Player
-{
+class Player {
 private:
 
 public:

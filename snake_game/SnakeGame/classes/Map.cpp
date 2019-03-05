@@ -1,17 +1,14 @@
 #include "../headers/Map.hpp"
 
-int Map::GetMapHeight()
-{
+int Map::GetMapHeight() {
   return MapHeight;
 }
 
-int Map::GetMapWidth()
-{
+int Map::GetMapWidth() {
   return MapWidth;
 }
 
-void Map::RenderMapCeiling()
-{
+void Map::RenderMapCeiling() {
   // Render top corners and ceiling of map
   for (int i = 0; i < MapWidth; i++)
   {
@@ -30,8 +27,7 @@ void Map::RenderMapCeiling()
   return;
 }
 
-void Map::RenderMapContent()
-{
+void Map::RenderMapContent() {
   NewSnake.Init(MapHeight, MapWidth);
   bool rendered = FALSE;
   int snakeLength = NewSnake.GetSnakeLength();
@@ -75,8 +71,7 @@ void Map::RenderMapContent()
   return;
 }
 
-void Map::RenderMapFloor()
-{
+void Map::RenderMapFloor() {
   // Render the floor of the map
   for (int floor = 0; floor < MapWidth; floor++)
   {
@@ -92,8 +87,7 @@ void Map::RenderMapFloor()
   return;
 }
 
-void Map::GenerateMap(int row, int col)
-{
+void Map::GenerateMap(int row, int col) {
   MapHeight = row;
   MapWidth = col;
 
@@ -102,7 +96,6 @@ void Map::GenerateMap(int row, int col)
   RenderMapFloor();
 }
 
-std::string Map::PrintMap()
-{
+std::string Map::PrintMap() {
   return MapStr;
 }

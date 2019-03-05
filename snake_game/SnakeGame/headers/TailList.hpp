@@ -6,8 +6,7 @@
 #ifndef TAIL_LIST
 #define TAIL_LIST
 
-class TailList
-{
+class TailList { 
 private:
 	std::vector<Tail> TailsArray;
 

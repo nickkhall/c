@@ -1,7 +1,6 @@
 #include "../headers/TailList.hpp"
 
-TailList::operator[] (const int &index)
-{
+TailList::operator[] (const int &index) {
 	for (auto &tail : TailsArray)
 	{
 		if (tail.index == index)
@@ -11,13 +10,11 @@ TailList::operator[] (const int &index)
 	}
 };
 
-int TailList::GetLength()
-{
+int TailList::GetLength() {
 	return TailsArray.size();
 }
 
-void TailList::Push(Tail &t)
-{
+void TailList::Push(Tail &t) {
 	int size = TailsArray.size();
 	t.index = size;
 	TailsArray.reserve(size + 1);

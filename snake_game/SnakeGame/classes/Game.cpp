@@ -1,19 +1,16 @@
 #include "../headers/Game.hpp"
 
-bool Game::GetIsGameOver()
-{
+bool Game::GetIsGameOver() {
   return IsGameOver;
 }
 
-bool Game::SetIsGameOver()
-{
+bool Game::SetIsGameOver() {
   IsGameOver = true;
   return IsGameOver;
 }
 
 // Render top corners and ceiling of intro
-void Game::RenderIntroCeiling()
-{
+void Game::RenderIntroCeiling() {
   int MapWidth = MapInstance->GetMapWidth();
 
   for (int i = 0; i <= MapWidth; i++)
@@ -32,8 +29,7 @@ void Game::RenderIntroCeiling()
 }
 
 // Render walls and text of intro
-void Game::RenderIntroText()
-{
+void Game::RenderIntroText() {
   int MapHeight = MapInstance->GetMapHeight();
   int MapWidth = MapInstance->GetMapWidth();
 
@@ -57,8 +53,7 @@ void Game::RenderIntroText()
 }
 
 // Render the floor of the intro
-void Game::RenderIntroFloor()
-{
+void Game::RenderIntroFloor() {
   int MapWidth = MapInstance->GetMapWidth();
 
 
@@ -75,26 +70,22 @@ void Game::RenderIntroFloor()
   return;
 }
 
-void Game::SetIntro()
-{
+void Game::SetIntro() {
   RenderIntroCeiling();
   RenderIntroText();
   RenderIntroFloor();
   return;
 }
 
-std::string Game::PrintIntro()
-{
+std::string Game::PrintIntro() {
   return Intro;
 }
 
-std::string Game::GetKeyPressed()
-{
+std::string Game::GetKeyPressed() {
   return KeyPressed;
 }
 
-void Game::SetKeyPressed()
-{
+void Game::SetKeyPressed() {
   KeyPlayerPressed = getch();
 
   if (KeyPlayerPressed > -1) {
@@ -127,8 +118,7 @@ void Game::SetKeyPressed()
   return;
 }
 
-void Game::ReRenderMap()
-{
+void Game::ReRenderMap() {
   IncrementGameCounter();
 
   getmaxyx(stdscr, row, col);
@@ -144,31 +134,26 @@ void Game::ReRenderMap()
   return;
 }
 
-int Game::GetGameCounter()
-{
+int Game::GetGameCounter() {
   return GameCounter;
 }
 
-void Game::IncrementGameCounter()
-{
+void Game::IncrementGameCounter() {
   GameCounter = GameCounter + 1;
   return;
 }
 
-void Game::ResetGameCounter()
-{
+void Game::ResetGameCounter() {
   GameCounter = 0;
   return;
 }
 
-void Game::MoveSnake()
-{
+void Game::MoveSnake() {
   NewSnake.MoveLeft();
   return;
 }
 
-std::string Game::GetGameOverText()
-{
+std::string Game::GetGameOverText() {
   return GameOverText;
 }
 };

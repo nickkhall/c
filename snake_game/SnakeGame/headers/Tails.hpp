@@ -2,19 +2,16 @@
 #ifndef TAIL
 #define TAIL
 
-struct Tail
-{
+struct Tail {
 	int x;
 	int y;
 	int index;
 
-	Tail()
-	{
+	Tail() {
 		x = y = index = -1;
 	}
 
-	Tail(int _x, int _y) : x(_x), y(_y)
-	{
+	Tail(int _x, int _y) : x(_x), y(_y) {
 		index = -1;
 	}
 };

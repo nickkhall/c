@@ -1,7 +1,6 @@
 #include "../headers/Snake.hpp"
 
-void Snake::Init(int MapHeight, int MapWidth)
-{
+void Snake::Init(int MapHeight, int MapWidth) {
   if (inited == TRUE) return;
   inited = true;
 
@@ -13,8 +12,7 @@ void Snake::Init(int MapHeight, int MapWidth)
   return;
 }
 
-// void Snake::AddTail()
-// {
+// void Snake::AddTail() {
 // 	int endX = GetEndX();
 // 	int endY = GetEndY();
 // 	int prevX = TailX[TailIndex - 2];
@@ -26,38 +24,31 @@ void Snake::Init(int MapHeight, int MapWidth)
 // 	TailY[TailIndex] = endY + (endY - prevY);
 // }
 
-// int Snake::GetHeadX()
-// {
+// int Snake::GetHeadX() {
 // 	return TailX[0];
 // }
 //
-// int Snake::GetHeadY()
-// {
+// int Snake::GetHeadY() {
 // 	return TailY[0];
 // }
 //
-// int Snake::GetEndX()
-// {
+// int Snake::GetEndX() {
 // 	return TailX[TailIndex];
 // }
 //
-// int Snake::GetEndY()
-// {
+// int Snake::GetEndY() {
 // 	return TailY[TailIndex];
 // }
 
-int Snake::GetTailX(int index)
-{
+int Snake::GetTailX(int index) {
   return TailX[index];
 }
 
-int Snake::GetTailY(int index)
-{
+int Snake::GetTailY(int index) {
   return TailY[index];
 }
 
-int Snake::GetSnakeLength()
-{
+int Snake::GetSnakeLength() {
   return TailIndex + 1;
 }
 
@@ -91,26 +82,22 @@ void Snake::Move() {
   }
 }
 
-void Snake::MoveUp()
-{
+void Snake::MoveUp() {
   Dir = UP;
   return;
 }
 
-void Snake::MoveDown()
-{
+void Snake::MoveDown() {
   Dir = DOWN;
   return;
 }
 
-void Snake::MoveLeft()
-{
+void Snake::MoveLeft() {
   Dir = LEFT;
   return;
 }
 
-void Snake::MoveRight()
-{
+void Snake::MoveRight() {
   Dir = RIGHT;
   return;
 }
