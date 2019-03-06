@@ -12,10 +12,10 @@
 #define GAME
 
 // Key Definitions
-const int UpKey = 119;
-const int DownKey = 115;
-const int LeftKey = 97;
-const int RightKey = 100;
+const int UpKey = 119;    // W Key
+const int DownKey = 115;  // S Key
+const int LeftKey = 97;   // A Key
+const int RightKey = 100; // D Key
 const int EscapeKey = 27;
 
 class Game {
@@ -47,9 +47,9 @@ public:
 		cbreak();
 		curs_set(0);
 		noecho();
-		nodelay(stdscr, TRUE);
-		scrollok(stdscr, FALSE);
-		clearok(stdscr, TRUE);
+		nodelay(stdscr, true);
+		scrollok(stdscr, false);
+		clearok(stdscr, true);
 	}
 
 	bool GetIsGameOver();

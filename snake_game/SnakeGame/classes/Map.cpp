@@ -13,8 +13,7 @@ int Map::GetMapWidth() {
 
 void Map::RenderMapCeiling() {
   // Render top corners and ceiling of map
-  for (int i = 0; i < MapWidth; i++)
-  {
+  for (int i = 0; i < MapWidth; i++) {
     move(0, i);
     if (i == 0) {
       addstr("\u250C");
@@ -32,52 +31,45 @@ void Map::RenderMapCeiling() {
 
 void Map::RenderMapContent() {
   NewSnake.Init(MapHeight, MapWidth);
-  bool rendered = FALSE;
+  bool rendered = false;
   int snakeLength = NewSnake.GetSnakeLength();
   int tailY, tailX;
 
   // Render walls of map
-  for (int y = 1; y < MapHeight - 1; y ++)
-  {
-    for (int x = 0; x < MapWidth; x++)
-    {
-      rendered = FALSE;
+  for (int y = 1; y < MapHeight - 1; y ++) {
+    for (int x = 0; x < MapWidth; x++) {
+      rendered = false;
       move(y, x);
 
-      if (x == 0 || x == MapWidth - 1)
-      {
+      if (x == 0 || x == MapWidth - 1) {
         addstr("\u2502");
-        rendered = TRUE;
+        rendered = true;
       }
 
-      for (int t = 0; t < snakeLength; t++)
-      {
-        if (rendered != TRUE)
-        {
+      for (int t = 0; t < snakeLength; t++) {
+        if (rendered != true) {
           tailX = NewSnake.GetTailX(t);
           tailY = NewSnake.GetTailY(t);
 
-          if (x == tailX && y == tailY)
-          {
+          if (x == tailX && y == tailY) {
             addstr("\u014C");
-            rendered = TRUE;
+            rendered = true;
           }
         }
       }
 
-      if (rendered == FALSE)
-      {
+      if (rendered == false) {
         addstr(" ");
       }
     }
   }
+
   return;
 }
 
 void Map::RenderMapFloor() {
   // Render the floor of the map
-  for (int floor = 0; floor < MapWidth; floor++)
-  {
+  for (int floor = 0; floor < MapWidth; floor++) {
     move(MapHeight, floor);
     if (floor == 0) {
       addstr("\u2514");
@@ -87,6 +79,7 @@ void Map::RenderMapFloor() {
       addstr("\u2500");
     }
   }
+  
   return;
 }
 

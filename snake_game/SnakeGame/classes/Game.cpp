@@ -53,7 +53,6 @@ void Game::RenderIntroText() {
 void Game::RenderIntroFloor() {
   int MapWidth = MapInstance->GetMapWidth();
 
-
   for (int floor = 0; floor <= MapWidth; floor++) {
     if (floor == 0) {
       Intro += "\u2514";
