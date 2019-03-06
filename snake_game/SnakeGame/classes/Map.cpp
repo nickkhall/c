@@ -32,7 +32,7 @@ void Map::RenderMapCeiling() {
 
 void Map::RenderMapContent() {
   NewSnake.Init(MapHeight, MapWidth);
-  bool rendered = FALSE;
+  bool rendered = false;
   int snakeLength = NewSnake.GetSnakeLength();
   int tailY, tailX;
 
@@ -41,18 +41,18 @@ void Map::RenderMapContent() {
   {
     for (int x = 0; x < MapWidth; x++)
     {
-      rendered = FALSE;
+      rendered = false;
       move(y, x);
 
       if (x == 0 || x == MapWidth - 1)
       {
         addstr("\u2502");
-        rendered = TRUE;
+        rendered = true;
       }
 
       for (int t = 0; t < snakeLength; t++)
       {
-        if (rendered != TRUE)
+        if (rendered != true)
         {
           tailX = NewSnake.GetTailX(t);
           tailY = NewSnake.GetTailY(t);
@@ -60,12 +60,12 @@ void Map::RenderMapContent() {
           if (x == tailX && y == tailY)
           {
             addstr("\u014C");
-            rendered = TRUE;
+            rendered = true;
           }
         }
       }
 
-      if (rendered == FALSE)
+      if (rendered == false)
       {
         addstr(" ");
       }
