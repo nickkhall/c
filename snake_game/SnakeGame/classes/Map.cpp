@@ -1,4 +1,7 @@
+#include <ncurses.h>
 #include "../headers/Map.hpp"
+
+Map::Map(Snake& GameSnake) : NewSnake(GameSnake), MapHeight {21}, MapWidth {100}, MapStr {""} {}
 
 int Map::GetMapHeight() {
   return MapHeight;

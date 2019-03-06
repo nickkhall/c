@@ -1,7 +1,9 @@
 #include "../headers/Snake.hpp"
 
+Snake::Snake() : inited{false}, TailIndex{-1}, Dir{LEFT} {}
+
 void Snake::Init(int MapHeight, int MapWidth) {
-  if (inited == TRUE) return;
+  if (inited == true) return;
   inited = true;
 
   TailIndex = 0;
@@ -56,8 +58,7 @@ void Snake::Move() {
   int prevX = TailX[0];
   int prevY = TailY[0];
 
-  switch(Dir)
-  {
+  switch(Dir) {
     case UP:
       TailY[0] -= 1;
       break;
@@ -72,7 +73,7 @@ void Snake::Move() {
       break;
   }
 
-  for(int i=0;i<TailIndex - 1;i--) {
+  for(int i = 0; i < TailIndex - 1; i--) {
     TailX[i+1] = TailX[i];
     TailY[i+1] = TailY[i];
     if (i != 0) {
