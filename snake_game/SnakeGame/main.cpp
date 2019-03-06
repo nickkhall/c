@@ -4,6 +4,8 @@
 #include "headers/Map.hpp"
 #include "headers/Snake.hpp"
 
+using namespace std;
+
 int main()
 {
 	system("clear");
@@ -19,7 +21,7 @@ int main()
 		NewGame.ReRenderMap();
 	} while (NewGame.GetIsGameOver() != true);
 
-	std::cout << std::endl << NewGame.GetGameOverText() << std::endl;
+	cout << endl << NewGame.GetGameOverText() << endl;
 
 	echo();
 	endwin();
