@@ -17,11 +17,17 @@ private:
 	bool inited;
 
 public:
-	Snake() {
-		inited = FALSE;
-		TailIndex = -1;
-		Dir = LEFT;
-	};
+	Snake();
+
+	void Init(int MapHeight, int MapWidth);
+	int GetTailX(int index);
+	int GetTailY(int index);
+	int GetSnakeLength();
+	void Move();
+	void MoveUp();
+	void MoveDown();
+	void MoveLeft();
+	void MoveRight();
 };
 
 #endif

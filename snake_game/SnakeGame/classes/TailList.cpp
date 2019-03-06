@@ -1,10 +1,8 @@
 #include "../headers/TailList.hpp"
 
-TailList::operator[] (const int &index) {
-	for (auto &tail : TailsArray)
-	{
-		if (tail.index == index)
-		{
+Tail TailList::operator[] (const int &index) {
+	for (auto &tail : TailsArray) {
+		if (tail.index == index) {
 			return tail;
 		}
 	}

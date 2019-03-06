@@ -13,8 +13,7 @@ bool Game::SetIsGameOver() {
 void Game::RenderIntroCeiling() {
   int MapWidth = MapInstance->GetMapWidth();
 
-  for (int i = 0; i <= MapWidth; i++)
-  {
+  for (int i = 0; i <= MapWidth; i++) {
     if (i == 0) {
       Intro += "\u250C";
     } else if (i == MapWidth) {
@@ -33,10 +32,8 @@ void Game::RenderIntroText() {
   int MapHeight = MapInstance->GetMapHeight();
   int MapWidth = MapInstance->GetMapWidth();
 
-  for (int walls = 0; walls <= MapHeight / 100; walls ++)
-  {
-    for (int w = 0; w <= MapWidth; w++)
-    {
+  for (int walls = 0; walls <= MapHeight / 100; walls ++) {
+    for (int w = 0; w <= MapWidth; w++) {
       if (w == 0 || w == MapWidth - 24) {
         Intro += "\u2502";
       } else if (w == MapWidth / 3) {
@@ -57,8 +54,7 @@ void Game::RenderIntroFloor() {
   int MapWidth = MapInstance->GetMapWidth();
 
 
-  for (int floor = 0; floor <= MapWidth; floor++)
-  {
+  for (int floor = 0; floor <= MapWidth; floor++) {
     if (floor == 0) {
       Intro += "\u2514";
     } else if (floor == MapWidth) {
@@ -89,8 +85,7 @@ void Game::SetKeyPressed() {
   KeyPlayerPressed = getch();
 
   if (KeyPlayerPressed > -1) {
-    switch (KeyPlayerPressed)
-    {
+    switch (KeyPlayerPressed) {
       case UpKey:
         NewSnake.MoveUp();
         break;
@@ -155,5 +150,4 @@ void Game::MoveSnake() {
 
 std::string Game::GetGameOverText() {
   return GameOverText;
-}
 };

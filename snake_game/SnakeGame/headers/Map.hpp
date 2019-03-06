@@ -13,11 +13,15 @@ private:
 	Snake& NewSnake;
 
 public:
-	Map(Snake& GameSnake) : NewSnake(GameSnake) {
-		MapHeight = 21;
-		MapWidth = 100;
-		MapStr = "";
-	}
+	Map(Snake& GameSnake);
+
+	int GetMapHeight();
+	int GetMapWidth();
+	void RenderMapCeiling();
+	void RenderMapContent();
+	void RenderMapFloor();
+	void GenerateMap(int row, int col);
+	std::string PrintMap();
 };
 
 #endif
