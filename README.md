@@ -3,16 +3,18 @@
 ----------------------------------
 
 ## Snake Game (WIP)
-**This game needs a complete re-write. I started writing this when I was beggining to learn C++.**
-**With more understanding of OOP C++, I will be re-writing this soon.**
-**IM SORRY FOR ALL THE CODE BEING IN HEADER FILES**
+**To run the game, open terminal, navigate to `snake_game` directory and run the following:**
 
-**To run the game, open terminal, navigate to SnakeGame directory and run the following:**
-
-`clear && make compile && clear && ./bin/SnakeGame`
+`clear && make compile && clear && ./SnakeGame/bin/SnakeGame`
 
 **Controls:**
 - WASD = Up, Left, Down, Right
 - ESC KEY = Quit game
+
+This currently has no collision detection.
+
+I am also still learning C++, so go easy on me ;) lol
+
+----
 
 ## Hello World Example (Some genius stuff going on in there)
