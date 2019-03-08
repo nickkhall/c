@@ -5,11 +5,53 @@
 
 using namespace std;
 
-int quit() {
-  return 1;
+void clearScreen() {
+  clear();
+}
+
+void printMenu(WINDOW *window, string items[], int highLighted) {
+  // Max Y and X coordinates for the Window (Full screen Window)
+  int yMax, xMax;
+  getmaxyx(stdscr, yMax, xMax);
+
+  int menuY = yMax / 2;
+  int menuX = xMax / 2;
+
+  for(int c = 0; c < items->size(); c++) {
+    // For selected option, turn on attribute reverse,
+    // which reverses the color scheme. (white bg, black text)
+    if(c == highLighted) {
+      wattron(window, A_REVERSE);
+    }
+
+    // Regardless, move to x,y coord and print option
+    mvwprintw(window, menuY + (c + 2), menuX - (strlen(items[c].c_str()) / 2), items[c].c_str());
+    // Turn off attribute.
+    wattroff(window, A_REVERSE);
+  }
+}
+
+void changeMenuChoice(int *choice, int *highLighted) {
+  switch(*choice) {
+    case KEY_UP:
+      *highLighted--;
+      if (*highLighted == -1) {
+        *highLighted = 0;
+      }
+      break;
+    case KEY_DOWN:
+      *highLighted++;
+      if (*highLighted == 3) {
+        *highLighted = 2;
+      }
+      break;
+    default:
+      break;
+  }
 }
 
 void printFrame(WINDOW* window) {
+  // Max Y and X coordinates for the Window (Full screen Window)
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
 
@@ -28,49 +70,29 @@ void printFrame(WINDOW* window) {
   sleep(1);
 }
 
-void printMainMenu(WINDOW* window, string choices[3], int highLight) {
-  // Max Y and X coordinates for the Window (Full screen Window)
-  int yMax, xMax;
-  getmaxyx(stdscr, yMax, xMax);
+int mainMenu(WINDOW* window) {
+  int highLighted = 0;
+  string choices[3] = {
+    "Create Repository",
+    "Update Repository",
+    "Clone  Repository"
+  };
 
-  refresh();
-  wrefresh(window);
+  int choice;
 
-  int menuY = yMax / 3;
-  int menuX = xMax / 2;
+  do {
+    printMenu(window, choices, highLighted);
+    choice = wgetch(window);
+  } while (choice != 27 && choice != 10);
 
-  for(int c = 0; c < 3; c++) {
-    // For selected option, turn on attribute reverse,
-    // which reverses the color scheme. (white bg, black text)
-    if(c == highLight) {
-      wattron(window, A_REVERSE);
-    }
-
-    // Regardless, move to x,y coord and print option
-    mvwprintw(window, menuY + (c + 2), menuX - (strlen(choices[c].c_str()) / 2), choices[c].c_str());
-    // Turn off attribute.
-    wattroff(window, A_REVERSE);
+  if (choice == 27) {
+    return -1;
   }
-}
 
-void clearMenu(WINDOW* window) {
-  // Max Y and X coordinates for the Window (Full screen Window)
-  int yMax, xMax;
-  getmaxyx(stdscr, yMax, xMax);
+  if (choice == 0) {
+    return 1;
+  }
 
-  refresh();
-  wrefresh(window);
-
-  int menuY = yMax / 3;
-  int menuX = xMax / 2;
-
-  move(menuY + 2, menuX - (17 / 2));
-  wclrtoeol(window);
-  move(menuY + 3, menuX - (17 / 2));
-  wclrtoeol(window);
-  move(menuY + 4, menuX - (17 / 2));
-  wclrtoeol(window);
-  printFrame(window);
   refresh();
   wrefresh(window);
 }
@@ -81,6 +103,7 @@ int main(int argc, char ** argv) {
   noecho();
   curs_set(0);
 
+
   // Create window
   WINDOW* window = newwin(0, 0, 0, 0);
   refresh();
@@ -88,47 +111,18 @@ int main(int argc, char ** argv) {
   // Enable arrow keys
   keypad(window, true);
 
-  string choices[3] = {
-    "Create Repository",
-    "Update Repository",
-    "Clone  Repository"
-  };
-
+  int menu = 0;
   int choice;
-  int highLight = 0;
-
-  printFrame(window);
+  int highLighted = 0;
 
   do {
-    printMainMenu(window, choices, highLight);
-
-    choice = wgetch(window);
-
-    refresh();
-    wrefresh(window);
-
-    switch(choice) {
-      case KEY_UP:
-        highLight--;
-        if (highLight == -1) {
-          highLight = 0;
-        }
-        break;
-      case KEY_DOWN:
-        highLight++;
-        if (highLight == 3) {
-          highLight = 2;
-        }
+    switch(menu) {
+      case 0:
+        menu = mainMenu(window);
         break;
       default:
-        case
         break;
     }
-
-    if (choice == 10) {
-
-    }
-
   } while(choice != 27);
 
   erase();
