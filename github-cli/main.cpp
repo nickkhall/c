@@ -1,22 +1,41 @@
 #include <iostream>
+#include <unistd.h>
 #include <ncurses.h>
 
 using namespace std;
+
+void printIntro(WINDOW* window, int xMax) {
+  sleep(1);
+  mvwprintw(window, 1, (xMax / 2) - (25 / 2), "Welcome to the Github CLI");
+  wrefresh(window);
+  sleep(1);
+  mvwprintw(window, 3, (xMax / 2) - (54 / 2),  "  _____ _ _   _           _        _____ _      _____ ");
+  mvwprintw(window, 4, (xMax / 2) - (54 / 2),  " \/ ____(_) | | |         | |      \/ ____| |    |_   _|");
+  mvwprintw(window, 5, (xMax / 2) - (54 / 2),  "| |  __ _| |_| |__  _   _| |__   | |    | |      | |  ");
+  mvwprintw(window, 6, (xMax / 2) - (54 / 2),  "| | |_ | | __| '_ \\| | | | '_ \\  | |    | |      | |  ");
+  mvwprintw(window, 7, (xMax / 2) - (54 / 2),  "| |__| | | |_| | | | |_| | |_) | | |____| |____ _| |_ ");
+  mvwprintw(window, 8, (xMax / 2) - (54 / 2), " \\_____|_|\\__|_| |_|\\__,_|_.__\/   \\_____|______|_____|");
+  wrefresh(window);
+  sleep(3);
+}
 
 int main(int argc, char ** argv) {
   // Initialize NCurses screen
   initscr();
   noecho();
-  cbreak();
+  curs_set(0);
 
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
 
   // Create window
-  WINDOW* window = newwin(6, xMax - 12, yMax - 8, 5);
-  box(window, 0, 0);
+  WINDOW* window = newwin(0, 0, 0, 0);
   refresh();
+
+  box(window, 0, 0);
   wrefresh(window);
+
+  printIntro(window, xMax);
 
   // Enable arrow keys
   keypad(window, true);
@@ -41,6 +60,7 @@ int main(int argc, char ** argv) {
 
     choice = wgetch(window);
 
+
     switch(choice) {
       case KEY_UP:
         highLight--;
@@ -61,7 +81,7 @@ int main(int argc, char ** argv) {
     // If user hits 'Enter' key
     if(choice == 10) {
       // Do things if user hits 'Enter'
-      
+
       // Break out of while loop
       break;
     }
