@@ -9,7 +9,7 @@ void clearScreen() {
   clear();
 }
 
-void printMenu(WINDOW *window, string items[], int size, int highLighted) {
+void printMenu(WINDOW *window, string items[], int size, int *highLighted) {
   // Max Y and X coordinates for the Window (Full screen Window)
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
@@ -20,7 +20,7 @@ void printMenu(WINDOW *window, string items[], int size, int highLighted) {
   for(int c = 0; c < size; c++) {
     // For selected option, turn on attribute reverse,
     // which reverses the color scheme. (white bg, black text)
-    if(c == highLighted) {
+    if(c == *highLighted) {
       wattron(window, A_REVERSE);
     }
 
@@ -28,19 +28,20 @@ void printMenu(WINDOW *window, string items[], int size, int highLighted) {
     mvwprintw(window, menuY + (c + 2), menuX - (strlen(items[c].c_str()) / 2), items[c].c_str());
     // Turn off attribute.
     wattroff(window, A_REVERSE);
+    wrefresh(window);
   }
 }
 
 void changeMenuChoice(int *choice, int *highLighted) {
   switch(*choice) {
     case KEY_UP:
-      *highLighted--;
+      *highLighted = *highLighted - 1;
       if (*highLighted == -1) {
         *highLighted = 0;
       }
       break;
     case KEY_DOWN:
-      *highLighted++;
+      *highLighted = *highLighted + 1;
       if (*highLighted == 3) {
         *highLighted = 2;
       }
@@ -70,8 +71,7 @@ void printFrame(WINDOW* window) {
   sleep(1);
 }
 
-int mainMenu(WINDOW* window, int* choice) {
-  int highLighted = 0;
+int mainMenu(WINDOW* window, int* choice, int* highLighted) {
   string choices[3] = {
     "Create Repository",
     "Update Repository",
@@ -81,7 +81,7 @@ int mainMenu(WINDOW* window, int* choice) {
   do {
     printMenu(window, choices, 3, highLighted);
     *choice = wgetch(window);
-
+    changeMenuChoice(choice, highLighted);
   } while (*choice != 27 && *choice != 10);
 
   if (*choice == 27) {
@@ -120,7 +120,7 @@ int main(int argc, char ** argv) {
 
     switch(menu) {
       case 0:
-        menu = mainMenu(window, &choice);
+        menu = mainMenu(window, &choice, &highLighted);
         break;
       default:
         break;
