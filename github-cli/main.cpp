@@ -32,7 +32,7 @@ void printMenu(WINDOW *window, string items[], int size, int *highLighted) {
   }
 }
 
-void changeMenuChoice(int *choice, int *highLighted) {
+void changeMenuChoice(WINDOW* window, int *choice, int *highLighted) {
   switch(*choice) {
     case KEY_UP:
       *highLighted = *highLighted - 1;
@@ -56,8 +56,11 @@ void printFrame(WINDOW* window) {
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
 
+  clearScreen();
+  wrefresh(window);
+
   box(window, 0, 0);
-  sleep(1);
+  sleep(0.5);
   mvwprintw(window, 1, (xMax / 2) - (25 / 2), "Welcome to the Github CLI");
   wrefresh(window);
   mvwprintw(window, 3, (xMax / 2) - (54 / 2),  "  _____ _ _   _           _        _____ _      _____ ");
@@ -68,7 +71,7 @@ void printFrame(WINDOW* window) {
   mvwprintw(window, 8, (xMax / 2) - (54 / 2), " \\_____|_|\\__|_| |_|\\__,_|_.__/   \\_____|______|_____|");
   refresh();
   wrefresh(window);
-  sleep(1);
+  sleep(0.5);
 }
 
 int mainMenu(WINDOW* window, int* choice, int* highLighted) {
@@ -81,14 +84,14 @@ int mainMenu(WINDOW* window, int* choice, int* highLighted) {
   do {
     printMenu(window, choices, 3, highLighted);
     *choice = wgetch(window);
-    changeMenuChoice(choice, highLighted);
+    changeMenuChoice(window, choice, highLighted);
   } while (*choice != 27 && *choice != 10);
 
   if (*choice == 27) {
     return -1;
   }
 
-  if (*choice == 0) {
+  if (*highLighted == 0) {
     return 1;
   }
 
@@ -96,12 +99,30 @@ int mainMenu(WINDOW* window, int* choice, int* highLighted) {
   wrefresh(window);
 }
 
+int createRepoMenu(WINDOW* window) {
+  // Max Y and X coordinates for the Window (Full screen Window)
+  int yMax, xMax;
+  getmaxyx(stdscr, yMax, xMax);
+
+  clearScreen();
+  printFrame(window);
+  wrefresh(window);
+
+  mvwprintw(window, yMax / 2, xMax / 2 - (19 / 2), "Name of repository:");
+  echo();
+  wrefresh(window);
+  char* repoName;
+  mvwgetnstr(window, (yMax / 2) + 1, (xMax / 2) - (19 / 2), repoName, 19);
+  wrefresh(window);
+
+  return 0;
+}
+
 int main(int argc, char ** argv) {
   // Initialize NCurses screen
   initscr();
   noecho();
   curs_set(0);
-
 
   // Create window
   WINDOW* window = newwin(0, 0, 0, 0);
@@ -121,6 +142,9 @@ int main(int argc, char ** argv) {
     switch(menu) {
       case 0:
         menu = mainMenu(window, &choice, &highLighted);
+        break;
+      case 1:
+        menu = createRepoMenu(window);
         break;
       default:
         break;
