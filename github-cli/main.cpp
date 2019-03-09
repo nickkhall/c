@@ -9,7 +9,7 @@ void clearScreen() {
   clear();
 }
 
-void printMenu(WINDOW *window, string items[], int highLighted) {
+void printMenu(WINDOW *window, string items[], int size, int highLighted) {
   // Max Y and X coordinates for the Window (Full screen Window)
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
@@ -17,7 +17,7 @@ void printMenu(WINDOW *window, string items[], int highLighted) {
   int menuY = yMax / 2;
   int menuX = xMax / 2;
 
-  for(int c = 0; c < items->size(); c++) {
+  for(int c = 0; c < size; c++) {
     // For selected option, turn on attribute reverse,
     // which reverses the color scheme. (white bg, black text)
     if(c == highLighted) {
@@ -70,7 +70,7 @@ void printFrame(WINDOW* window) {
   sleep(1);
 }
 
-int mainMenu(WINDOW* window) {
+int mainMenu(WINDOW* window, int* choice) {
   int highLighted = 0;
   string choices[3] = {
     "Create Repository",
@@ -78,18 +78,17 @@ int mainMenu(WINDOW* window) {
     "Clone  Repository"
   };
 
-  int choice;
-
   do {
-    printMenu(window, choices, highLighted);
-    choice = wgetch(window);
-  } while (choice != 27 && choice != 10);
+    printMenu(window, choices, 3, highLighted);
+    *choice = wgetch(window);
 
-  if (choice == 27) {
+  } while (*choice != 27 && *choice != 10);
+
+  if (*choice == 27) {
     return -1;
   }
 
-  if (choice == 0) {
+  if (*choice == 0) {
     return 1;
   }
 
@@ -112,18 +111,21 @@ int main(int argc, char ** argv) {
   keypad(window, true);
 
   int menu = 0;
-  int choice;
   int highLighted = 0;
+  int choice = 0;
+
 
   do {
+    printFrame(window);
+
     switch(menu) {
       case 0:
-        menu = mainMenu(window);
+        menu = mainMenu(window, &choice);
         break;
       default:
         break;
     }
-  } while(choice != 27);
+  } while(menu != -1);
 
   erase();
   // Close window
