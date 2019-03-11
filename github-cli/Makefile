@@ -1,2 +1,2 @@
 compile:
-	g++ -o github-cli main.cpp -lncurses -g 
+	g++ -o github-cli main.cpp -lncurses
