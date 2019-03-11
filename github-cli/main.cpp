@@ -165,20 +165,16 @@ int CreateRepoMenu(WINDOW* window) {
   string user (username);
   string pass (password);
   string repo (repoName);
-  string command = "curl -u '" + user + ":" + pass + "'" + " https://api.github.com/user/repos -d '{\"name\":" + repo + "\"}'";
+  string command = "curl -u " + user + ":" + pass + " https://api.github.com/user/repos -d '{\"name\":" + "\"" + repo + "\"" + "\"}'";
 
   wrefresh(window);
-
-  sleep(10);
 
   system(command.c_str());
 
   mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Github repository successfully created.");
-  ClearScreen();
-  PrintFrame(window);
 
   wrefresh(window);
-  sleep(5);
+  sleep(10);
 
   // Return to Main Menu
   return 0;
