@@ -2,14 +2,17 @@
 #include <unistd.h>
 #include <ncurses.h>
 #include <cstring>
+#include <cstdlib>
 
 using namespace std;
 
-void clearScreen() {
+// ClearScreen: Handles clearing the entire screen
+void ClearScreen() {
   clear();
 }
 
-void printMenu(WINDOW *window, string items[], int size, int *highLighted) {
+// PrintMenu: Handles generating a menu based off a given set of items
+void PrintMenu(WINDOW *window, string items[], int size, int *highLighted) {
   // Max Y and X coordinates for the Window (Full screen Window)
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
@@ -32,7 +35,8 @@ void printMenu(WINDOW *window, string items[], int size, int *highLighted) {
   }
 }
 
-void changeMenuChoice(WINDOW* window, int *choice, int *highLighted) {
+// ChangeMenuChoice: Handles changing the state of the current menu
+void ChangeMenuChoice(WINDOW* window, int *choice, int *highLighted) {
   switch(*choice) {
     case KEY_UP:
       *highLighted = *highLighted - 1;
@@ -51,12 +55,13 @@ void changeMenuChoice(WINDOW* window, int *choice, int *highLighted) {
   }
 }
 
-void printFrame(WINDOW* window) {
+// PrintFrame: Handles printing the main window frame with the ASCII title art
+void PrintFrame(WINDOW* window) {
   // Max Y and X coordinates for the Window (Full screen Window)
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
 
-  clearScreen();
+  ClearScreen();
   wrefresh(window);
 
   box(window, 0, 0);
@@ -74,7 +79,8 @@ void printFrame(WINDOW* window) {
   sleep(0.5);
 }
 
-int mainMenu(WINDOW* window, int* choice, int* highLighted) {
+// MainMenu: Handles generating the Main Menu
+int MainMenu(WINDOW* window, int* choice, int* highLighted) {
   string choices[3] = {
     "Create Repository",
     "Update Repository",
@@ -82,9 +88,9 @@ int mainMenu(WINDOW* window, int* choice, int* highLighted) {
   };
 
   do {
-    printMenu(window, choices, 3, highLighted);
+    PrintMenu(window, choices, 3, highLighted);
     *choice = wgetch(window);
-    changeMenuChoice(window, choice, highLighted);
+    ChangeMenuChoice(window, choice, highLighted);
   } while (*choice != 27 && *choice != 10);
 
   if (*choice == 27) {
@@ -99,22 +105,51 @@ int mainMenu(WINDOW* window, int* choice, int* highLighted) {
   wrefresh(window);
 }
 
-int createRepoMenu(WINDOW* window) {
+// CreateRepoMenu: Handles the Create Repository Menu
+int CreateRepoMenu(WINDOW* window) {
   // Max Y and X coordinates for the Window (Full screen Window)
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
-
-  clearScreen();
-  printFrame(window);
+  // Clear the screen
+  ClearScreen();
+  // Print the window frame
+  PrintFrame(window);
   wrefresh(window);
 
-  mvwprintw(window, yMax / 2, xMax / 2 - (19 / 2), "Name of repository:");
+  mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Name of repository: (30 character max)");
+
+  // Output what the user types
   echo();
-  wrefresh(window);
-  char* repoName;
-  mvwgetnstr(window, (yMax / 2) + 1, (xMax / 2) - (19 / 2), repoName, 19);
+  // Show blinking cursor
+  curs_set(1);
   wrefresh(window);
 
+  char* repoName;
+  mvwgetnstr(window, (yMax / 2) + 1, (xMax / 2) - (33 / 2), repoName, 30);
+
+  ClearScreen();
+  PrintFrame(window);
+
+  mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Github Username:");
+
+  wrefresh(window);
+
+  char* username;
+  mvwgetnstr(window, (yMax / 2) + 1, (xMax / 2) - (50 / 2), username, 50);
+  curs_set(0);
+
+  // char command[500];
+  //
+  // sprintf(command, "curl -u '%s' https://api.github.com/user/repos -d '{\"name\":\"%s\"}'", *username, *repoName);
+  //
+  // system(command);
+
+  wrefresh(window);
+
+  mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Github repository successfully created.");
+  sleep(3);
+
+  // Remove blinking cursor
   return 0;
 }
 
@@ -135,16 +170,15 @@ int main(int argc, char ** argv) {
   int highLighted = 0;
   int choice = 0;
 
-
   do {
-    printFrame(window);
+    PrintFrame(window);
 
     switch(menu) {
       case 0:
-        menu = mainMenu(window, &choice, &highLighted);
+        menu = MainMenu(window, &choice, &highLighted);
         break;
       case 1:
-        menu = createRepoMenu(window);
+        menu = CreateRepoMenu(window);
         break;
       default:
         break;
