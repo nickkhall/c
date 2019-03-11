@@ -139,24 +139,48 @@ int CreateRepoMenu(WINDOW* window) {
   char username[50];
   mvwgetnstr(window, (yMax / 2) + 1, (xMax / 2) - (50 / 2), username, 50);
 
+  ClearScreen();
+  PrintFrame(window);
+
+  wrefresh(window);
+
+  mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Github Password:");
+  wrefresh(window);
+
+  noecho();
+
+  char password[50];
+  mvwgetnstr(window, (yMax / 2) + 1, (xMax / 2) - (50 / 2), password, 50);
+
+  ClearScreen();
+  PrintFrame(window);
+
+  wrefresh(window);
+
   curs_set(0);
 
   ClearScreen();
   PrintFrame(window);
+
+  string user (username);
+  string pass (password);
+  string repo (repoName);
+  string command = "curl -u '" + user + ":" + pass + "'" + " https://api.github.com/user/repos -d '{\"name\":" + repo + "\"}'";
+
   wrefresh(window);
 
-  // char command[500];
-  //
-  // sprintf(command, "curl -u '%s' https://api.github.com/user/repos -d '{\"name\":\"%s\"}'", *username, *repoName);
-  //
-  // system(command);
+  sleep(10);
 
+  system(command.c_str());
 
   mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Github repository successfully created.");
+  ClearScreen();
+  PrintFrame(window);
+
   wrefresh(window);
   sleep(5);
 
-  // Remove blinking cursor
+  // Return to Main Menu
   return 0;
 }
 
