@@ -65,7 +65,7 @@ void PrintFrame(WINDOW* window) {
   wrefresh(window);
 
   box(window, 0, 0);
-  sleep(0.5);
+  sleep(1);
   mvwprintw(window, 1, (xMax / 2) - (25 / 2), "Welcome to the Github CLI");
   wrefresh(window);
   mvwprintw(window, 3, (xMax / 2) - (54 / 2),  "  _____ _ _   _           _        _____ _      _____ ");
@@ -76,7 +76,7 @@ void PrintFrame(WINDOW* window) {
   mvwprintw(window, 8, (xMax / 2) - (54 / 2), " \\_____|_|\\__|_| |_|\\__,_|_.__/   \\_____|______|_____|");
   refresh();
   wrefresh(window);
-  sleep(0.5);
+  sleep(1);
 }
 
 // MainMenu: Handles generating the Main Menu
@@ -103,6 +103,8 @@ int MainMenu(WINDOW* window, int* choice, int* highLighted) {
 
   refresh();
   wrefresh(window);
+
+  return 0;
 }
 
 // CreateRepoMenu: Handles the Create Repository Menu
@@ -110,11 +112,6 @@ int CreateRepoMenu(WINDOW* window) {
   // Max Y and X coordinates for the Window (Full screen Window)
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
-  // Clear the screen
-  ClearScreen();
-  // Print the window frame
-  PrintFrame(window);
-  wrefresh(window);
 
   mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Name of repository: (30 character max)");
 
@@ -124,19 +121,29 @@ int CreateRepoMenu(WINDOW* window) {
   curs_set(1);
   wrefresh(window);
 
-  char* repoName;
+  char repoName[30];
   mvwgetnstr(window, (yMax / 2) + 1, (xMax / 2) - (33 / 2), repoName, 30);
-
-  ClearScreen();
-  PrintFrame(window);
-
-  mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Github Username:");
+  curs_set(0);
 
   wrefresh(window);
 
-  char* username;
+  ClearScreen();
+  PrintFrame(window);
+  wrefresh(window);
+
+  mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Github Username:");
+  curs_set(1);
+
+  wrefresh(window);
+
+  char username[50];
   mvwgetnstr(window, (yMax / 2) + 1, (xMax / 2) - (50 / 2), username, 50);
+
   curs_set(0);
+
+  ClearScreen();
+  PrintFrame(window);
+  wrefresh(window);
 
   // char command[500];
   //
@@ -144,10 +151,10 @@ int CreateRepoMenu(WINDOW* window) {
   //
   // system(command);
 
-  wrefresh(window);
 
   mvwprintw(window, yMax / 2, xMax / 2 - (38 / 2), "Github repository successfully created.");
-  sleep(3);
+  wrefresh(window);
+  sleep(5);
 
   // Remove blinking cursor
   return 0;
