@@ -17,6 +17,7 @@ int main() {
   MainMenu.GenerateMenu(&NewWindow, MainMenu.selected);
 
   do {
+    NewWindow.PrintHeader(NewWindow.windowInstance);
     MainMenu.GenerateMenu(&NewWindow, MainMenu.selected);
     int ch = getch();
 

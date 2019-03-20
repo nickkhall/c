@@ -12,6 +12,8 @@ public:
   int xMax;
 
   WINDOW* windowInstance;
+
+  void PrintHeader(WINDOW* window);
 };
 
 #endif
