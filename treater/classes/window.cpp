@@ -4,15 +4,16 @@
 #include "../headers/window.hpp"
 
 // Default Constructor
-Window::Window() : windowInstance {newwin(0,0,0,0)} {
+Window::Window() {
   initscr();
   noecho();
   curs_set(0);
 
-  keypad(windowInstance, true);
-}
+  windowInstance = newwin(0,0,0,0);
 
-// Sets Max Y and Max X
-void Window::SetMaxYX() {
+  keypad(windowInstance, true);
+
+  std::cout << "window constructor" << std::endl;
+
   getmaxyx(stdscr, yMax, xMax);
 }

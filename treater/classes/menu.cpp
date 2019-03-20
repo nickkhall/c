@@ -3,6 +3,7 @@
 #include <string>
 
 #include "../headers/menu.hpp"
+#include "../headers/window.hpp"
 
 // Default Constructor
 Menu::Menu(std::string type, std::vector<std::string> items) :

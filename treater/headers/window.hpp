@@ -10,11 +10,8 @@ public:
 
   int yMax;
   int xMax;
-  WINDOW* windowInstance {nullptr};
 
-  // Setters
-  void SetMaxYX();
-  void ConfigureWindow();
+  WINDOW* windowInstance;
 };
 
 #endif
