@@ -2,8 +2,8 @@
 #include <ncurses.h>
 #include <vector>
 
-#include "classes/menu.cpp"
-#include "classes/window.cpp"
+#include "headers/menu.hpp"
+#include "headers/window.hpp"
 
 using namespace std;
 
@@ -12,15 +12,16 @@ int main() {
   Menu MainMenu("main", mainMenuItems);
 
   // Create window
-  Window* NewWindow;
-  NewWindow->ConfigureWindow();
+  Window NewWindow;
 
-  do {
-    MainMenu.GenerateMenu(NewWindow, MainMenu.selected);
-    int ch = getch();
+  MainMenu.GenerateMenu(&NewWindow, MainMenu.selected);
 
-    MainMenu.SetMenuSelected(ch);
-  } while (MainMenu.GetMenuSelected() != 2);
+  // do {
+  //   MainMenu.GenerateMenu(NewWindow, MainMenu.selected);
+  //   int ch = getch();
+  //
+  //   MainMenu.SetMenuSelected(ch);
+  // } while (MainMenu.GetMenuSelected() != 2);
 
   erase();
   // Close window

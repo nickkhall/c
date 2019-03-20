@@ -13,18 +13,18 @@ Menu::Menu(std::string type, std::vector<std::string> items) :
 void Menu::GenerateMenu(Window* window, int selected) {
   SetMenuYPosXPos(window->yMax, window->xMax);
 
-  for (int i = 0; i < 3; i++) {
-    if (i == selected) {
-      wattron(window->windowInstance, A_REVERSE);
-    }
-
-    // Move to y, x coordinates and print current item
-    mvwprintw(window->windowInstance, yPos + (i + 2), xPos - (strlen(items[i].c_str()) / 2), items[i].c_str());
-
-    // Turn off reverse attribute
-    wattroff(window->windowInstance, A_REVERSE);
-    wrefresh(window->windowInstance);
-  }
+  // for (int i = 0; i < 3; i++) {
+  //   if (i == selected) {
+  //     wattron(window->windowInstance, A_REVERSE);
+  //   }
+  //
+  //   // Move to y, x coordinates and print current item
+  //   mvwprintw(window->windowInstance, yPos + (i + 2), xPos - (strlen(items[i].c_str()) / 2), items[i].c_str());
+  //
+  //   // Turn off reverse attribute
+  //   wattroff(window->windowInstance, A_REVERSE);
+  //   wrefresh(window->windowInstance);
+  // }
 }
 
 // Get's Menu Type
