@@ -14,15 +14,20 @@ int main() {
   vector<string> mainMenuItems {"Add Review", "List Reviews", "Quit"};
   Menu MainMenu("main", mainMenuItems);
 
-  MainMenu.GenerateMenu(&NewWindow, MainMenu.selected);
+  MainMenu.SetMenuYPosXPos(&NewWindow);
+
+  int curMenu = 0;
 
   do {
-    NewWindow.PrintHeader(NewWindow.windowInstance);
-    MainMenu.GenerateMenu(&NewWindow, MainMenu.selected);
-    int ch = getch();
+    switch(curMenu) {
+      case 0:
+        curMenu = MainMenu.PrintMenu(&NewWindow);
+        break;
+      default:
+        break;
+    }
 
-    MainMenu.SetMenuSelected(ch);
-  } while (MainMenu.GetMenuSelected() != 2);
+  } while (curMenu != -1);
 
   erase();
   // Close window

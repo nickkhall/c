@@ -13,7 +13,7 @@ public:
 
   WINDOW* windowInstance;
 
-  void PrintHeader(WINDOW* window);
+  void PrintHeader();
 };
 
 #endif

@@ -14,11 +14,11 @@ private:
 
 public:
   int selected;
+  int highlighted {0};
   int yPos;
   int xPos;
 
 	Menu(std::string type, std::vector<std::string> items);
-  void GenerateMenu(Window* window, int selected);
 
   // Getters
   int GetMenuSelected();
@@ -28,7 +28,8 @@ public:
 
   // Setters
   void SetMenuSelected(int keyCode);
-  void SetMenuYPosXPos(int y, int x);
+  void SetMenuYPosXPos(Window* window);
+  int PrintMenu(Window* window);
 };
 
 #endif
