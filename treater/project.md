@@ -4,23 +4,27 @@ An application for managing and maintaining visited places, to keep track of per
 ----
 
 ## Classes
-  - Establishment
-    - Name - string
-    - Address - string
-    - Type - string
-    - Review (0-5 stars) - int
-    - Items experienced - Array< string >
-    - Return Factor - boolean
+  * Establishment
+    * Name - string
+    * Address - string
+    * Type - string
+    * Review (0-5 stars) - int
+    * Items experienced - vector< string >
+    * Return Factor - boolean
 
-  - User
-    - Name - string
+  * User
+    * Name - string
 
-  - Menu
-    - Type - string
-    - Items - Array< string >
-    - Choice - int
-    - yPos - int
-    - xPos - int
+  * Menu
+    * Type - string
+    * Items - vector< string >
+    * Choice - int
+    * yPos - int
+    * xPos - int
+
+  * Interface
+    * inputs - vector< string >
+    * label - string
 
 ### As A User
   1. Starts out seeing the Main Menu.
