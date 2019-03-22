@@ -14,6 +14,7 @@ public:
   WINDOW* windowInstance;
 
   void PrintHeader();
+	void ClearScreen();
 };
 
 #endif

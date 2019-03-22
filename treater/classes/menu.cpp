@@ -47,7 +47,7 @@ int Menu::PrintMenu(Window* window) {
     SetMenuSelected(keyCode);
   } while (keyCode != 27 && keyCode != 10);
 
-  if (selected == 1) {
+  if (selected == 0) {
     return 1;
   }
 

@@ -12,15 +12,20 @@ int Interface::HandleInput(Window* window) {
   int curItem = 0;
 
   do {
+    window->ClearScreen();
     char input[100];
     mvwprintw(window->windowInstance, window->yMax / 2, window->xMax - (sizeof(labels[curItem]) / 2), ("Enter " + labels[curItem] + " (100 character max): ").c_str());
     std::cin.getline(input, 100);
+    refresh();
+    wrefresh(window->windowInstance);
     inputs.push_back(input);
     curItem++;
   } while(curItem < labels.size());
 
   for (int i = 0; i < inputs.size(); i++) {
     mvwprintw(window->windowInstance, window->yMax / 2, window->xMax - (sizeof(inputs[i]) / 2), ("Enter " + inputs[i] + " (100 character max): ").c_str());
+    refresh();
+    wrefresh(window->windowInstance);
   }
 
   return 0;

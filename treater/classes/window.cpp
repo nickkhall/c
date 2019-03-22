@@ -34,3 +34,7 @@ void Window::PrintHeader() {
   refresh();
   wrefresh(windowInstance);
 }
+
+void Window::ClearScreen() {
+  clear();
+}
