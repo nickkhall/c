@@ -22,6 +22,7 @@ int Menu::GetMenuSelected() {
 }
 
 int Menu::PrintMenu(Window* window) {
+  window->ClearScreen();
   window->PrintHeader();
 
   int keyCode = 0;

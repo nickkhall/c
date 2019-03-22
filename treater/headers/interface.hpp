@@ -14,7 +14,10 @@ public:
   std::vector<std::string> inputs;
   std::vector<std::string> labels;
 
-  int HandleInput(Window* window);
+  void HandleInput(Window* window);
+  void WriteDataToFile();
+  void ClearInputs();
+  int AddMenu(Window* window);
 };
 
 #endif

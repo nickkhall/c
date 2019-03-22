@@ -28,7 +28,7 @@ int main() {
         curMenu = MainMenu.PrintMenu(&NewWindow);
         break;
       case 1:
-        curMenu = AddInterface.HandleInput(&NewWindow);
+        curMenu = AddInterface.AddMenu(&NewWindow);
         break;
       default:
         break;
