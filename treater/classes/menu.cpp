@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <vector>
 #include <string>
+#include <cstring>
 
 #include "../headers/menu.hpp"
 #include "../headers/window.hpp"
