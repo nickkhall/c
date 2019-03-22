@@ -17,16 +17,26 @@ void Interface::HandleInput(Window* window) {
   int x = (window->xMax / 2);
 
   do {
+    // Clear window
     window->ClearScreen();
+
     mvwprintw(window->windowInstance, y - 2, x - (19 / 2), "(100 character max)");
+
     char* input;
+
+    // Print out input text
     mvwprintw(window->windowInstance, y, x - (8 + labels[curItem].length()), ("Enter " + labels[curItem] + ":  ").c_str());
     refresh();
     wrefresh(window->windowInstance);
+
+    // Get user input
     mvwgetnstr(window->windowInstance, y, x, input, 100);
     refresh();
     wrefresh(window->windowInstance);
+
+    // Push user input onto inputs vector
     inputs.push_back(input);
+    // Increment counter
     curItem++;
   } while(curItem < labels.size());
 

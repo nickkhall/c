@@ -11,7 +11,7 @@ class Interface {
 public:
   Interface(std::vector<std::string> labels);
 
-  std::vector<std::string> inputs;
+  std::vector<char*> inputs;
   std::vector<std::string> labels;
 
   void HandleInput(Window* window);
