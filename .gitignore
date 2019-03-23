@@ -43,4 +43,4 @@ snake_game/architecture
 */structure.txt
 
 # Data
-data/*
+**/*/*.txt
