@@ -1,6 +1,8 @@
 #include <ncurses.h>
 #include <vector>
 #include <string>
+#include <unistd.h>
+#include <iostream>
 #include <fstream>
 
 #include "../headers/interface.hpp"
@@ -46,7 +48,7 @@ void Interface::HandleInput(Window* window) {
 
 void Interface::WriteDataToFile() {
   std::ofstream dataFile;
-  dataFile.open("../data/data.txt");
+  dataFile.open("data/data.txt");
 
   // Iterate over labels and user inputs and write to data file.
   for (int i = 0; i < labels.size(); i++) {
@@ -64,8 +66,8 @@ void Interface::ClearInputs() {
 
 int Interface::AddMenu(Window* window) {
   HandleInput(window);
-  // WriteDataToFile();
-  // ClearInputs();
+  WriteDataToFile();
+  ClearInputs();
 
   return 0;
 }
