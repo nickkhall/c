@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <vector>
 #include <string>
+#include <cstring>
 
 #include "../headers/menu.hpp"
 #include "../headers/window.hpp"
@@ -21,6 +22,7 @@ int Menu::GetMenuSelected() {
 }
 
 int Menu::PrintMenu(Window* window) {
+  window->ClearScreen();
   window->PrintHeader();
 
   int keyCode = 0;
@@ -46,7 +48,7 @@ int Menu::PrintMenu(Window* window) {
     SetMenuSelected(keyCode);
   } while (keyCode != 27 && keyCode != 10);
 
-  if (selected == 1) {
+  if (selected == 0) {
     return 1;
   }
 

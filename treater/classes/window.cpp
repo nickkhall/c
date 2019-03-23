@@ -13,8 +13,6 @@ Window::Window() {
 
   keypad(windowInstance, true);
 
-  std::cout << "window constructor" << std::endl;
-
   getmaxyx(stdscr, yMax, xMax);
 }
 
@@ -33,4 +31,8 @@ void Window::PrintHeader() {
 
   refresh();
   wrefresh(windowInstance);
+}
+
+void Window::ClearScreen() {
+  wclear(windowInstance);
 }

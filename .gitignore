@@ -41,3 +41,6 @@ snake_game/architecture
 # Mac bullcrap
 .DS_Store
 */structure.txt
+
+# Data
+data/*
