@@ -22,7 +22,7 @@ void Interface::HandleInput(Window* window) {
 
     mvwprintw(window->windowInstance, y - 2, x - (19 / 2), "(100 character max)");
 
-    char* input;
+    char* input = (char*)malloc(sizeof(char) * 100);
 
     // Print out input text
     mvwprintw(window->windowInstance, y, x - (8 + labels[curItem].length()), ("Enter " + labels[curItem] + ":  ").c_str());
@@ -64,8 +64,8 @@ void Interface::ClearInputs() {
 
 int Interface::AddMenu(Window* window) {
   HandleInput(window);
-  WriteDataToFile();
-  ClearInputs();
+  // WriteDataToFile();
+  // ClearInputs();
 
   return 0;
 }
