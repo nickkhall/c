@@ -24,10 +24,7 @@ int main() {
   // Create Establishment list Menu class with data from filepath
   Menu EstablishmentList(emptyList, "data/data.txt");
   // Create Return Menu class
-  // Menu ReturnMenu("return", returnMenuItems);
-
-  // Set Main Menu's x position and y position
-  // MainMenu.SetMenuYPosXPos(&window);
+  // Menu ReturnMenu("return", returnMenuItems); // Will uncomment soon, hold those horses of urs
 
   // Set current menu to Main Menu
   int curMenu = 0;
