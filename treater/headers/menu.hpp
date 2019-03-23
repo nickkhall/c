@@ -10,26 +10,21 @@
 class Menu {
 private:
   std::vector<std::string> items;
-  std::string type;
+  int selected;
 
 public:
-  int selected;
-  int highlighted {0};
-  int yPos;
-  int xPos;
+  int highlighted;
 
-	Menu(std::string type, std::vector<std::string> items);
+	Menu(std::vector<std::string> items, std::string filepath);
 
   // Getters
   int GetMenuSelected();
-  std::string GetMenuType();
-  int GetYPos();
-  int GetXPos();
 
   // Setters
   void SetMenuSelected(int keyCode);
-  void SetMenuYPosXPos(Window* window);
-  int PrintMenu(Window* window);
+  int PrintMenu(Window* window, int yDividend, int xDividend);
+
+  void PopulateItemsFromFile(std::string filename);
 };
 
 #endif
