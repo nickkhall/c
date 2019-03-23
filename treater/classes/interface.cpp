@@ -48,7 +48,7 @@ void Interface::HandleInput(Window* window) {
 
 void Interface::WriteDataToFile() {
   std::ofstream dataFile;
-  dataFile.open("data/data.txt");
+  dataFile.open("data/data.txt", std::ios_base::app);
 
   // Iterate over labels and user inputs and write to data file.
   for (int i = 0; i < labels.size(); i++) {
