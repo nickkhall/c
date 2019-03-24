@@ -26,13 +26,27 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
   int x = (xDividend != 0) ? xDividend : 2;
 
   do {
+    // Print legend
+    mvwprintw(window->windowInstance, window->yMax - 2, window->xMax - 25, "Scroll down: Down Arrow");
+    mvwprintw(window->windowInstance, window->yMax - 1, window->xMax - 25, "Scroll up: Up Arrow");
+
+    refresh();
+    wrefresh(window->windowInstance);
+
     for (int i = 0; i < items.size(); i++) {
+      if (selected > 45) {
+        highlighted--;
+        wscrl(window->windowInstance, 1);
+        refresh();
+        wrefresh(window->windowInstance);
+      }
+
       if (i == highlighted) {
         wattron(window->windowInstance, A_REVERSE);
       }
 
       int curY = window->yMax / y + (i + 2);
-      
+
       // Move to y, x coordinates and print current item
       mvwprintw(
         window->windowInstance,
