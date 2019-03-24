@@ -11,13 +11,9 @@
 #include "../headers/window.hpp"
 
 // Overloaded Constructor with list
-Menu::Menu(std::vector<std::string> items, std::string filepath)
+Menu::Menu(std::vector<std::string> items)
  : items {items}, selected {0}, highlighted {0}
-{
-  if (filepath != "empty") {
-    PopulateItemsFromFile(filepath);
-  }
-}
+{}
 
 // Get's Menu's Current Choice
 int Menu::GetMenuSelected() {
@@ -35,11 +31,20 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
         wattron(window->windowInstance, A_REVERSE);
       }
 
+      int curY = window->yMax / y + (i + 2);
+      
       // Move to y, x coordinates and print current item
-      mvwprintw(window->windowInstance, (round(window->yMax / y)) + (i + 2), (round(window->xMax / x)) - (strlen(items[i].c_str()) / 2), items[i].c_str());
+      mvwprintw(
+        window->windowInstance,
+        curY,
+        window->xMax / x - (strlen(items[i].c_str()) / 2),
+        items[i].c_str()
+      );
 
       // Turn off reverse attribute
       wattroff(window->windowInstance, A_REVERSE);
+
+      // 47 will fit on screen
     }
 
     refresh();

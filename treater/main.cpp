@@ -18,11 +18,11 @@ int main() {
   vector<string> emptyList         {};
 
   // Create Main Menu class
-  Menu MainMenu(mainMenuItems, "empty");
+  Menu MainMenu(mainMenuItems);
   // Create Add Menu class
   Interface AddInterface(addLabels);
   // Create Establishment list Menu class with data from filepath
-  Menu EstablishmentList(emptyList, "data/data.txt");
+  Menu EstablishmentList(emptyList);
   // Create Return Menu class
   // Menu ReturnMenu("return", returnMenuItems); // Will uncomment soon, hold those horses of urs
 
@@ -40,12 +40,15 @@ int main() {
         break;
       case 2:
         window.ClearScreen();
-        curMenu = EstablishmentList.PrintMenu(&window, 3, 0);
+        EstablishmentList.PopulateItemsFromFile("data/data.txt");
+        curMenu = EstablishmentList.PrintMenu(&window, 10, 0);
         break;
       case 3:
         curMenu = -1;
         break;
       default:
+        curMenu = 0;
+        window.ClearScreen();
         break;
     }
   } while (curMenu != -1);

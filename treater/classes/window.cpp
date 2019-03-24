@@ -14,6 +14,7 @@ Window::Window() {
   keypad(windowInstance, true);
 
   getmaxyx(stdscr, yMax, xMax);
+  scrollok(windowInstance, true);
 }
 
 void Window::PrintHeader() {

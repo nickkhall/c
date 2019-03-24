@@ -19,6 +19,7 @@ void Interface::HandleInput(Window* window) {
   int x = (window->xMax / 2);
 
   do {
+    window->ClearScreen();
     mvwprintw(window->windowInstance, y - 2, x - (19 / 2), "(100 character max)");
 
     char* input = (char*)malloc(sizeof(char) * 100);

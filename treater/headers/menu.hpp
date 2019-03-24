@@ -15,7 +15,7 @@ private:
 public:
   int highlighted;
 
-	Menu(std::vector<std::string> items, std::string filepath);
+	Menu(std::vector<std::string> items);
 
   // Getters
   int GetMenuSelected();
