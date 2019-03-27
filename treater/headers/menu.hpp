@@ -14,6 +14,8 @@ private:
 
 public:
   int highlighted;
+  int pageNum;
+  std::vector<std::vector<std::string> > itemsContainer {};
 
 	Menu(std::vector<std::string> items);
 
@@ -24,7 +26,7 @@ public:
   void SetMenuSelected(int keyCode);
   int PrintMenu(Window* window, int yDividend, int xDividend);
 
-  void PopulateItemsFromFile(std::string filename);
+  void PaginateItems();
 };
 
 #endif

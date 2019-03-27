@@ -37,3 +37,9 @@ void Window::PrintHeader() {
 void Window::ClearScreen() {
   wclear(windowInstance);
 }
+
+void Window::ScrollDown() {
+  scroll(windowInstance);
+  refresh();
+  wrefresh(windowInstance);
+}

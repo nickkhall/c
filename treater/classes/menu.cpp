@@ -3,7 +3,6 @@
 #include <string>
 #include <cstring>
 #include <iostream>
-#include <fstream>
 #include <unistd.h>
 #include <math.h>
 
@@ -12,8 +11,13 @@
 
 // Overloaded Constructor with list
 Menu::Menu(std::vector<std::string> items)
- : items {items}, selected {0}, highlighted {0}
-{}
+ : items {items},
+   selected {0},
+   highlighted {0},
+   pageNum {0}
+{
+  PaginateItems();
+}
 
 // Get's Menu's Current Choice
 int Menu::GetMenuSelected() {
@@ -26,19 +30,14 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
   int x = (xDividend != 0) ? xDividend : 2;
 
   do {
-    // Print legend
-    mvwprintw(window->windowInstance, window->yMax - 2, window->xMax - 25, "Scroll down: Down Arrow");
-    mvwprintw(window->windowInstance, window->yMax - 1, window->xMax - 25, "Scroll up: Up Arrow");
-
     refresh();
     wrefresh(window->windowInstance);
 
-    for (int i = 0; i < items.size(); i++) {
+    for (int i = 0; i < itemsContainer[pageNum].size(); i++) {
       if (selected > 45) {
-        highlighted--;
-        wscrl(window->windowInstance, 1);
-        refresh();
-        wrefresh(window->windowInstance);
+        if ((pageNum + 1) <= items.size()) {
+          pageNum++;
+        }
       }
 
       if (i == highlighted) {
@@ -51,14 +50,12 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
       mvwprintw(
         window->windowInstance,
         curY,
-        window->xMax / x - (strlen(items[i].c_str()) / 2),
+        window->xMax / x - (strlen(itemsContainer[pageNum][i].c_str()) / 2),
         items[i].c_str()
       );
 
       // Turn off reverse attribute
       wattroff(window->windowInstance, A_REVERSE);
-
-      // 47 will fit on screen
     }
 
     refresh();
@@ -96,14 +93,18 @@ void Menu::SetMenuSelected (int keyCode) {
   selected = highlighted;
 }
 
-void Menu::PopulateItemsFromFile(std::string filepath) {
-  std::string line;
-  std::ifstream data(filepath);
+void Menu::PaginateItems() {
+  std::vector<std::string> tempVec {};
 
-  while (!data.eof()) {
-    getline(data, line);
-    items.push_back(line);
+  for (int i = 0; i < items.size(); i++) {
+    if (i != 0 && i % 30 == 0) {
+      tempVec.push_back(items[i]);
+      itemsContainer.push_back(tempVec);
+      tempVec.clear();
+    } else {
+      tempVec.push_back(items[i]);
+    }
   }
 
-  data.close();
+  itemsContainer.push_back(tempVec);
 }

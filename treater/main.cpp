@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ncurses.h>
+#include <fstream>
 #include <vector>
 
 #include "headers/menu.hpp"
@@ -7,6 +8,21 @@
 #include "headers/interface.hpp"
 
 using namespace std;
+
+std::vector<std::string> PopulateItemsFromFile(std::string filepath) {
+  std::string line;
+  std::ifstream file(filepath);
+  std::vector<std::string> items {};
+
+  while (!file.eof()) {
+    getline(file, line);
+    items.push_back(line);
+  }
+
+  file.close();
+
+  return items;
+}
 
 int main() {
   // Create window
@@ -21,8 +37,10 @@ int main() {
   Menu MainMenu(mainMenuItems);
   // Create Add Menu class
   Interface AddInterface(addLabels);
+
+  std::vector<std::string> items = PopulateItemsFromFile("data/data.txt");
   // Create Establishment list Menu class with data from filepath
-  Menu EstablishmentList(emptyList);
+  Menu EstablishmentList(items);
   // Create Return Menu class
   // Menu ReturnMenu("return", returnMenuItems); // Will uncomment soon, hold those horses of urs
 
@@ -40,8 +58,7 @@ int main() {
         break;
       case 2:
         window.ClearScreen();
-        EstablishmentList.PopulateItemsFromFile("data/data.txt");
-        curMenu = EstablishmentList.PrintMenu(&window, 10, 0);
+        curMenu = EstablishmentList.PrintMenu(&window, 5, 0);
         break;
       case 3:
         curMenu = -1;
