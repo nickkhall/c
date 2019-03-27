@@ -4,6 +4,7 @@
 #include <cstring>
 #include <iostream>
 #include <unistd.h>
+#include <stdlib.h>
 #include <math.h>
 
 #include "../headers/menu.hpp"
@@ -24,20 +25,29 @@ int Menu::GetMenuSelected() {
   return selected;
 }
 
+void Menu::IncrementPageNum() {
+  pageNum = pageNum + 1;
+}
+
 int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
   int keyCode = 0;
   int y = (yDividend != 0) ? yDividend : 2;
   int x = (xDividend != 0) ? xDividend : 2;
 
   do {
+    if (itemsContainer.size() > 1) {
+      mvwprintw(window->windowInstance, 1, 1, itemsContainer[1][0].c_str());
+    }
     refresh();
     wrefresh(window->windowInstance);
 
     for (int i = 0; i < itemsContainer[pageNum].size(); i++) {
-      if (selected > 45) {
-        if ((pageNum + 1) <= items.size()) {
-          pageNum++;
-        }
+      if (selected > 2) {
+        IncrementPageNum();
+        // window->ScrollDown();
+        // if ((pageNum + 1) <= items.size() && (pageNum + 1) > itemsContainer.size()) {
+        //
+        // }
       }
 
       if (i == highlighted) {
@@ -51,11 +61,14 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
         window->windowInstance,
         curY,
         window->xMax / x - (strlen(itemsContainer[pageNum][i].c_str()) / 2),
-        items[i].c_str()
+        itemsContainer[pageNum][i].c_str()
       );
 
       // Turn off reverse attribute
       wattroff(window->windowInstance, A_REVERSE);
+
+      refresh();
+      wrefresh(window->windowInstance);
     }
 
     refresh();
@@ -75,7 +88,7 @@ void Menu::SetMenuSelected (int keyCode) {
     // Up Arrow Key
     case 258:
       // Prevent user from selecting item above list
-      if (highlighted + 1 < items.size()) {
+      if (highlighted + 1 < itemsContainer[pageNum].size()) {
         highlighted = highlighted + 1;
       }
       break;

@@ -27,6 +27,7 @@ public:
   int PrintMenu(Window* window, int yDividend, int xDividend);
 
   void PaginateItems();
+  void IncrementPageNum();
 };
 
 #endif
