@@ -14,7 +14,7 @@ private:
 
 public:
   int highlighted;
-  int pageNum;
+  int pageNum = 0;
   std::vector<std::vector<std::string> > itemsContainer {};
 
 	Menu(std::vector<std::string> items);
@@ -27,7 +27,6 @@ public:
   int PrintMenu(Window* window, int yDividend, int xDividend);
 
   void PaginateItems();
-  void IncrementPageNum();
 };
 
 #endif
