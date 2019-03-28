@@ -30,13 +30,18 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
   int x = (xDividend != 0) ? xDividend : 2;
 
   do {
-    if (highlighted > itemsContainer[pageNum].size() - 1) {
-      if (pageNum + 1 < itemsContainer.size()) {
-        pageNum++;
-        highlighted = 0;
-        window->ClearScreen();
-      }
+    if (itemsContainer[pageNum][highlighted] == "-----Next Page-----") {
+      pageNum++;
+      highlighted = 0;
+      window->ClearScreen();
     }
+
+    if (itemsContainer[pageNum][highlighted] == "-----Previous Page-----") {
+      pageNum--;
+      highlighted = itemsContainer[pageNum].size();
+      window->ClearScreen();
+    }
+
     refresh();
     wrefresh(window->windowInstance);
 
@@ -73,15 +78,15 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
 // Set's Menu's Current Choice
 void Menu::SetMenuSelected (int keyCode) {
   switch(keyCode) {
-    // Up Arrow Key
-    case 258:
+    // Down
+    case KEY_DOWN:
       // Prevent user from selecting item above list
-      if (highlighted + 1 < itemsContainer[pageNum].size() + 1) {
+      if (highlighted + 1 < itemsContainer[pageNum].size()) {
         highlighted = highlighted + 1;
       }
       break;
-    // Down Arrow Key
-    case 259:
+    // Up
+    case KEY_UP:
       // Prevent user from selecting item below list
       if (highlighted - 1 > -1) {
         highlighted = highlighted - 1;
@@ -100,6 +105,9 @@ void Menu::PaginateItems() {
   for (int i = 0; i < items.size(); i++) {
     if (i != 0 && i % 30 == 0) {
       tempVec.push_back(items[i]);
+      tempVec.push_back("\n");
+      tempVec.push_back("-----Next Page-----");
+      //tempVec.insert(tempVec.begin(), "-----Previous Page-----");
       itemsContainer.push_back(tempVec);
       tempVec.clear();
     } else {
