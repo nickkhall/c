@@ -30,9 +30,10 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
   int x = (xDividend != 0) ? xDividend : 2;
 
   do {
-    if (selected > 30) {
+    if (highlighted > itemsContainer[pageNum].size() - 1) {
       if (pageNum + 1 < itemsContainer.size()) {
         pageNum++;
+        highlighted = 0;
         window->ClearScreen();
       }
     }
