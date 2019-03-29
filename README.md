@@ -2,7 +2,7 @@
 
 ----------------------------------
 
-## Snake Game (WIP)
+## -Snake Game (WIP)
 **To run the game, open terminal, navigate to `snake_game` directory and run the following:**
 
 `clear && make compile && clear && ./SnakeGame/bin/SnakeGame`
@@ -17,4 +17,7 @@ I am also still learning C++, so go easy on me ;) lol
 
 ----
 
-## Hello World Example (Some genius stuff going on in there)
+## -Hello World Example (Some genius stuff going on in there)
+
+## -Treater
+An application built with OOP C++ and `NCurses` C library. This application is intended to add reviews of places visited, and view a list of previously visited places and your personal reviews on them. Please see projects `README.md` for more information on this project.
