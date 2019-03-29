@@ -66,17 +66,18 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
     refresh();
     wrefresh(window->windowInstance);
 
+    // Iterate over current list to render
     for (int i = 0; i < itemsContainer[pageNum].size(); i++) {
+      // If the current item in list matches the number of highlighted
       if (i == highlighted) {
+        // Switch the colors (white bg, black text)
         wattron(window->windowInstance, A_REVERSE);
       }
-
-      int curY = window->yMax / y + (i + 2);
 
       // Move to y, x coordinates and print current item
       mvwprintw(
         window->windowInstance,
-        curY,
+        window->yMax / y + (i + 2),
         window->xMax / x - (strlen(itemsContainer[pageNum][i].c_str()) / 2),
         itemsContainer[pageNum][i].c_str()
       );
