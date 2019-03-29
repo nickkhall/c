@@ -32,13 +32,13 @@ int Menu::PrintMenu(Window* window, int yDividend, int xDividend) {
   do {
     if (itemsContainer[pageNum][highlighted] == "-----Next Page-----") {
       pageNum++;
-      highlighted = 0;
+      highlighted = 1;
       window->ClearScreen();
     }
 
     if (itemsContainer[pageNum][highlighted] == "-----Previous Page-----") {
       pageNum--;
-      highlighted = itemsContainer[pageNum].size();
+      highlighted = itemsContainer[pageNum].size() - 2;
       window->ClearScreen();
     }
 
@@ -107,7 +107,6 @@ void Menu::PaginateItems() {
       tempVec.push_back(items[i]);
       tempVec.push_back("\n");
       tempVec.push_back("-----Next Page-----");
-      //tempVec.insert(tempVec.begin(), "-----Previous Page-----");
       itemsContainer.push_back(tempVec);
       tempVec.clear();
     } else {
@@ -116,4 +115,10 @@ void Menu::PaginateItems() {
   }
 
   itemsContainer.push_back(tempVec);
+
+  for (int x = 0; x < itemsContainer.size(); x++) {
+    if (x > 0) {
+      itemsContainer[x].insert(itemsContainer[x].begin(), "-----Previous Page-----");
+    }
+  }
 }
