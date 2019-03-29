@@ -15,6 +15,7 @@ public:
 
   void PrintHeader();
 	void ClearScreen();
+	void ScrollDown();
 };
 
 #endif

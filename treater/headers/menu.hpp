@@ -10,26 +10,23 @@
 class Menu {
 private:
   std::vector<std::string> items;
-  std::string type;
+  int selected;
 
 public:
-  int selected;
-  int highlighted {0};
-  int yPos;
-  int xPos;
+  int highlighted;
+  int pageNum = 0;
+  std::vector<std::vector<std::string> > itemsContainer {};
 
-	Menu(std::string type, std::vector<std::string> items);
+	Menu(std::vector<std::string> items);
 
   // Getters
   int GetMenuSelected();
-  std::string GetMenuType();
-  int GetYPos();
-  int GetXPos();
 
   // Setters
   void SetMenuSelected(int keyCode);
-  void SetMenuYPosXPos(Window* window);
-  int PrintMenu(Window* window);
+  int PrintMenu(Window* window, int yDividend, int xDividend);
+
+  void PaginateItems();
 };
 
 #endif

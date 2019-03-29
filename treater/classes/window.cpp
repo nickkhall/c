@@ -14,6 +14,7 @@ Window::Window() {
   keypad(windowInstance, true);
 
   getmaxyx(stdscr, yMax, xMax);
+  scrollok(windowInstance, true);
 }
 
 void Window::PrintHeader() {
@@ -35,4 +36,10 @@ void Window::PrintHeader() {
 
 void Window::ClearScreen() {
   wclear(windowInstance);
+}
+
+void Window::ScrollDown() {
+  scroll(windowInstance);
+  refresh();
+  wrefresh(windowInstance);
 }
