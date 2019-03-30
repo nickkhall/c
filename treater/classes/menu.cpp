@@ -1,4 +1,5 @@
 #include <cstring>
+#include <fstream>
 
 #include "../headers/menu.hpp"
 #include "../headers/window.hpp"
@@ -11,9 +12,7 @@ Menu::Menu(std::vector<std::string> items)
  : items {items},
    selected {0},
    highlighted {0}
-{
-  PaginateItems();
-}
+{}
 
 /**
  * Returns the currently selected item.
@@ -157,4 +156,25 @@ void Menu::PaginateItems() {
       itemsContainer[x].insert(itemsContainer[x].begin(), "-----Previous Page-----");
     }
   }
+}
+
+/**
+ * Populates items list from a text file.
+ * @param {string} filepath The filepath to the file to read from.
+ */
+void PopulateItemsFromFile(std::string filepath) {
+  std::string line;
+  std::ifstream file(filepath);
+  std::vector<std::string> items {};
+
+  // While the line of the file is not the end of the file
+  while (!file.eof()) {
+    // Grab the line in the file
+    getline(file, line);
+    // Push that line onto the items list
+    items.push_back(line);
+  }
+
+  // Close the file
+  file.close();
 }
