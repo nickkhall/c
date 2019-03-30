@@ -1,7 +1,4 @@
-#include <iostream>
-#include <ncurses.h>
 #include <fstream>
-#include <vector>
 
 #include "headers/menu.hpp"
 #include "headers/window.hpp"

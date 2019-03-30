@@ -1,11 +1,4 @@
-#include <ncurses.h>
-#include <vector>
-#include <string>
 #include <cstring>
-#include <iostream>
-#include <unistd.h>
-#include <stdlib.h>
-#include <math.h>
 
 #include "../headers/menu.hpp"
 #include "../headers/window.hpp"
