@@ -162,7 +162,7 @@ void Menu::PaginateItems() {
  * Populates items list from a text file.
  * @param {string} filepath The filepath to the file to read from.
  */
-void PopulateItemsFromFile(std::string filepath) {
+void Menu::PopulateItemsFromFile(std::string filepath) {
   std::string line;
   std::ifstream file(filepath);
   std::vector<std::string> items {};
