@@ -11,11 +11,7 @@
   ```
   * Create a `data.txt` file:
   ```
-  you@linux:~/path/to/treater$ cd data && touch data.txt
-  ```
-  * Navigate back to the `treater` directory:
-  ```
-  you@linux:~/path/to/treater/data$ cd ../
+  you@linux:~/path/to/treater$ touch data/data.txt
   ```
   * Run the following:
   ```
