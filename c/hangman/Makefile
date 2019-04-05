@@ -1,2 +1,2 @@
 compile:
-	gcc -o hangman main.c
+	gcc -g -o hangman main.c
