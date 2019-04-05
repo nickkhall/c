@@ -2,13 +2,10 @@
 
 ## C
 
-----
-
 ### Hangman (wip)
+Your classic Hangman game
 
 ## C++
-
-----
 
 ### -Snake Game (WIP)
 **To run the game, open terminal, navigate to `snake_game` directory and run the following:**
