@@ -7,10 +7,42 @@
 
 #define LENGTH 500
 
+void printHeader() {
+  printf("+--------------------------------------------------------------------+\n");
+  printf("|                   Welcome to the game of Hangman!                  |\n");
+  printf("|--------------------------------------------------------------------|\n");
+}
+
+void printHumanStatus() {
+  printf("|                                |                                   |\n");
+  printf("|                                O                                   |\n");
+  printf("|                               / \\                                  |\n");
+  printf("|                                |                                   |\n");
+  printf("|                               / \\                                  |\n");
+  printf("|                     +--------------------+                         |\n");
+  printf("|                    /                    \/|                         |\n");
+  printf("|                   /____________________\/ |                         |\n");
+  printf("|                  |                     |                           |\n");
+  printf("|                  |                     |                           |\n");
+  printf("|                                                                    |\n");
+  printf("+--------------------------------------------------------------------+\n");
+}
+
+void printGameStatus() {
+  printf("|  Score: %d        Word count: %d       Guesses Left: %d  |\n");
+  printf("+--------------------------------------------------------------------+\n");
+}
+
+void printGuess() {
+  printf("Guess: ");
+}
+
 void printStatus(size_t wordCount, unsigned int guess) {
   system("clear");
- 
-  printf("Welcome to hangman.\nEvery word will be a car manufacture and model.\nThe current word is %zu characters long.\n\nGuess: %d\n\nPlease guess a character\n\nCharacter: ", wordCount, guess);
+
+  printHeader();
+  printHumanStatus();
+  printGameStatus();
 }
 
 void getUserChar(char* c, unsigned int* guess) {
@@ -31,7 +63,7 @@ int main() {
   }
 
   total = i;
-  
+
   fclose(wordlist);
 
   const char* randomWord;
@@ -43,9 +75,10 @@ int main() {
   size_t wordCount = strlen(randomWord);
 
   char c;
-  
+
   while(guess <= (int)wordCount) {
     printStatus(wordCount, guess);
+    printGuess();
     getUserChar(&c, &guess);
   }
 
