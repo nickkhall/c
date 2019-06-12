@@ -1,2 +1,6 @@
-
-
+Name: Bob's Burgers
+Address: 1011 Binary Lane, Dallas, TX 75234
+Type: American Food
+Review: 3.5 stars
+Items Experienced: #1 Burger with no onion	
+Return Factor: 3.5
