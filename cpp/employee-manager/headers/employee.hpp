@@ -5,8 +5,7 @@
 
 class Employee {
   private:
-    unsigned long int employee_id;
-    unsigned long int salary;
+    const unsigned long int employee_id;
     std::string first_name;
     std::string middle_name;
     std::string last_name;
@@ -17,17 +16,16 @@ class Employee {
     std::string cell_phone_number;
     std::string marital_status;
     std::string social_security_number;
-    std::string start_date;
+    unsigned long long int start_date;
     std::string emergency_contact;
     std::string gender;
     std::string ethnicity;
     std::string residency;
     std::string job_title;
+    unsigned long int salary;
 
   public:
       Employee(
-        unsigned long int employee_id,
-        unsigned long int salary,
         std::string first_name,
         std::string middle_name,
         std::string last_name,
@@ -38,13 +36,16 @@ class Employee {
         std::string cell_phone_number,
         std::string marital_status,
         std::string social_security_number,
-        std::string start_date,
+        unsigned long long int start_date,
         std::string emergency_contact,
         std::string gender,
         std::string ethnicity,
         std::string residency,
-        std::string job_title
+        std::string job_title,
+        unsigned long int salary
       );
+
+      unsigned long int generate_id();
 
       ~Employee();
 };

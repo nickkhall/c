@@ -1,10 +1,9 @@
 #include <string>
+#include <iostream>
 
 #include "../headers/employee.hpp"
 
 Employee::Employee(
-  unsigned long int employee_id,
-  unsigned long int salary,
   std::string first_name,
   std::string middle_name,
   std::string last_name,
@@ -15,14 +14,14 @@ Employee::Employee(
   std::string cell_phone_number,
   std::string marital_status,
   std::string social_security_number,
-  std::string start_date,
+  unsigned long long int start_date,
   std::string emergency_contact,
   std::string gender,
   std::string ethnicity,
   std::string residency,
-  std::string job_title
-) : employee_id {employee_id},
-  salary {salary},
+  std::string job_title,
+  unsigned long int salary
+) :
   first_name {first_name},
   middle_name {middle_name},
   last_name {last_name},
@@ -38,5 +37,10 @@ Employee::Employee(
   gender {gender},
   ethnicity {ethnicity},
   residency {residency},
-  job_title {job_title} 
+  job_title {job_title},
+  salary {salary}
 {};
+
+unsigned long int generate_id() {
+  std::cout << "generate_id() called" << std::endl;
+};
