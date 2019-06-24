@@ -44,3 +44,6 @@ snake_game/architecture
 
 # Data
 **/*/*.txt
+
+# VS Code
+.vscode
