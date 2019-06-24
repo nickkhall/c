@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 
+#include "../headers/uuid.hpp"
 #include "../headers/employee.hpp"
 
 Employee::Employee(
@@ -22,6 +23,7 @@ Employee::Employee(
   std::string job_title,
   unsigned long int salary
 ) :
+  employee_id {set_employee_id()},
   first_name {first_name},
   middle_name {middle_name},
   last_name {last_name},
@@ -41,6 +43,9 @@ Employee::Employee(
   salary {salary}
 {};
 
-unsigned long int generate_id() {
-  std::cout << "generate_id() called" << std::endl;
+unsigned long int Employee::set_employee_id() {
+
+  cout << id << endl;
+
+  return 1233242;
 };
