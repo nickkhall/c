@@ -1,11 +1,13 @@
 #ifndef UUID_H
 #define UUID_h
 
+#include <string>
+
 class UUID {
   public:
     UUID();
 
-    unsigned long int generate_id();
+    std::string generate_id();
 };
 
 #endif

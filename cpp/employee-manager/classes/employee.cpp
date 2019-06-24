@@ -44,8 +44,9 @@ Employee::Employee(
 {};
 
 unsigned long int Employee::set_employee_id() {
+  UUID new_uuid;
+  std::string uuid = new_uuid.generate_id(); 
 
-  cout << id << endl;
-
+  std::cout << uuid << std::endl;
   return 1233242;
 };
