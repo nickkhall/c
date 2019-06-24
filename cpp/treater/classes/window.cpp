@@ -1,6 +1,3 @@
-#include <iostream>
-#include <ncurses.h>
-
 #include "../headers/window.hpp"
 
 // Default Constructor

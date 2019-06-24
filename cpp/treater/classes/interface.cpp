@@ -1,8 +1,3 @@
-#include <ncurses.h>
-#include <vector>
-#include <string>
-#include <unistd.h>
-#include <iostream>
 #include <fstream>
 
 #include "../headers/interface.hpp"

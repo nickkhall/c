@@ -1,6 +1,4 @@
-#include <iostream>
 #include <vector>
-#include <string>
 
 #ifndef MENU_H
 #define MENU_H
@@ -27,6 +25,7 @@ public:
   int PrintMenu(Window* window, int yDividend, int xDividend);
 
   void PaginateItems();
+  void PopulateItemsFromFile(std::string filepath);
 };
 
 #endif
