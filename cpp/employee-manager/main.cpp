@@ -25,9 +25,13 @@ int main() {
         break;
       }
       case 2: {
-        window.ClearScreen();
-        Employee new_employee;
-        new_employee.CreateEmployee();
+        // Create a new instance of a Form
+        Form NewForm;
+
+        // Collect new Employee's information
+        NewForm.CollectInfo();
+
+        // Return back to main Employee Window
         current_menu_selected = 0;
         break;
       }

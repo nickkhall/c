@@ -27,7 +27,7 @@ class Employee {
   public:
     Employee();
 
-    unsigned long int set_employee_id();
+    // unsigned long int set_employee_id();
     void CreateEmployee();
 
     ~Employee();
