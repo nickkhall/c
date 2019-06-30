@@ -2,6 +2,8 @@
 
 #include "headers/menu.hpp"
 #include "headers/window.hpp"
+#include "headers/employee.hpp"
+#include "headers/form.hpp"
 
 int main() {
   // Create new NCurses Window instance
@@ -17,13 +19,22 @@ int main() {
 
   do {
     switch(current_menu_selected) {
-      case 0:
+      case 0: {
         window.PrintHeader();
         current_menu_selected = EmployeeMenu.PrintMenu(&window);
-
-      default:
+        break;
+      }
+      case 2: {
+        window.ClearScreen();
+        Employee new_employee;
+        new_employee.CreateEmployee();
         current_menu_selected = 0;
         break;
+      }
+      default : {
+        current_menu_selected = 0;
+        break;
+      }
     }
   } while (current_menu_selected != -1);
   return 0;

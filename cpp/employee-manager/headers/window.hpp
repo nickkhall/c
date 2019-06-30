@@ -12,6 +12,7 @@ class Window {
     Window();
 
     void PrintHeader();
+    void ClearScreen();
 };
 
 #endif
