@@ -18,6 +18,7 @@ int main() {
   do {
     switch(current_menu_selected) {
       case 0:
+        window.PrintHeader();
         current_menu_selected = EmployeeMenu.PrintMenu(&window);
 
       default:
