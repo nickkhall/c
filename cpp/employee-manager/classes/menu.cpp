@@ -9,7 +9,7 @@
 #include "../headers/window.hpp"
 
 Menu::Menu(const std::vector<std::string> &menu_items)
-  : menu_items {menu_items}
+  : menu_items {menu_items}, highlighted {0}
 {};
 
 int Menu::PrintMenu(Window *window) {
@@ -31,7 +31,7 @@ int Menu::PrintMenu(Window *window) {
       mvwprintw(
         window->window,
         window->y_max / 2 + (i + 2),
-        window->x_max / 2 + (strlen(menu_items[i].c_str()) / 2),
+        window->x_max / 2 - (strlen(menu_items[i].c_str()) / 2),
         menu_items[i].c_str()
       );
 

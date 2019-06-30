@@ -8,7 +8,7 @@ int main() {
   Window window;
 
   // Create Employee menu items
-  std::vector<std::string> employee_menu_items {"Add Employee", "Update Employee", "Remove Employee"};
+  std::vector<std::string> employee_menu_items {"  Search  Employee  " , "  Create  Employee  ", "  Update  Employee  ", "  Remove  Employee  "};
 
   // Create new instance of an Employee Menu
   Menu EmployeeMenu {employee_menu_items};
