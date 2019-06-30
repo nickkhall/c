@@ -15,4 +15,4 @@ Window::Window() {
   scrollok(window, true);
 };
 
-
+void Window::PrintHeader() {};

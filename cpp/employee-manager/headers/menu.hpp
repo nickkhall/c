@@ -15,6 +15,7 @@ class Menu {
     std::vector<std::string> menu_items;
 
     Menu(const std::vector<std::string> &menu_items);
+    
     int PrintMenu(Window *window); 
     int SetMenuSelected(int key_code);
 };

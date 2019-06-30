@@ -1,2 +1,2 @@
 compile:
-	g++ --std=c++14 -o bin/employee-manager main.cpp classes/menu.cpp
+	g++ --std=c++14 -o bin/employee-manager main.cpp classes/menu.cpp classes/window.cpp -lncurses
