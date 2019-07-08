@@ -8,7 +8,7 @@ Shader::Shader(const std::string &fileName) {
   shaders[1] = CreateShader(LoadShader(fileName + ".fs"), GL_FRAGMENT_SHADER);
 
   for(unsigned int i = 0; i < NUM_SHADERS; i++)
-  	glAttachShader(program, shaders[i]);
+    glAttachShader(program, shaders[i]);
 
   glBindAttribLocation(program, 0, "position");
 
