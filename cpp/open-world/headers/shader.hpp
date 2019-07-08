@@ -6,21 +6,21 @@
 
 class Shader {
   public:
-  	Shader(const std::string &filename);
+    Shader(const std::string &filename);
 
-  	void Bind();
+    void Bind();
 
-  	virtual ~Shader();
+    virtual ~Shader();
 
   private:
-  	static const unsigned int NUM_SHADERS = 2;
+    static const unsigned int NUM_SHADERS = 2;
 
-  	std::string LoadShader(const std::string &fileName);
-  	void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string &errorMessage);
-  	GLuint CreateShader(const std::string &text, unsigned int type);
+    std::string LoadShader(const std::string &fileName);
+    void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string &errorMessage);
+    GLuint CreateShader(const std::string &text, unsigned int type);
 
-  	GLuint program;
-  	GLuint shaders[NUM_SHADERS];
+    GLuint program;
+    GLuint shaders[NUM_SHADERS];
 };
 
 #endif
