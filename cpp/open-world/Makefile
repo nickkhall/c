@@ -1,2 +1,2 @@
 compile:
-	g++ --std=c++14 -o bin/open-world main.cpp classes/display.cpp -lGL -lGLEW -lSDL2
+	g++ --std=c++14 -o bin/open-world main.cpp classes/display.cpp classes/shader.cpp -lGL -lGLEW -lSDL2
