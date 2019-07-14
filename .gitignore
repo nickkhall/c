@@ -47,3 +47,5 @@ snake_game/architecture
 
 # VS Code
 .vscode
+
+*.swp
