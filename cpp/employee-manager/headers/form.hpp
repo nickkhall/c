@@ -10,11 +10,11 @@ class Form : public Window {
   public:
     Form();
 
-    void Create();
-
-    //void Create(const unsigned int &type);
+    int Create(const std::vector<std::string> &form_items);
 
     ~Form();
+  private:
+    std::vector<std::string> form_items;
 };
 
 #endif

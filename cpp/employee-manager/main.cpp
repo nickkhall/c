@@ -19,17 +19,20 @@ int main() {
 
   do {
     switch(current_menu_selected) {
-      case 0: {
+    	case 0: {
         window.PrintHeader();
         current_menu_selected = EmployeeMenu.PrintMenu(&window);
         break;
       }
-      case 2: {
+			case 2: {
+				window.ClearScreen();
         // Create a new instance of a Form
         Form NewForm;
 
+				// Create form labels
+				const std::vector<std::string> form_items {"First Name", "Middle Name", "Last Name"};
         // Collect new Employee's information
-        NewForm.CollectInfo();
+        NewForm.Create(form_items);
 
         // Return back to main Employee Window
         current_menu_selected = 0;
