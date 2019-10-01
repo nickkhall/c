@@ -10,7 +10,7 @@ class Form : public Window {
   public:
     Form();
 
-    int Create(const std::vector<std::string> &form_items);
+    void Create(const std::vector<std::string> &form_items);
 
     ~Form();
   private:

@@ -26,23 +26,18 @@ int main() {
       }
 			case 2: {
 				window.ClearScreen();
-        // Create a new instance of a Form
-        Form NewForm;
-
-				// Create form labels
-				const std::vector<std::string> form_items {"First Name", "Middle Name", "Last Name"};
-        // Collect new Employee's information
-        NewForm.Create(form_items);
-
-        // Return back to main Employee Window
-        current_menu_selected = 0;
         break;
       }
       default : {
+        window.ClearScreen();
         current_menu_selected = 0;
         break;
       }
     }
   } while (current_menu_selected != -1);
+
+  // Turn back on cursor
+  curs_set(1);
+
   return 0;
 }
