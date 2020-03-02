@@ -2,35 +2,56 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../headers/employee.h"
+
 char* create_uuid() {
+	int min = 0;
+	int max = 30;
   char* uid = NULL;
-  int min = 0;
-  int max = 25;
-  int nums[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-  char chars[25] = {
-    'a', 'b', 'c', 'd',
+	uid = (char*) malloc(sizeof(max));
+
+  char chars[35] = {
+		'0', '1', '2', '3',
+    'p', 'b', 'k', 'd',
+    'v', 'w', 'x', 'y',
+		'4', '5', 'z',
     'e', 'f', 'g', 'h',
-    'i', 'j', 'k', 'l',
-    'm', 'n', 'o', 'p',
     'r', 's', 't', 'u',
-    'v', 'w', 'x', 'y', 'z'
+    'i', 'j', 'c', 'l',
+		'8', '9', 'o', 'a',
+    'm', 'n', '6', '7',
   };
 
   // Set random seed
   srand(time(0));
 
   for (int i = 0; i < max; i++) {
-    int random_seed = (rand() % (min - max + 1)) + min;
     int num = (rand() % (min - max + 1)) + min;
 
-    if (random_seed % 2 == 0) {
-      
-    } else {
-      
-    }
-
-    printf("random char: %c\n", chars[num]);
+		if (i != 0 && (i+1) % 5 == 0) uid[i] = '-';
+		else uid[i] = chars[num];
   };
 
   return uid;
+};
+
+Employee create_employee(
+	int age,
+	char* first,
+	char* last,
+	char* phone,
+	char* email,
+	char gender
+) {
+	Employee new_employee = {
+		create_uuid(),
+		age,
+		first,
+		last,
+		phone,
+		email,
+		gender
+	};
+
+	return new_employee;
 };
