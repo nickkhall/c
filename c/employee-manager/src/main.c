@@ -1,6 +1,8 @@
 #include <string.h>
 #include <stdio.h>
+
 #include "headers/employee.h"
+#include "headers/menu.h"
 
 int main() {
 	Employee test_employee = create_employee(
@@ -11,6 +13,8 @@ int main() {
 		"test@foo.bar",
 		'm'
 	);
+
+	struct coords c = get_screen_size();
 
   return 0;
 };

@@ -1,3 +1,6 @@
+#ifndef EMPLOYEE
+#define EMPLOYEE
+
 typedef struct {
 	char* uuid;
   int age;
@@ -18,3 +21,5 @@ Employee create_employee(
 );
 
 char* create_uuid();
+
+#endif
