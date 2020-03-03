@@ -1,3 +1,4 @@
+#include <ncurses.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/ioctl.h>
@@ -31,3 +32,8 @@ void print_menu(const char menu_items[16][4], const int row, const int col) {
 		}
 	}
 };
+
+void clear_screen() {
+  const char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
+  write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 12);
+}

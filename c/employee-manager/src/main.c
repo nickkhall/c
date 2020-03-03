@@ -1,3 +1,5 @@
+#include <ncurses.h>
+#include <unistd.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -5,6 +7,11 @@
 #include "headers/menu.h"
 
 int main() {
+	// Initialize ncurses screen
+	initscr();
+	noecho();
+	cbreak();
+
 	Employee test_employee = create_employee(
 		28,
 		"nick",
