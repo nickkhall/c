@@ -22,7 +22,7 @@ struct coords* get_screen_size() {
 void print_menu(const char menu_items[16][4], const int row, const int col) {	
 	for (int y = 0; y < row - 2; y++) {
 		for (int x = 0; x < col; x++) {
-			if (y == 0) {
+			if (y == 0 || y == row - 3) {
 				if (x == 0 || x == col - 1) printf("+");
 				else printf("-");
 			} else if (y > 0 && y < row - 2 && (x == 0 || x == col - 1)) {
