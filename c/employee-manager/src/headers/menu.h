@@ -6,6 +6,6 @@ struct coords {
 	int col;
 };
 
-struct coords get_screen_size();
+struct coords* get_screen_size();
 
 #endif
