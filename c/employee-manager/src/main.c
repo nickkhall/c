@@ -16,30 +16,9 @@ int main() {
 
 	int choice = 0;
 	struct coords *c = get_screen_size();
-	char* menu_items[4] = {"View", "Plus", "Edit", "Void"};
+	char menu_items[16][4] = {"View", "Plus", "Edit", "Void"};
 
-	for (int y = 0; y < c->row - 2; y++) {
-		if (y == 0) {
-			printf("+");
-		}
-
-		for (int x = 0; x < c->col - 1; x++) {
-			// Print corners
-			if (y == 0) {
-				if (x == c->col - 2) {
-					printf("+");
-				} else printf("-");
-			} else if (y == 0 && x == c->col - 1) {
-				printf("+");
-			} else if () {
-
-			} else {
-				printf(" ");
-			}
-		}
-
-		printf("¦");
-	}
+	print_menu(menu_items, c->row, c->col);
 
   return 0;
 };
