@@ -18,7 +18,7 @@ int main() {
 	};
 
   // Create new instance of an Employee Menu
-  Menu EmployeeMenu {employee_menu_items};
+  Menu MainMenu {employee_menu_items};
 
   int current_menu_selected {0};
 
@@ -26,7 +26,7 @@ int main() {
     switch(current_menu_selected) {
     	case 0: {
         window.PrintHeader();
-        current_menu_selected = EmployeeMenu.PrintMenu(&window);
+        current_menu_selected = MainMenu.PrintMenu(&window);
         break;
       }
 			case 1: {
@@ -49,10 +49,11 @@ int main() {
 					"Job Title: ",
 					"Salary: "
 				};
+				printf("test");
 
-				Form TempForm;
+				Form TempForm {temp_form_labels};
 
-				TempForm.PrintForm(&window, temp_form_labels, 15);
+				TempForm.PrintForm(&window, 15);
 			}
 			case 2: {
 				window.ClearScreen();

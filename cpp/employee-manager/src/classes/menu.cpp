@@ -51,7 +51,7 @@ int Menu::PrintMenu(Window *window) {
   return (menu_selected + 1);
 };
 
-int Menu::SetMenuSelected(int key_code) {
+void Menu::SetMenuSelected(int key_code) {
   switch(key_code) {
     case KEY_DOWN:
       // Prevent the user from selecting item above the list

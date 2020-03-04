@@ -1,5 +1,5 @@
 #ifndef UUID_H
-#define UUID_h
+#define UUID_H
 
 #include <string>
 

@@ -9,7 +9,7 @@ Form::Form(std::vector<std::string> form_labels)
 	: form_labels {form_labels}
 {};
 
-int Form::PrintForm(Window *window, std::vector<std::string> field_labels, const int num_of_fields) {
+int Form::PrintForm(Window *window, const int num_of_fields) {
 	curs_set(1);
 	echo();
 	
@@ -46,9 +46,7 @@ int Form::PrintForm(Window *window, std::vector<std::string> field_labels, const
 };
 
 
-
-
-  // std::cout << "\033[2J\033[1;1H";
+// std::cout << "\033[2J\033[1;1H";
 
 
 Form::~Form() {};
