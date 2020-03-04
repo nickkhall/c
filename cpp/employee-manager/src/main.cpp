@@ -10,7 +10,12 @@ int main() {
   Window window;
 
   // Create Employee menu items
-  std::vector<std::string> employee_menu_items {"  Search  Employee  " , "  Create  Employee  ", "  Update  Employee  ", "  Remove  Employee  "};
+  std::vector<std::string> employee_menu_items {
+		"  Search  Employee  " ,
+		"  Create  Employee  ",
+		"  Update  Employee  ",
+		"  Remove  Employee  "
+	};
 
   // Create new instance of an Employee Menu
   Menu EmployeeMenu {employee_menu_items};
@@ -24,6 +29,31 @@ int main() {
         current_menu_selected = EmployeeMenu.PrintMenu(&window);
         break;
       }
+			case 1: {
+				window.ClearScreen();
+				std::vector<std::string> temp_form_labels = {
+					"First Name: ",
+					"Middle Name: ",
+					"Last Name: ",
+					"Suffix: ",
+					"Email: ",
+					"Home Phone: ",
+					"Cell Phone: ",
+					"Marital Status: ",
+					"Social Security: ",
+					"Hire Date: ",
+					"Emergency Contact: ",
+					"Gender: ",
+					"Ethnicity: ",
+					"Residence: ",
+					"Job Title: ",
+					"Salary: "
+				};
+
+				Form TempForm;
+
+				TempForm.PrintForm(&window, temp_form_labels, 15);
+			}
 			case 2: {
 				window.ClearScreen();
         break;
