@@ -18,13 +18,16 @@ int Form::PrintForm(Window *window, const int num_of_fields) {
   int x = 2;
 
 	do {
-    refresh();
-    wrefresh(window->window);
+		refresh();
+		wrefresh(window->window);
 
     for (int i = 0; i < num_of_fields; i++) {
+			refresh();
+			wrefresh(window->window);
+
 			char* temp_data;
 			mvwprintw(window->window, window->y_max / 2, window->x_max / 2 - (form_labels[i].length() / 2), form_labels[i].c_str());
-			move(window->y_max / 2, window->x_max / 2);
+			move(window->y_max / 2, window->x_max / 2 + form_labels[i].length() + 1);
 			getnstr(temp_data, 50);
 
 			// Convert c string to c++ string	
