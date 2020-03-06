@@ -8,11 +8,11 @@
 #include "../headers/menu.hpp"
 #include "../headers/window.hpp"
 
-Menu::Menu(const std::vector<std::string> &menu_items)
-  : menu_items {menu_items}, highlighted {0}
+Menu::Menu(const std::vector<std::string> &items)
+  : items {items}, highlighted {0}, state {0}
 {};
 
-int Menu::PrintMenu(Window *window) {
+int Menu::render_menu(Window *window) {
   std::cout << "\033[2J\033[1;1H";
 
   int key_code {0};
@@ -23,7 +23,7 @@ int Menu::PrintMenu(Window *window) {
     refresh();
     wrefresh(window->window);
 
-    for (int i = 0; i < menu_items.size(); i++) {
+    for (int i = 0; i < items.size(); i++) {
       if (i == highlighted) {
         wattron(window->window, A_REVERSE);
       }
@@ -31,8 +31,8 @@ int Menu::PrintMenu(Window *window) {
       mvwprintw(
         window->window,
         window->y_max / 2 + (i + 2),
-        window->x_max / 2 - (strlen(menu_items[i].c_str()) / 2),
-        menu_items[i].c_str()
+        window->x_max / 2 - (strlen(items[i].c_str()) / 2),
+        items[i].c_str()
       );
 
       // Turn off reverse attribute
@@ -45,17 +45,17 @@ int Menu::PrintMenu(Window *window) {
     key_code = wgetch(window->window);
 
     // Update the menu with the currently selected item
-    SetMenuSelected(key_code);
+    update_state(key_code);
   } while (key_code != 27 && key_code != 10); // As long as the user does not hit the "Escape" or "Enter" key
 
-  return (menu_selected + 1);
+  return (state + 1);
 };
 
-void Menu::SetMenuSelected(int key_code) {
+void Menu::update_state(int key_code) {
   switch(key_code) {
     case KEY_DOWN:
       // Prevent the user from selecting item above the list
-      if (highlighted + 1 < menu_items.size()) {
+      if (highlighted + 1 < items.size()) {
         highlighted += 1;
       }
       break;
@@ -69,6 +69,6 @@ void Menu::SetMenuSelected(int key_code) {
       break;
   };
 
-  menu_selected = highlighted;
+  state = highlighted;
 };
 

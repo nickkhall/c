@@ -14,7 +14,8 @@ int main() {
 		"  Search  Employee  " ,
 		"  Create  Employee  ",
 		"  Update  Employee  ",
-		"  Remove  Employee  "
+		"  Remove  Employee  ",
+		"       Quit         "
 	};
 
   // Create new instance of an Employee Menu
@@ -26,7 +27,7 @@ int main() {
     switch(current_menu_selected) {
     	case 0: {
         window.PrintHeader();
-        current_menu_selected = MainMenu.PrintMenu(&window);
+        current_menu_selected = MainMenu.render_menu(&window);
         break;
       }
 			case 1: {
@@ -49,16 +50,18 @@ int main() {
 					"Job Title: ",
 					"Salary: "
 				};
-				printf("test");
 
 				Form TempForm {temp_form_labels};
 
-				TempForm.PrintForm(&window, 15);
+				current_menu_selected = TempForm.CollectInput(&window, 15);
 			}
 			case 2: {
 				window.ClearScreen();
         break;
       }
+			case 4: {
+				return 0;
+			}
       default : {
         window.ClearScreen();
         current_menu_selected = 0;
@@ -66,6 +69,8 @@ int main() {
       }
     }
   } while (current_menu_selected != -1);
+
+	printf("\n\nGoodbye...\n");
 
   // Turn back on cursor
   curs_set(1);

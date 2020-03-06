@@ -8,16 +8,17 @@
 
 class Menu {
   private:
+		std::vector<std::string> items{};
     short int highlighted;
-    short int menu_selected;
+    short int state;
 
   public:
     std::vector<std::string> menu_items;
 
     Menu(const std::vector<std::string> &menu_items);
     
-    int PrintMenu(Window *window); 
-    void SetMenuSelected(int key_code);
+    int render_menu(Window *window); 
+    void update_state(int key_code);
 };
 
 #endif
