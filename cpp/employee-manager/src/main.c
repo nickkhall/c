@@ -1,22 +1,22 @@
-#include <iostream>
+#include <stdio.h>
 
-#include "headers/menu.hpp"
-#include "headers/window.hpp"
-#include "headers/employee.hpp"
-#include "headers/form.hpp"
+#include "headers/menu.h"
+#include "headers/window.h"
+#include "headers/employee.h"
+#include "headers/form.h"
 
-int main() {
+int main() {	
   // Create new NCurses Window instance
   Window window;
 
   // Create Employee menu items
-  std::vector<std::string> employee_menu_items {
-		"  Search  Employee  " ,
-		"  Create  Employee  ",
-		"  Update  Employee  ",
-		"  Remove  Employee  ",
-		"       Quit         "
-	};
+//  std::vector<std::string> employee_menu_items {
+//		"  Search  Employee  " ,
+//		"  Create  Employee  ",
+//		"  Update  Employee  ",
+//		"  Remove  Employee  ",
+//		"       Quit         "
+//	};
 
   // Create new instance of an Employee Menu
   Menu MainMenu {employee_menu_items};
@@ -82,4 +82,4 @@ int main() {
 	endwin();
 
   return 0;
-}
+};
