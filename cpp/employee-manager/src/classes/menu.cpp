@@ -16,6 +16,10 @@ const short int* Menu::get_state() const {
 	return &state;
 };
 
+void Menu::update_state(int new_state) {
+	state = new_state;
+};
+
 const int Menu::render_menu(Window *window) {
   std::cout << "\033[2J\033[1;1H";
 
@@ -49,13 +53,13 @@ const int Menu::render_menu(Window *window) {
     key_code = wgetch(window->window);
 
     // Update the menu with the currently selected item
-    update_state(key_code);
+    handle_navigation(key_code);
   } while (key_code != 27 && key_code != 10); // As long as the user does not hit the "Escape" or "Enter" key
 
   return state;
 };
 
-void Menu::update_state(int key_code) {
+void Menu::handle_navigation(int key_code) {
   switch(key_code) {
     case KEY_DOWN:
       // Prevent the user from selecting item above the list

@@ -12,7 +12,7 @@ class Form : public Window {
 
     Form(std::vector<std::string> form_labels);
 
-    int create(Window *window, const int num_of_fields);
+    const std::vector<std::string> create(Window *window, int num_of_fields);
 
     ~Form();
   private:

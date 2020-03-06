@@ -9,7 +9,7 @@ Form::Form(std::vector<std::string> form_labels)
 	: form_labels {form_labels}
 {};
 
-const std::vector<std::string> Form::create(Window *window, const int num_of_fields) {
+const std::vector<std::string> Form::create(Window *window, int num_of_fields) {
 	// enable cursor
 	curs_set(1);
 
@@ -49,7 +49,7 @@ const std::vector<std::string> Form::create(Window *window, const int num_of_fie
 	// disable cursor
 	curs_set(0);
 
-	return 0;
+	return form_values;
 };
 
 Form::~Form() {};

@@ -19,7 +19,8 @@ class Menu {
     
     const int render_menu(Window *window); 
 		const short int* get_state() const;
-    void update_state(int key_code);
+    void update_state(int state);
+		void handle_navigation(int key_code);
 };
 
 #endif

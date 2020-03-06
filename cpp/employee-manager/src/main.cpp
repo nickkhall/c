@@ -25,7 +25,8 @@ int main() {
     switch(*MainMenu.get_state()) {
     	case 0: {
         window.PrintHeader();
-        MainMenu.update_state(MainMenu.render_menu(&window));
+				MainMenu.render_menu(&window);
+				break;
       }
 			case 1: {
 				window.ClearScreen();
@@ -50,17 +51,20 @@ int main() {
 
 				Form TempForm {temp_form_labels};
 				
-				const std::vector<std::string> emp_data = tempForm.create(&window, 15);
+				const std::vector<std::string> emp_data = TempForm.create(&window, 15);
 
 				MainMenu.update_state(0);
+				break;
 			}
 			case 2: {
 				window.ClearScreen();
 				MainMenu.update_state(0);
+				break;
       }
 			case 4: {
 				window.ClearScreen();
 				MainMenu.update_state(-1);
+				break;
 			}
       default : {
         window.ClearScreen();
@@ -68,12 +72,14 @@ int main() {
         break;
       }
     }
-  } while (*MainMenu.get_state() != -1);
+  } while (*MainMenu.get_state() > -1);
 
 	printf("\n\nGoodbye...\n");
 
   // Turn back on cursor
   curs_set(1);
+	echo();
+	endwin();
 
   return 0;
 }
