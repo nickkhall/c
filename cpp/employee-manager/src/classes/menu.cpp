@@ -12,7 +12,11 @@ Menu::Menu(const std::vector<std::string> &items)
   : items {items}, highlighted {0}, state {0}
 {};
 
-int Menu::render_menu(Window *window) {
+const short int* Menu::get_state() const {
+	return &state;
+};
+
+const int Menu::render_menu(Window *window) {
   std::cout << "\033[2J\033[1;1H";
 
   int key_code {0};
@@ -48,7 +52,7 @@ int Menu::render_menu(Window *window) {
     update_state(key_code);
   } while (key_code != 27 && key_code != 10); // As long as the user does not hit the "Escape" or "Enter" key
 
-  return (state + 1);
+  return state;
 };
 
 void Menu::update_state(int key_code) {

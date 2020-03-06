@@ -17,7 +17,8 @@ class Menu {
 
     Menu(const std::vector<std::string> &menu_items);
     
-    int render_menu(Window *window); 
+    const int render_menu(Window *window); 
+		const short int* get_state() const;
     void update_state(int key_code);
 };
 

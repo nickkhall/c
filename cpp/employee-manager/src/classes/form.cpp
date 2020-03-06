@@ -9,7 +9,7 @@ Form::Form(std::vector<std::string> form_labels)
 	: form_labels {form_labels}
 {};
 
-int Form::CollectInput(Window *window, const int num_of_fields) {
+const std::vector<std::string> Form::create(Window *window, const int num_of_fields) {
 	// enable cursor
 	curs_set(1);
 

@@ -21,14 +21,11 @@ int main() {
   // Create new instance of an Employee Menu
   Menu MainMenu {employee_menu_items};
 
-  int current_menu_selected {0};
-
   do {
-    switch(current_menu_selected) {
+    switch(*MainMenu.get_state()) {
     	case 0: {
         window.PrintHeader();
-        current_menu_selected = MainMenu.render_menu(&window);
-        break;
+        MainMenu.update_state(MainMenu.render_menu(&window));
       }
 			case 1: {
 				window.ClearScreen();
@@ -52,23 +49,26 @@ int main() {
 				};
 
 				Form TempForm {temp_form_labels};
+				
+				const std::vector<std::string> emp_data = tempForm.create(&window, 15);
 
-				current_menu_selected = TempForm.CollectInput(&window, 15);
+				MainMenu.update_state(0);
 			}
 			case 2: {
 				window.ClearScreen();
-        break;
+				MainMenu.update_state(0);
       }
 			case 4: {
-				return 0;
+				window.ClearScreen();
+				MainMenu.update_state(-1);
 			}
       default : {
         window.ClearScreen();
-        current_menu_selected = 0;
+        MainMenu.update_state(0);
         break;
       }
     }
-  } while (current_menu_selected != -1);
+  } while (*MainMenu.get_state() != -1);
 
 	printf("\n\nGoodbye...\n");
 
