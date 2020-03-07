@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ncurses.h>
 
 #include "headers/menu.h"
 #include "headers/window.h"
@@ -6,8 +7,21 @@
 #include "headers/form.h"
 
 int main() {	
-  // create new window
+	// initialize screen
+	initscr();
+	noecho();
+	curs_set(0);
+
+	// create Window struct
   Window window;
+
+	// assign new window instance to Window struct
+	window.window = newwin(0,0,0,0);
+
+	keypad(window.window, true);
+
+	getmaxyx(stdscr, window.y_max, window.x_max);
+	scrollok(window.window, true);
 
   // create main menu items
 	const int main_menu_size = 5;
@@ -25,12 +39,12 @@ int main() {
   do {
     switch(MainMenu.state) {
     	case 0: {
-        print_header();
-				render_main_menu(&window, &MainMenu, main_menu_items);
+        print_header(&window);
+				render_main_menu(&window, &MainMenu, main_menu_items, &main_menu_size);
 				break;
       }
 			case 1: {
-				clear_screen();
+				clear_screen(&window);
 				const char* temp_form_labels[] = {
 					"First Name: ",
 					"Middle Name: ",
@@ -55,17 +69,17 @@ int main() {
 				break;
 			}
 			case 2: {
-				clear_screen();
+				clear_screen(&window);
 				MainMenu.state = 0;
 				break;
       }
 			case 4: {
-				clear_screen();
+				clear_screen(&window);
 				MainMenu.state = -1;
 				break;
 			}
       default : {
-				clear_screen();
+				clear_screen(&window);
         MainMenu.state = 0;
         break;
       }

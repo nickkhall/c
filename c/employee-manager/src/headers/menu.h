@@ -11,7 +11,7 @@ typedef struct m {
 	short int state;
 } Menu;
 
-void render_main_menu(Window *window, Menu *menu, const char** items);
+void render_main_menu(Window *window, Menu *menu, const char** items, const int* items_size);
 Menu* update_state(Menu *menu, int state);
 void handle_navigation(Menu *menu, int key_code, int items_size);
 

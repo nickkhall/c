@@ -14,7 +14,7 @@ Menu* update_state(Menu *menu, int new_state) {
 	return menu;
 };
 
-void render_menu(Window *window,Menu *menu, const char** items, int items_size) {
+void render_main_menu(Window *window,Menu *menu, const char** items, const int* items_size) {
 	printf("\033[2J\033[1;1H");
 
 	int key_code = 0;
@@ -25,7 +25,7 @@ void render_menu(Window *window,Menu *menu, const char** items, int items_size) 
 		refresh();
 		wrefresh(window->window);
 
-		for (int i = 0; i < items_size; i++) {
+		for (int i = 0; i < *items_size; i++) {
 			if (i == menu->highlighted) {
 				wattron(window->window, A_REVERSE);
 			}
@@ -33,7 +33,7 @@ void render_menu(Window *window,Menu *menu, const char** items, int items_size) 
 			mvwprintw(
 				window->window,
 				window->y_max / 2 + (i + 2),
-				window->x_max / 2 - items_size,
+				window->x_max / 2 - *items_size,
 				*(items + i)
 			);
 
@@ -47,7 +47,7 @@ void render_menu(Window *window,Menu *menu, const char** items, int items_size) 
 		key_code = wgetch(window->window);
 
 		// Update the menu with the currently selected item
-		handle_navigation(menu, key_code, items_size);
+		handle_navigation(menu, key_code, *items_size);
 	} while (key_code != 27 && key_code != 10); // As long as the user does not hit the "Escape" or "Enter" key
 	};
 

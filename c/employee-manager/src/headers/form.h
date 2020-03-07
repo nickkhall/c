@@ -10,7 +10,7 @@ typedef struct f {
 	char** form_data;
 } Form;
 
-const char** create(Window *window, int num_of_fields);
+char** create(Window *window, char** form_labels, int num_of_fields);
 
 #endif
 

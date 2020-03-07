@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <ncurses.h>
 
 #include "../headers/window.h"
@@ -11,8 +12,9 @@ char** create(Window *window, char** form_labels, int num_of_fields) {
 	// print user input to screen
 	echo();
 	
-	int key_code {0};
-	char** form_data = (char**)malloc(sizeof(char*) * num_of_fields)
+	int key_code = 0;
+	char** form_data = NULL;
+	form_data = malloc(sizeof(char*) * num_of_fields);
 
 	// iterate over form labels (size of form)
 	for (int i = 0; i < num_of_fields; i++) {
@@ -28,8 +30,8 @@ char** create(Window *window, char** form_labels, int num_of_fields) {
 		mvwprintw(
 			window->window,
 			window->y_max / 2,
-			window->x_max / 2 - (form_labels[i].length() / 2),
-			form_labels[i]
+			window->x_max / 2 - (strlen(*(form_labels + i)) / 2),
+			*(form_labels + i)
 		);
 
 		// erase / refresh screen again
@@ -38,7 +40,7 @@ char** create(Window *window, char** form_labels, int num_of_fields) {
 		wrefresh(window->window);
 
 		// move cursor to after form_label for user input		
-		move(window->y_max / 2, window->x_max / 2 + form_labels[i].length() + 1);
+		move(window->y_max / 2, window->x_max / 2 + strlen(*(form_labels + i)) + 1);
 
 		// get user input
 		getnstr(temp_data, 50);
