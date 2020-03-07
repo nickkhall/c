@@ -6,31 +6,33 @@
 #include "headers/form.h"
 
 int main() {	
-  // Create new NCurses Window instance
+  // create new window
   Window window;
 
-  // Create Employee menu items
-//  std::vector<std::string> employee_menu_items {
-//		"  Search  Employee  " ,
-//		"  Create  Employee  ",
-//		"  Update  Employee  ",
-//		"  Remove  Employee  ",
-//		"       Quit         "
-//	};
+  // create main menu items
+	const int main_menu_size = 5;
+	const char* main_menu_items[sizeof(char*) * 20][main_menu_size] = {
+		"  Search  Employee  " ,
+		"  Create  Employee  ",
+		"  Update  Employee  ",
+		"  Remove  Employee  ",
+		"       Quit         "
+	};
+	char** mmi = main_menu_items;
 
-  // Create new instance of an Employee Menu
-  Menu MainMenu {employee_menu_items};
+  // create new menu 
+	Menu MainMenu = {mmi, 0, 0};
 
   do {
-    switch(*MainMenu.get_state()) {
+    switch(MainMenu.state) {
     	case 0: {
-        window.PrintHeader();
-				MainMenu.render_menu(&window);
+        print_header();
+				render_main_menu(&window, &MainMenu, main_menu_items);
 				break;
       }
 			case 1: {
-				window.ClearScreen();
-				std::vector<std::string> temp_form_labels = {
+				clear_screen();
+				const char* temp_form_labels[] = {
 					"First Name: ",
 					"Middle Name: ",
 					"Last Name: ",
@@ -49,32 +51,29 @@ int main() {
 					"Salary: "
 				};
 
-				Form TempForm {temp_form_labels};
-				
-				const std::vector<std::string> emp_data = TempForm.create(&window, 15);
 
-				MainMenu.update_state(0);
+				MainMenu.state = 0;
 				break;
 			}
 			case 2: {
-				window.ClearScreen();
-				MainMenu.update_state(0);
+				clear_screen();
+				MainMenu.state = 0;
 				break;
       }
 			case 4: {
-				window.ClearScreen();
-				MainMenu.update_state(-1);
+				clear_screen();
+				MainMenu.state = -1;
 				break;
 			}
       default : {
-        window.ClearScreen();
-        MainMenu.update_state(0);
+				clear_screen();
+        MainMenu.state = 0;
         break;
       }
     }
-  } while (*MainMenu.get_state() > -1);
+  } while (MainMenu.state > -1);
 
-	printf("\n\nGoodbye...\n");
+	printf("\nGoodbye...\n\n");
 
   // Turn back on cursor
   curs_set(1);

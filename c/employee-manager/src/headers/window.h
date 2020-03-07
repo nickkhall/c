@@ -1,14 +1,14 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <ncurses.h"
+#include <ncurses.h>
 
-struct Window {
+typedef struct w {
 	unsigned int y_max;
 	unsigned int x_max;
 
 	WINDOW *window;
-};
+} Window;
 
 void print_header();
 void clear_screen();
