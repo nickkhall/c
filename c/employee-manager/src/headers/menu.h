@@ -6,7 +6,7 @@
 #include "../headers/window.h"
 
 typedef struct m {
-	char** items;
+	const char** items;
 	short int highlighted;
 	short int state;
 } Menu;

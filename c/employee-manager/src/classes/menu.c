@@ -5,7 +5,6 @@
 #include "../headers/menu.h"
 #include "../headers/window.h"
 
-
 const short int* get_state(Menu *menu) {
 	return &menu->state;
 };

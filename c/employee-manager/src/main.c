@@ -11,17 +11,16 @@ int main() {
 
   // create main menu items
 	const int main_menu_size = 5;
-	const char* main_menu_items[sizeof(char*) * 20][main_menu_size] = {
+	const char* main_menu_items[] = {
 		"  Search  Employee  " ,
 		"  Create  Employee  ",
 		"  Update  Employee  ",
 		"  Remove  Employee  ",
 		"       Quit         "
 	};
-	char** mmi = main_menu_items;
 
   // create new menu 
-	Menu MainMenu = {mmi, 0, 0};
+	Menu MainMenu = {main_menu_items, 0, 0};
 
   do {
     switch(MainMenu.state) {
