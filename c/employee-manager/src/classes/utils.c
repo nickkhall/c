@@ -25,17 +25,17 @@ void write_to_strs(char **s, const int *rows, const int *cols) {
 
 void write_to_file(const char** labels, char **string, const int *size) {
 	// create file pointer to data/employees.txt
-	FILE *file = fopen("data/employees.txt", "w+");
+	FILE *file = fopen("data/employees.txt", "a");
 
 	// add new line to separate entries
-	fputs("\n---------------------------------------------------------------\n", file);
+	if (feof(file)) fputs("---------------------------------------------------------------\n", file);
+	else fputs("\n---------------------------------------------------------------\n", file);
 	
 	for (int i = 0; i < *size; i++) {
 		// add data entry
 		fputs(*(labels + i), file);
-		fputs(": ", file);
 		fputs(*(string + i), file);
-		if (i < *size) {
+		if (i < *size - 1) {
 			fputs(",\n", file);
 		}
 	}

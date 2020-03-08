@@ -47,7 +47,7 @@ int main() {
       }
 			case 1: {
 				clear_screen(&window);
-				const int size = 17;
+				const int size = 16;
 				const char* temp_form_labels[] = {
 					"First Name: ",
 					"Middle Name: ",
