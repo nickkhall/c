@@ -50,7 +50,7 @@ void render_main_menu(Window *window,Menu *menu, const char** items, const int* 
 		// Update the menu with the currently selected item
 		handle_navigation(menu, key_code, *items_size);
 	} while (key_code != 27 && key_code != 10); // As long as the user does not hit the "Escape" or "Enter" key
-	};
+};
 
 void handle_navigation(Menu *menu, int key_code, int items_size) {
 	switch(key_code) {
@@ -70,7 +70,7 @@ void handle_navigation(Menu *menu, int key_code, int items_size) {
 			break;
 		};
 
-	menu->state = menu->highlighted;
+	menu->state = menu->highlighted + 1;
 };
 
 

@@ -45,7 +45,22 @@ int main() {
 				render_main_menu(&window, &MainMenu, main_menu_items, &main_menu_size);
 				break;
       }
+			// search employee
 			case 1: {
+				clear_screen(&window);
+
+				// get user input for search (max 50 chars)
+
+				// search for data in file
+
+				// if found, return data
+
+				// else print error msg and return to main menu
+
+				break;
+			}
+			// create employee
+			case 2: {
 				clear_screen(&window);
 				const int size = 16;
 				const char* temp_form_labels[] = {
@@ -79,12 +94,8 @@ int main() {
 				MainMenu.state = 0;
 				break;
 			}
-			case 2: {
-				clear_screen(&window);
-				MainMenu.state = 0;
-				break;
-      }
-			case 4: {
+			// quit
+			case 5: {
 				clear_screen(&window);
 				MainMenu.state = -1;
 				break;
