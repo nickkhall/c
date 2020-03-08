@@ -47,9 +47,6 @@ char** create(Window *window, char** form_labels, int num_of_fields) {
 
 		// after user input, push data onto form_data array
 		*(form_data + i) = temp_data;
-
-		// free up form data memory
-		free(form_data);
 	}
 
 	// erase / refresh screen
