@@ -5,7 +5,7 @@
 #include "../headers/form.h"
 #include "../headers/employee.h"
 
-char** create(Window *window, char** form_labels, int num_of_fields) {
+char** create(Window *window, const char** form_labels, int num_of_fields) {
 	// enable cursor
 	curs_set(1);
 
@@ -24,7 +24,8 @@ char** create(Window *window, char** form_labels, int num_of_fields) {
 		wrefresh(window->window);
 
 		// create local variable for storing user input
-		char* temp_data;
+		char* temp_data = NULL;
+		temp_data = malloc(sizeof(char) * 50);
 
 		// move cursor and print form labels
 		mvwprintw(

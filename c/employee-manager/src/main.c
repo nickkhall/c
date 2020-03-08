@@ -64,6 +64,7 @@ int main() {
 					"Salary: "
 				};
 
+				char** user_input =  create(&window, temp_form_labels, 16);
 
 				MainMenu.state = 0;
 				break;
