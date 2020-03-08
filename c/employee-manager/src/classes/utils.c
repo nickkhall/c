@@ -23,7 +23,7 @@ void write_to_strs(char **s, const int *rows, const int *cols) {
 	}
 };
 
-void write_to_file(char **string, const int *size) {
+void write_to_file(const char** labels, char **string, const int *size) {
 	// create file pointer to data/employees.txt
 	FILE *file = fopen("data/employees.txt", "w+");
 
@@ -32,10 +32,12 @@ void write_to_file(char **string, const int *size) {
 	
 	for (int i = 0; i < *size; i++) {
 		// add data entry
+		fputs(*(labels + i), file);
+		fputs(": ", file);
 		fputs(*(string + i), file);
-		if (i < *size - 1) {
+		if (i < *size) {
 			fputs(",\n", file);
-		} else fputs("\n", file);
+		}
 	}
 
 	// add new line to separate entries
@@ -43,5 +45,8 @@ void write_to_file(char **string, const int *size) {
 
 	// close file stream
 	fclose(file);
+	
+	// free up file pointer memory
+	free(file);
 };
 

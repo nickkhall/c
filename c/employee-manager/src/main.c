@@ -68,10 +68,10 @@ int main() {
 				};
 
 				// user input data
-				char** user_input =  create(&window, temp_form_labels, &size);
+				char** user_input = create(&window, temp_form_labels, &size);
 
 				// write user input to data as employee
-				write_to_file(user_input, &size);
+				write_to_file(temp_form_labels, user_input, &size);
 
 				// free up user input memory
 				free(user_input);

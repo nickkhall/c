@@ -18,8 +18,6 @@ void render_main_menu(Window *window,Menu *menu, const char** items, const int* 
 	printf("\033[2J\033[1;1H");
 
 	int key_code = 0;
-	int y = 2;
-	int x = 2;
 
 	do {
 		refresh();
@@ -39,6 +37,9 @@ void render_main_menu(Window *window,Menu *menu, const char** items, const int* 
 
 			// Turn off reverse attribute
 			wattroff(window->window, A_REVERSE);
+
+			refresh();
+			wrefresh(window->window);
 		}
 
 		refresh();

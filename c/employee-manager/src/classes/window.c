@@ -15,7 +15,7 @@ void print_header(Window *window) {
 	};
 
 	for (short int i = 0; i < 8; i++) {
-		mvprintw(window->window, i + 1, (window->x_max / 2) - (91 / 2), *(header + i));
+		mvwprintw(window->window, i + 1, (window->x_max / 2) - (91 / 2), *(header + i));
 	}
 
   refresh();

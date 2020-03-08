@@ -13,7 +13,6 @@ char** create(Window *window, const char** form_labels, const int *num_of_fields
 	// print user input to screen
 	echo();
 	
-	int key_code = 0;
 	char** form_data = NULL;
 	form_data = malloc(sizeof(char*) * *num_of_fields);
 
@@ -42,9 +41,6 @@ char** create(Window *window, const char** form_labels, const int *num_of_fields
 		wrefresh(window->window);
 
 		// move cursor to after form_label for user input		
-		move(window->y_max / 2, window->x_max / 2 + strlen(*(form_labels + i)) + 1);
-
-		// get user input
 		getnstr(temp_data, 50);
 
 		// after user input, push data onto form_data array
