@@ -48,5 +48,6 @@ snake_game/architecture
 # VS Code
 .vscode
 
+**/**/data/*
 *.swp
 *~*

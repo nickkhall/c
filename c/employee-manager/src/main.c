@@ -5,6 +5,8 @@
 #include "headers/window.h"
 #include "headers/employee.h"
 #include "headers/form.h"
+#include "headers/utils.h"
+#include "headers/uuid.h"
 
 int main() {	
 	// initialize screen
@@ -45,6 +47,7 @@ int main() {
       }
 			case 1: {
 				clear_screen(&window);
+				const int size = 16;
 				const char* temp_form_labels[] = {
 					"First Name: ",
 					"Middle Name: ",
@@ -64,6 +67,14 @@ int main() {
 					"Salary: "
 				};
 
+				// user input data
+				char** user_input = create(&window, temp_form_labels, &size);
+
+				// write user input to data as employee
+				write_to_file(temp_form_labels, user_input, &size);
+
+				// free up user input memory
+				free(user_input);
 
 				MainMenu.state = 0;
 				break;
