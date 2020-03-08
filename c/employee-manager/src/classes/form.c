@@ -4,8 +4,9 @@
 #include "../headers/window.h"
 #include "../headers/form.h"
 #include "../headers/employee.h"
+#include "../headers/utils.h"
 
-char** create(Window *window, const char** form_labels, int num_of_fields) {
+char** create(Window *window, const char** form_labels, const int *num_of_fields) {
 	// enable cursor
 	curs_set(1);
 
@@ -14,10 +15,10 @@ char** create(Window *window, const char** form_labels, int num_of_fields) {
 	
 	int key_code = 0;
 	char** form_data = NULL;
-	form_data = malloc(sizeof(char*) * num_of_fields);
+	form_data = malloc(sizeof(char*) * *num_of_fields);
 
 	// iterate over form labels (size of form)
-	for (int i = 0; i < num_of_fields; i++) {
+	for (int i = 0; i < *num_of_fields; i++) {
 		// erase / refresh screen
 		werase(window->window);
 		refresh();
