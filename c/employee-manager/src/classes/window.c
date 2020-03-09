@@ -24,5 +24,7 @@ void print_header(Window *window) {
 
 void clear_screen(Window *window) {
   wclear(window->window);
+  refresh();
+  wrefresh(window->window);
 };
 

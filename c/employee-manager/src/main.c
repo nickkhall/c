@@ -8,6 +8,16 @@
 #include "headers/utils.h"
 #include "headers/uuid.h"
 
+// main menu items
+const int main_menu_size = 5;
+const char* main_menu_items[] = {
+	"  Search  Employee  " ,
+	"  Create  Employee  ",
+	"  Update  Employee  ",
+	"  Remove  Employee  ",
+	"       Quit         "
+};
+
 int main() {	
 	// initialize screen
 	initscr();
@@ -25,16 +35,6 @@ int main() {
 	getmaxyx(stdscr, window.y_max, window.x_max);
 	scrollok(window.window, true);
 
-  // create main menu items
-	const int main_menu_size = 5;
-	const char* main_menu_items[] = {
-		"  Search  Employee  " ,
-		"  Create  Employee  ",
-		"  Update  Employee  ",
-		"  Remove  Employee  ",
-		"       Quit         "
-	};
-
   // create new menu 
 	Menu MainMenu = {main_menu_items, 0, 0};
 
@@ -49,14 +49,30 @@ int main() {
 			case 1: {
 				clear_screen(&window);
 
+				char label[] = "Search: ";
+				int label_len = strlen(label);
+				// print label
+				mvwprintw(window.window, window.y_max / 2, window.x_max / 2 - (label_len / 2) - 1, "Search: ");
+
+				// enable cursor and output
+				curs_set(1);
+				echo();
+
+				char key[50];
 				// get user input for search (max 50 chars)
+				mvwgetnstr(window.window, window.y_max / 2, window.x_max / 2 + (label_len / 2) + 1, key, 50);
+
+				// clear screen
+				clear_screen(&window);
 
 				// search for data in file
+				search_from_file(key, main_menu_items);
 
 				// if found, return data
 
 				// else print error msg and return to main menu
 
+				MainMenu.state = 0;
 				break;
 			}
 			// create employee
@@ -87,9 +103,6 @@ int main() {
 
 				// write user input to data as employee
 				write_to_file(temp_form_labels, user_input, &size);
-
-				// free up user input memory
-				free(user_input);
 
 				MainMenu.state = 0;
 				break;

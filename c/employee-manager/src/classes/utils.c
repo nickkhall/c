@@ -86,11 +86,19 @@ void write_to_file(const char** labels, char **string, const int *size) {
  * @param {char*} The key word to search by
  * @return {char**} A pointer to the sectioned off data
  **/
-char** search_from_file(char* key, const char** labels) {
-	// create pointer to file
+void search_from_file(char* key, const char** labels) {
+	// open && create pointer to file
 	FILE *file = fopen("data/employee.txt", "r");
 
+	// if there is a problem opening file
+	if (file == NULL) return; 
+	// search file for key word
 	fscanf(file, "%s", key);
+
+	// get current postion in file
+	long int cur_index = ftell(file);
+
+
 
 	// close file
 	fclose(file);
