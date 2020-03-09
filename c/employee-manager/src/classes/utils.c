@@ -75,9 +75,6 @@ void write_to_file(const char** labels, char **string, const int *size) {
 
 	// close file stream
 	fclose(file);
-	
-	// free up file pointer memory
-	free(file);
 };
 
 /**
