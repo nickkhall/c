@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 /**
@@ -83,12 +84,23 @@ void write_to_file(const char** labels, char **string, const int *size) {
  * @param {char*} The key word to search by
  * @return {char**} A pointer to the sectioned off data
  **/
-int search_from_file(char* key, const char** labels) {
+int search_from_file(char* key, char* value, const char** labels, const size_t labels_size) {
 	// open && create pointer to file
-	FILE *file = fopen("data/employee.txt", "r");
+	FILE *file = fopen("data/employees.txt", "r");
 
 	// if there is a problem opening file
 	if (file == NULL) return 1; 
+
+	char* line;
+
+	while(fgets(line, 100, file) != NULL) {
+		sscanf(line, "%s", file);
+
+		if (strcmp(key, value)) {
+			
+		}
+	}
+
 	// search file for key word
 	fscanf(file, "%s", key);
 

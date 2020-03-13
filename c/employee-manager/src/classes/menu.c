@@ -15,8 +15,6 @@ Menu* update_state(Menu *menu, int new_state) {
 };
 
 void render_main_menu(Window *window,Menu *menu, const char** items, const int* items_size) {
-	printf("\033[2J\033[1;1H");
-
 	int key_code = 0;
 
 	do {
