@@ -58,27 +58,15 @@ int main() {
 				curs_set(1);
 				echo();
 
-				char label[50];
 				char key[50];
 				// get label for search (max 50 chars)
-				mvwgetnstr(window.window, window.y_max / 2, window.x_max / 2 + (label_len / 2) + 1, label, 50);
-
-				// clear screen
-				clear_screen(&window);
-
-				mvwprintw(window.window, window.y_max / 2, window.x_max / 2 - (label_len / 2) - 1, key);
-
-				// clear screen
-				clear_screen(&window);
-
-				// get key for search (max 50 chars)
 				mvwgetnstr(window.window, window.y_max / 2, window.x_max / 2 + (label_len / 2) + 1, key, 50);
 
 				// clear screen
 				clear_screen(&window);
 
 				// search for data in file
-				search_from_file(label, key, main_menu_items, sizeof(main_menu_items) / sizeof(*(main_menu_items + 0)));
+				search_from_file(key, main_menu_items, sizeof(main_menu_items) / sizeof(*(main_menu_items + 0)));
 
 				// if found, return data
 

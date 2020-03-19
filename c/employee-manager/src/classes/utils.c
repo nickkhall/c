@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#define LINE_SIZE 100
+
 /**
  * Allocates a sum of memory for a string array.
  * @param {int*} rows The number of strings in the string array to be alloted.
@@ -84,34 +86,47 @@ void write_to_file(const char** labels, char **string, const int *size) {
  * @param {char*} The key word to search by
  * @return {char**} A pointer to the sectioned off data
  **/
-int search_from_file(char* key, char* value, const char** labels, const size_t labels_size) {
+void* search_from_file(char *key, char *value, const char **labels, const size_t labels_size) {
 	// open && create pointer to file
 	FILE *file = fopen("data/employees.txt", "r");
 
 	// if there is a problem opening file
-	if (file == NULL) return 1; 
+	if (file == NULL) {
+		void *return_pointer = NULL;
 
-	char* line;
+		return return_pointer;
+	}; 
 
-	while(fgets(line, 100, file) != NULL) {
-		sscanf(line, "%s", file);
+	char *line = NULL;
+	line = (char*)malloc(sizeof(char) * LINE_SIZE);
 
-		if (strcmp(key, value)) {
+	while(fgets(line, LINE_SIZE, file) != NULL) {
+		long int is_match = 0;
+
+		for (int lc = 0; lc < LINE_SIZE; lc++) {
+			char *next_chars = NULL;
+			next_chars = (char*)malloc(sizeof(char) * (sizeof(key) / sizeof(*key)));
+
+			for (int x = 0; x < (sizeof(key) / sizeof(*key)); x++) {
+				*(next_chars + x) = *(line + (lc + x));
+			}
+
+			if (strcmp(next_chars, key) == 0) is_match = ftell(file);
 			
+			if (is_match) {
+				int x = 0;
+			}
+
+			free(next_chars);
 		}
 	}
 
-	// search file for key word
-	fscanf(file, "%s", key);
-
-	// get current postion in file
-	long int cur_index = ftell(file);
-
-	// @TODO finish finding current spot and print blob of data until user
-	// presses "Escape", "Enter" or "Spacebar"
 
 	// close file
 	fclose(file);
+
+	// free up line memory
+	free(line);
 	
 	return 0;
 };
