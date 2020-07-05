@@ -52,21 +52,16 @@ int main() {
       exit(1);
   }
 
-  char* hour = (char*)malloc(sizeof(char) * 3);
-  char* min = (char*)malloc(sizeof(char) * 3);
   char* month = (char*)malloc(sizeof(char) * 4);
   char* day = (char*)malloc(sizeof(char) * 4);
+
+  const short time_digits[4] = { 
+    (*(c_date_string + 11) - 48),
+    (*(c_date_string + 12) - 48),
+    (*(c_date_string + 14) - 48),
+    (*(c_date_string + 15) - 48)
+  };
   
-  // set hour
-  *(hour + 0) = *(c_date_string + 11);
-  *(hour + 1) = *(c_date_string + 12);
-  *(hour + 2) = 0x00;
-
-  // set minute
-  *(min + 0) = *(c_date_string + 14);
-  *(min + 1) = *(c_date_string + 15);
-  *(min + 2) = 0x00;
-
   // set day from date string
   *(day + 0) = *(c_date_string + 0);
   *(day + 1) = *(c_date_string + 1);
@@ -80,14 +75,21 @@ int main() {
   *(month + 3) = 0x00;
 
 
-  // char mappings
-  const int chars[10] = { 123, 18, 103, 55, 26, 61, 125, 19, 63, 127 };
+  // char mappings (binary)
+  const int bit_chars[10] = {123, 18, 103, 55, 26, 61, 125, 19, 63, 127};
+  const int bit_masks[7] = {1, 2, 4, 8, 16, 32, 64};
 
+  for (int d = 0; d < 4; d++) {
+    const short current_digit = *(time_digits + d);
+    printf("current_digit: %d\n", current_digit);
+    for (short i = 0; i < 8; i++) {
+      if ((*(bit_chars + current_digit) >> (i - 1)) & 1) printf("match\n");
+    }
+  }
   
 
 
-  free(hour);
-  free(min);
+  free(month);
   free(day);
   exit(0);
 }
