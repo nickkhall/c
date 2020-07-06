@@ -82,7 +82,7 @@ int main() {
     1023775, 559247, 1023903, 561055
   };
 
-  char time_result_str[85];
+  char time_result_str[104];
   short head_count = 0;
 
   for (int d = 0; d < 4; d++) {
@@ -99,15 +99,18 @@ int main() {
         else *(time_result_str + head_count) = 32;
 
         head_count++;
-        if (((y == 4) && (y % 2 == 0) || x == 3)) *(time_result_str + head_count) = '\n';
+        *(time_result_str + head_count) = '\n';
       }
 
       head_count++;
+      *(time_result_str + head_count) = '\n';
     }
+
 
     head_count++;
   } 
 
+  *(time_result_str + head_count) = 0x00;
   printf("%s\nheadcount: %d\n", time_result_str, head_count);
 
   free(month);
