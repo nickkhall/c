@@ -82,7 +82,7 @@ int main() {
     1023775, 559247, 1023903, 561055
   };
 
-  char time_result_str[104];
+  char time_result_str[120] = {0};
   short head_count = 0;
 
   for (int d = 0; d < 4; d++) {
@@ -97,20 +97,15 @@ int main() {
 
         if (is_bit_set) *(time_result_str + head_count) = 120;
         else *(time_result_str + head_count) = 32;
-
+        
         head_count++;
-        *(time_result_str + head_count) = '\n';
+
+        if (x == 3) *(time_result_str + (head_count + 1)) = '\n';
+        else if (x == 3 && y == 4) *(time_result_str + (head_count + 1)) = 32;
       }
-
-      head_count++;
-      *(time_result_str + head_count) = '\n';
     }
-
-
-    head_count++;
   } 
 
-  *(time_result_str + head_count) = 0x00;
   printf("%s\nheadcount: %d\n", time_result_str, head_count);
 
   free(month);
