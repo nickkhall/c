@@ -75,19 +75,40 @@ int main() {
   *(month + 3) = 0x00;
 
 
-  // char mappings (binary)
-  const int bit_chars[10] = {123, 18, 103, 55, 26, 61, 125, 19, 63, 127};
-  const int bit_masks[7] = {1, 2, 4, 8, 16, 32, 64};
+  // binary char mappings [0-9]
+  const unsigned int bit_chars[10] = {
+    1022367, 559240, 991119,
+    1019535, 561049, 1019679,
+    1023775, 559247, 1023903, 561055
+  };
+
+  char time_result_str[85];
+  short head_count = 0;
 
   for (int d = 0; d < 4; d++) {
-    const short current_digit = *(time_digits + d);
-    printf("current_digit: %d\n", current_digit);
-    for (short i = 0; i < 8; i++) {
-      if ((*(bit_chars + current_digit) >> (i - 1)) & 1) printf("match\n");
-    }
-  }
-  
+    short current_digit = *(time_digits + d);
+    short counter = 0;
 
+    for (short y = 0; y < 5; y++) {
+      for (short x = 0; x < 4; x++) {
+        const short is_bit_set = ((bit_chars[current_digit] >> ((counter + 1) - 1)) & 1); 
+
+        counter++;
+
+        if (is_bit_set) *(time_result_str + head_count) = 120;
+        else *(time_result_str + head_count) = 32;
+
+        head_count++;
+        if (((y == 4) && (y % 2 == 0) || x == 3)) *(time_result_str + head_count) = '\n';
+      }
+
+      head_count++;
+    }
+
+    head_count++;
+  } 
+
+  printf("%s\nheadcount: %d\n", time_result_str, head_count);
 
   free(month);
   free(day);
