@@ -51,10 +51,7 @@ int main() {
 
       exit(1);
   }
-
-  char* month = (char*)malloc(sizeof(char) * 4);
-  char* day = (char*)malloc(sizeof(char) * 4);
-
+  
   const short digits[4] = { 
     (*(c_date_string + 11) - 48),
     (*(c_date_string + 12) - 48),
@@ -63,30 +60,24 @@ int main() {
   };
   
   // set day from date string
-  *(day + 0) = *(c_date_string + 0);
-  *(day + 1) = *(c_date_string + 1);
-  *(day + 2) = *(c_date_string + 2);
-  *(day + 3) = 0x00;
-
-  // set month from date string
-  *(month + 0) = *(c_date_string + 4);
-  *(month + 1) = *(c_date_string + 5);
-  *(month + 2) = *(c_date_string + 6);
-  *(month + 3) = 0x00;
-
+  char* day = (char*)malloc(sizeof(char) * 5);
+  
+  for (unsigned short i = 0; i < 5; i++) {
+    if (i == 4) *(day + i) = 0x00;
+    else *(day + i) = *(c_date_string + i);
+  }
 
   // binary char mappings [0-9]
   const unsigned int digit_masks[10] = {
     1022367, 69905, 991119,
     987935, 630545, 1019679,
-    1023775, 559247, 1023903, 561055
+    1023775, 987409, 1023903, 561055
   };
 
-  char time_result_str[104] = {0};
+  char result_str[200] = {0};
   unsigned short digit_index = 0;
+  unsigned short current_index = 0;
   
-  printf("\n%s\n", c_date_string);
-
   for (unsigned short y = 0; y < 5; y++) {
     digit_index = 0;
     for (unsigned short x = 0; x < 7; x++) {
@@ -98,24 +89,39 @@ int main() {
           const unsigned int draw = (cur_bit_set >> d) & 1;
           
           if (draw) {
-            printf("x");
+            *(result_str + current_index) = 'x';
+            current_index++;
           } else {
-            printf(" ");
+            *(result_str + current_index) = ' ';
+            current_index++;
           }
         } 
       } else if (x == 3 && (y == 1 || y == 3 )) {
-          printf(" • ");
+          for (unsigned short i = 0; i < 3; i++) {
+            if (i == 2) *(result_str + current_index) = '•';
+            else *(result_str + current_index) = ' ';
+            current_index++;
+          }
       } else {
-        printf("   ");
+          for (unsigned short i = 0; i < 3; i++) {
+            *(result_str + current_index) = ' ';
+            current_index++;
+          }
+        *(result_str + current_index) = ' ';
+        current_index++;
+        *(result_str + current_index) = ' ';
+        current_index++;
+        *(result_str + current_index) = ' ';
+        current_index++;
       }
     }
     
-    printf("\n");
+    *(result_str + current_index) = '\n';
+    current_index++;
   }
   
-  printf("\n%s", c_date_string);
+  printf("\n%s", result_str);
 
-  free(month);
   free(day);
   exit(0);
 }
