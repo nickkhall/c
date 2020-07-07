@@ -76,7 +76,7 @@ int main() {
 
 
   // binary char mappings [0-9]
-  const unsigned int bit_masks[10] = {
+  const unsigned int digit_masks[10] = {
     1022367, 559240, 991119,
     1019023, 561049, 1019679,
     1023775, 559247, 1023903, 561055
@@ -84,18 +84,18 @@ int main() {
 
   char time_result_str[104] = {0};
   unsigned short bits = 4;
-  unsigned short cur_digit_index = 0;
+  unsigned short digit_index = 0;
   
   printf("\n%s\n", c_date_string);
 
   for (unsigned short y = 0; y < 5; y++) {
-    const unsigned int cur_digit = *(digits + cur_digit_index);
+    const unsigned int cur_digit = digit_masks[(*(digits + digit_index))];
     const short n_mask = 15;
     
     for (unsigned short x = 0; x < 7; x++) {
       if (x % 2 == 0) {
         for (unsigned short d = 0; d < 4; d++) {
-          const unsigned int cur_bit_set = ((n_mask >> (d + 1)) & 1);
+          const unsigned int cur_bit_set = ((n_mask >> d) & 1);
           if (cur_bit_set) {
             printf("x");
           } else printf(" ");
