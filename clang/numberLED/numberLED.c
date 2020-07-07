@@ -55,7 +55,7 @@ int main() {
   char* month = (char*)malloc(sizeof(char) * 4);
   char* day = (char*)malloc(sizeof(char) * 4);
 
-  const short time_digits[4] = { 
+  const short digits[4] = { 
     (*(c_date_string + 11) - 48),
     (*(c_date_string + 12) - 48),
     (*(c_date_string + 14) - 48),
@@ -76,40 +76,45 @@ int main() {
 
 
   // binary char mappings [0-9]
-  const unsigned int bit_chars[10] = {
+  const unsigned int bit_masks[10] = {
     1022367, 559240, 991119,
-    1019535, 561049, 1019679,
+    1019023, 561049, 1019679,
     1023775, 559247, 1023903, 561055
   };
 
-  char time_result_str[120] = {0};
-  short head_count = 0;
+  char time_result_str[104] = {0};
+  unsigned short bits = 4;
+  unsigned short cur_digit_index = 0;
+  
+  printf("\n%s\n", c_date_string);
 
-  for (int d = 0; d < 4; d++) {
-    short current_digit = *(time_digits + d);
-    short counter = 0;
-
-    for (short y = 0; y < 5; y++) {
-      for (short x = 0; x < 4; x++) {
-        const short is_bit_set = ((bit_chars[current_digit] >> ((counter + 1) - 1)) & 1); 
-
-        counter++;
-
-        if (is_bit_set) *(time_result_str + head_count) = 120;
-        else *(time_result_str + head_count) = 32;
+  for (unsigned short y = 0; y < 5; y++) {
+    const unsigned int cur_digit = *(digits + cur_digit_index);
+    const short n_mask = 15;
+    
+    for (unsigned short x = 0; x < 7; x++) {
+      if (x % 2 == 0) {
+        for (unsigned short d = 0; d < 4; d++) {
+          const unsigned int cur_bit_set = ((n_mask >> (d + 1)) & 1);
+          if (cur_bit_set) {
+            printf("x");
+          } else printf(" ");
         
-        head_count++;
-
-        if (x == 3) *(time_result_str + (head_count + 1)) = '\n';
-        else if (x == 3 && y == 4) *(time_result_str + (head_count + 1)) = 32;
+        } 
+      } else {
+        printf(" ");
       }
     }
-  } 
-
-  printf("%s\nheadcount: %d\n", time_result_str, head_count);
+    
+    printf("\n");
+    bits += 4;
+  }
+  
+  printf("\n%s", c_date_string);
 
   free(month);
   free(day);
   exit(0);
 }
+
 
