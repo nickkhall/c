@@ -89,30 +89,28 @@ int main() {
           const unsigned int draw = (cur_bit_set >> d) & 1;
           
           if (draw) {
-            *(result_str + current_index) = 'x';
+            *(result_str + current_index) = 120;
             current_index++;
           } else {
-            *(result_str + current_index) = ' ';
+            *(result_str + current_index) = 32;
             current_index++;
           }
         } 
       } else if (x == 3 && (y == 1 || y == 3 )) {
           for (unsigned short i = 0; i < 3; i++) {
-            if (i == 2) *(result_str + current_index) = '•';
-            else *(result_str + current_index) = ' ';
+            if (i == 1) {
+              *(result_str + current_index) = 35;
+            }  else {
+              *(result_str + current_index) = 32;
+            }
+
             current_index++;
           }
       } else {
           for (unsigned short i = 0; i < 3; i++) {
-            *(result_str + current_index) = ' ';
+            *(result_str + current_index) = 32;
             current_index++;
           }
-        *(result_str + current_index) = ' ';
-        current_index++;
-        *(result_str + current_index) = ' ';
-        current_index++;
-        *(result_str + current_index) = ' ';
-        current_index++;
       }
     }
     
