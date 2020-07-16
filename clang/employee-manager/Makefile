@@ -1,20 +1,27 @@
+INCLUDE_DIR = /usr/include
 CC = gcc
-INCLUDE = /usr/include/postgresql
-INCLUDE_POSTGRES = $(pg_config --includedir)
+C_FLAGS = -I$(INCLUDE_DIR)
 
-all: employee-manager
+LIBS = -lm
+ODIR = obj
 
-main.o: main.c
-	$(CC) -c $(INCLUDE_POSTGRES) $(INCLUDES) main.c
+_DEPS = src/headers/*
+DEPS = $(patsubst %, $(INCLUDE_DIR)/%, $(_DEPS))
 
-employee-manager: main.o
-	$(CC) -o employee-manager main.o $(LIBS)
+_OBJ = 
+OBJ = $(patsubst %, $(ODIR)/%, $(_OBJ))
+
+
+$(ODIR)/%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(C_FLAGS)
+
+employee-manager: $(OBJ)
+	$(CC) -o $@ $^ $(C_FLAGS) $(LIBS)
+
+.PHONY: clean
 
 clean:
-	rm -rf employee-manager main.o
-
-compile:
-	gcc -Wall -o bin/employee-manager -lncurses -I/usr/local/include/mysql src/main.c src/classes/*.c 
+		rm -f $(ODIR)/*.o *~ core $(INCLUDE_DIR)/*~
 
 produce_debug:
 	gcc -g -o debug/debug src/main.c src/classes/*.c -lncurses -L/usr/lib/mysql
