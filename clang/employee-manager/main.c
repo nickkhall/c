@@ -21,18 +21,6 @@ const char* main_menu_items[] = {
 };
 
 int main() {	
-	PGconn* conn;
-	conn = PQconnectdb(SQL_INFO);
-	if (conn == NULL) exit(1);
-
-	if (PQstatus(conn) != CONNECTION_OK) {
-		printf("YO WE GOT AN ERROR BICH!\n%s\n", PQerrorMessage(conn));
-		exit(1);
-	}
-
-	PQfinish(conn);
-
-
 	// initialize screen
 	initscr();
 	noecho();
@@ -78,13 +66,6 @@ int main() {
 
 				// clear screen
 				clear_screen(&window);
-
-				// search for data in file
-				search_from_file(key, main_menu_items, sizeof(main_menu_items) / sizeof(*(main_menu_items + 0)));
-
-				// if found, return data
-
-				// else print error msg and return to main menu
 
 				MainMenu.state = 0;
 				break;
