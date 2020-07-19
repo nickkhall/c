@@ -51,3 +51,5 @@ snake_game/architecture
 **/**/data/*
 *.swp
 *~*
+
+*postgres_info.h

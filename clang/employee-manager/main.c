@@ -1,3 +1,4 @@
+#include <libpq-fe.h>
 #include <stdio.h>
 #include <ncurses.h>
 
@@ -19,6 +20,11 @@ const char* main_menu_items[] = {
 };
 
 int main() {	
+	// testing shite
+	PGconn* PQconnectdb(SQL_INFO);
+	PQfinish(PQconnectdb);
+
+
 	// initialize screen
 	initscr();
 	noecho();

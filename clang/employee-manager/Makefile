@@ -30,8 +30,9 @@ depend: $(SRC)
 	makedepend $(INCLUDES) $^
 
 debug_code:
-	$(CC) -g $(CFLAGS) $(INCLUDES) $(LIBS) -o $(BUILD_DIR)/$(BIN)
+	$(RM) debug/debug
+	$(CC) -g -o debug/debug $(SRC) $(CFLAGS) $(INCLUDES) $(LIBS)
 
 debug_mode:
-	tmux splitw -h -p 50 "gdbserver :12345 ./debug/debug"; tmux select -t 0; gdb -x ./debug/debug_conf.gdb;
+	tmux splitw -h -p 50 "gdbserver localhost:12345 debug/debug"; tmux select -t 0; gdb -x debug/debug_conf.gdb;
 
