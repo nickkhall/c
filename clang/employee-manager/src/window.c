@@ -1,6 +1,6 @@
 #include <ncurses.h>
 
-#include "../headers/window.h"
+#include "headers/window.h"
 
 void print_header(Window *window) {
 	const char* header[] = {

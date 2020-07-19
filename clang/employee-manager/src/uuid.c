@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "../headers/uuid.h"
+#include "headers/uuid.h"
 
 char* generate_uuid() {
 	int min = 0;

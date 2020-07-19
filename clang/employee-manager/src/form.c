@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <ncurses.h>
 
-#include "../headers/window.h"
-#include "../headers/form.h"
-#include "../headers/employee.h"
-#include "../headers/utils.h"
+#include "headers/window.h"
+#include "headers/form.h"
+#include "headers/employee.h"
+#include "headers/utils.h"
 
 char** create(Window *window, const char** form_labels, const int *num_of_fields) {
 	// enable cursor

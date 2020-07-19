@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <ncurses.h>
 
-#include "../headers/menu.h"
-#include "../headers/window.h"
+#include "headers/menu.h"
+#include "headers/window.h"
 
 const short int* get_state(Menu *menu) {
 	return &menu->state;
