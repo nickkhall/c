@@ -8,6 +8,7 @@
 #include "src/headers/form.h"
 #include "src/headers/utils.h"
 #include "src/headers/uuid.h"
+#include "src/headers/postgres_info.h"
 
 // main menu items
 const int main_menu_size = 5;
@@ -20,9 +21,16 @@ const char* main_menu_items[] = {
 };
 
 int main() {	
-	// testing shite
-	PGconn* PQconnectdb(SQL_INFO);
-	PQfinish(PQconnectdb);
+	PGconn* conn;
+	conn = PQconnectdb(SQL_INFO);
+	if (conn == NULL) exit(1);
+
+	if (PQstatus(conn) != CONNECTION_OK) {
+		printf("YO WE GOT AN ERROR BICH!\n%s\n", PQerrorMessage(conn));
+		exit(1);
+	}
+
+	PQfinish(conn);
 
 
 	// initialize screen
