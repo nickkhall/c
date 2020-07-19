@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <ncurses.h>
 
-#include "headers/menu.h"
-#include "headers/window.h"
-#include "headers/employee.h"
-#include "headers/form.h"
-#include "headers/utils.h"
-#include "headers/uuid.h"
+#include "src/headers/menu.h"
+#include "src/headers/window.h"
+#include "src/headers/employee.h"
+#include "src/headers/form.h"
+#include "src/headers/utils.h"
+#include "src/headers/uuid.h"
 
 // main menu items
 const int main_menu_size = 5;
@@ -129,4 +129,4 @@ int main() {
 	endwin();
 
   return 0;
-};
+}
