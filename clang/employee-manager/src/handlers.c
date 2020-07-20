@@ -24,6 +24,13 @@ void search_employee(const char* query) {
 
 	// fetch rows from db
 	res = PQexec(conn, "DELCARE employee CURSOR FOR select * from employees");
+	if (PQresultStatus(res) != PGRES_COMMAND_OK) {
+		PQclear(res);
+		exit_nicely(conn);
+		exit(1);
+	}
+
+
 
 	disconnect_from_db(conn);
 }
