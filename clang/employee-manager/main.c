@@ -48,13 +48,18 @@ int main() {
       }
       // search employee
       case 1: {
-        print_search_form(&window);
+				char* user_input = NULL;
+        user_input = print_search_form(&window);
 
         MainMenu.state = 0;
+        
+        // free up pointer returned from `print_search_form`
+        free(user_input);
         break;
       }
       // create employee
       case 2: {
+        // @TODO: (nickkhall) Refactor me to be a more functional approach, this is a mess
         clear_screen(&window);
         const int size = 16;
         const char* temp_form_labels[] = {

@@ -62,7 +62,7 @@ char** create(Window *window, const char** form_labels, const int *num_of_fields
 };
 
 
-void print_search_form(Window* win) {
+char* print_search_form(Window* win) {
   // get length of search form label
   int label_len = strlen(SEARCH_LABEL);
 
@@ -78,7 +78,7 @@ void print_search_form(Window* win) {
 
   // temp buffer for user input
   // (ncurses `mvngetnstr` sanitizes so no buffer overflow)
-  char key[100];
+  char* key = (char*)malloc(sizeof(char) * 100);
 
   // get label for search (max 100 chars)
   mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, key, 100);
@@ -89,4 +89,6 @@ void print_search_form(Window* win) {
 
   // clear screen again
   clear_screen(win);
+
+	return key;
 }
