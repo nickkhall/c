@@ -8,7 +8,6 @@
 #include "src/headers/form.h"
 #include "src/headers/utils.h"
 #include "src/headers/uuid.h"
-#include "src/headers/postgres_info.h"
 
 // main menu items
 const int main_menu_size = 5;

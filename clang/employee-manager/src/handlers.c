@@ -12,10 +12,11 @@ void search_employee(const char* query) {
 	PGconn* conn = connect_to_db();
 
 	// start transaction block
-	PGResult* result = PQexec(conn, "BEGIN");
+	PGresult* res = PQexec(conn, "BEGIN");
 	if (PQresultStatus(res) != PGRES_COMMAND_OK) {
 		PQclear(res);
-		exit_nicely(conn);
+
+		PQfinish(conn);
 		exit(1);
 	}
 
@@ -26,7 +27,8 @@ void search_employee(const char* query) {
 	res = PQexec(conn, "DELCARE employee CURSOR FOR select * from employees");
 	if (PQresultStatus(res) != PGRES_COMMAND_OK) {
 		PQclear(res);
-		exit_nicely(conn);
+
+		PQfinish(conn);
 		exit(1);
 	}
 
