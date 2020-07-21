@@ -48,23 +48,7 @@ int main() {
       }
 			// search employee
 			case 1: {
-				clear_screen(&window);
-
-				char label_label[] = "First name, email for phone: ";
-				int label_len = strlen(label_label);
-				// print label
-				mvwprintw(window.window, window.y_max / 2, window.x_max / 2 - (label_len / 2) - 1, label_label);
-
-				// enable cursor and output
-				curs_set(1);
-				echo();
-
-				char key[50];
-				// get label for search (max 50 chars)
-				mvwgetnstr(window.window, window.y_max / 2, window.x_max / 2 + (label_len / 2) + 1, key, 50);
-
-				// clear screen
-				clear_screen(&window);
+				print_search_form(&window);
 
 				MainMenu.state = 0;
 				break;

@@ -6,6 +6,8 @@
 #include "headers/employee.h"
 #include "headers/utils.h"
 
+#define SEARCH_LABEL "Search by ID, First and/or Last name:"
+
 char** create(Window *window, const char** form_labels, const int *num_of_fields) {
 	// enable cursor
 	curs_set(1);
@@ -59,3 +61,28 @@ char** create(Window *window, const char** form_labels, const int *num_of_fields
 	return form_data;
 };
 
+
+void print_search_form(Window* win) {
+	// get length of search form label
+	int label_len = strlen(SEARCH_LABEL);
+
+	// clear screen
+	clear_screen(win);
+
+	// print search form label
+	mvwprintw(win->window, win->y_max / 2, win->x_max / 2 - (label_len / 2) - 1, SEARCH_LABEL);
+
+	// enable cursor and output
+	curs_set(1);
+	echo();
+
+	// temp buffer for user input
+	// (ncurses `mvngetnstr` sanitizes so no buffer overflow)
+	char key[100];
+
+	// get label for search (max 100 chars)
+	mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, key, 100);
+
+	// clear screen again
+	clear_screen(win);
+}
