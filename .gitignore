@@ -1,3 +1,6 @@
+# all binaries
+**/*/bin/*
+
 # SFTP Server
 sftp/Server
 
