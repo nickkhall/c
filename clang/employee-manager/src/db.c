@@ -1,13 +1,14 @@
-#include "src/headers/postgres_info.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <libpq-fe.h>
 
+#include "headers/postgres_info.h"
+
 // @NOTE: sanitize data
 // connect
-PGConn* connect_to_db(const char* query) {
+PGconn* connect_to_db(const char* query) {
 	// establish connection to db
-	PGConn* conn =  PQconnect(SQL_INFO);
+	PGconn* conn =  PQconnect(SQL_INFO);
 
 	// if cannot connect to db
 	if (conn == NULL) {
@@ -31,7 +32,7 @@ PGConn* connect_to_db(const char* query) {
 // delete
 
 // disconnect
-void disconnect_from_db(PGConn* conn) {
+void disconnect_from_db(PGconn* conn) {
 	PQfinish(conn);
 }
 

@@ -1,9 +1,9 @@
-#ifndef "DB_H"
-#define "DB_H"
+#ifndef DB_H
+#define DB_H
 
-PGConn* connect_to_db(const char* query);
+PGconn* connect_to_db(const char* query);
 
-void disconnect_from_db(PGConn* conn);
+void disconnect_from_db(PGconn* conn);
 
 #endif
 
