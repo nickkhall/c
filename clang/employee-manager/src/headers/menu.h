@@ -3,7 +3,7 @@
 
 #include <string.h>
 
-#include "../headers/window.h"
+#include "window.h"
 
 typedef struct m {
 	const char** items;

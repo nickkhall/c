@@ -83,6 +83,10 @@ void print_search_form(Window* win) {
 	// get label for search (max 100 chars)
 	mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, key, 100);
 
+	// disable cursor and output
+	curs_set(0);
+	noecho();
+
 	// clear screen again
 	clear_screen(win);
 }

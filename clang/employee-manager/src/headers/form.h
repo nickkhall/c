@@ -3,7 +3,7 @@
 
 #include <string.h>
 
-#include "./window.h"
+#include "window.h"
 
 typedef struct f {
 	char** form_labels;
