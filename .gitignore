@@ -1,6 +1,3 @@
-# all binaries
-**/*/bin/*
-
 # SFTP Server
 sftp/Server
 
@@ -56,3 +53,6 @@ snake_game/architecture
 *~*
 
 *postgres_info.h
+clang/employee-manager/bin/*
+clang/employee-manager/debug/*
+
