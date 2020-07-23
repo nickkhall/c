@@ -49,7 +49,8 @@ PGresult* query_db(const char* query, const char* const* queryParams, const int 
 	res = PQexecParams(conn, query, num_of_queries, NULL, queryParams, NULL, NULL, 0);
 
 	if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-		printf("\n\nERROR!\n-----------------------------\n%s\n----------------------", PQerrorMessage(conn));
+		system("reset");
+		printf("\n-----------------------------\n%s\n-----------------------------", PQerrorMessage(conn));
 		PQclear(res);
 		disconnect_from_db(conn);
 		exit(1);
