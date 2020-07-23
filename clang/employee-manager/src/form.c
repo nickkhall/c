@@ -7,6 +7,7 @@
 #include "headers/utils.h"
 
 #define SEARCH_LABEL "Search by ID, First and/or Last name:"
+#define KEY_SIZE 100
 
 char** create(Window *window, const char** form_labels, const int *num_of_fields) {
   // enable cursor
@@ -78,13 +79,13 @@ char* print_search_form(Window* win) {
 
   // temp buffer for user input
   // (ncurses `mvngetnstr` sanitizes so no buffer overflow)
-  char* key = (char*)malloc(sizeof(char) * 100);
+  char* key = (char*)malloc(sizeof(char) * KEY_SIZE);
 	if (key == NULL) {
 		exit(1);
 	}
 
   // get label for search (max 100 chars)
-  mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, key, 100);
+  mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, key, KEY_SIZE);
 
   // disable cursor and output
   curs_set(0);

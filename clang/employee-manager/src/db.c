@@ -26,14 +26,45 @@ PGconn* connect_to_db() {
 	return conn;
 }
 
-// search
-
-// insert
-
-// delete
-
 // disconnect
 void disconnect_from_db(PGconn* conn) {
 	PQfinish(conn);
 }
 
+// search
+PGresult* query_db(const char* query, const char* const* queryParams, const int num_of_queries) {
+	PGresult* res;
+	// create connection with db
+	PGconn* conn = connect_to_db();
+
+	res = PQexec(conn, "BEGIN");
+	if (PQresultStatus(res) != PGRES_COMMAND_OK) {
+		PQclear(res);
+		disconnect_from_db(conn);
+		exit(1);
+	}
+
+	PQclear(res);
+
+	res = PQexecParams(conn, query, num_of_queries, NULL, queryParams, NULL, NULL, 0);
+
+	if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+		printf("\n\nERROR!\n-----------------------------\n%s\n----------------------", PQerrorMessage(conn));
+		PQclear(res);
+		disconnect_from_db(conn);
+		exit(1);
+	}
+	
+	PGresult* rows = res;
+
+	PQclear(res);
+	
+	// disconnect from db
+	disconnect_from_db(conn);
+
+	return rows;
+};
+
+// insert
+
+// delete
