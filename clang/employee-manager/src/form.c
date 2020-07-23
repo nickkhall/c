@@ -79,6 +79,9 @@ char* print_search_form(Window* win) {
   // temp buffer for user input
   // (ncurses `mvngetnstr` sanitizes so no buffer overflow)
   char* key = (char*)malloc(sizeof(char) * 100);
+	if (key == NULL) {
+		exit(1);
+	}
 
   // get label for search (max 100 chars)
   mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, key, 100);
