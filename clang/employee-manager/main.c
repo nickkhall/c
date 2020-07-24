@@ -53,9 +53,10 @@ int main() {
 				const char* user_input = print_search_form(&window);
 				const char* const* queryParams = &user_input;
 				char* sql_query = "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1";
+				PGresult* query_result;
 
 				// query db
-				query_db(sql_query, queryParams, 1);
+				query_result = query_db(sql_query, queryParams, 1);
 
 				// update menu state to 0 to return to main menu
         MainMenu.state = 0;
