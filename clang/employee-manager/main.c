@@ -52,7 +52,7 @@ int main() {
 				// get user input
 				const char* user_input = print_search_form(&window);
 				const char* const* queryParams = &user_input;
-				char* sql_query = "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1";
+				const char* sql_query = "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1";
 				PGresult* query_result;
 
 				// query db

@@ -4,25 +4,19 @@
 #include <string.h>
 
 typedef struct e {
-	const unsigned long int employee_id;
-	char** first_name;
-	char** middle_name;
-	char** last_name;
-	char** suffix;
-	char** email_address;
+	const unsigned long int id;
+	char** first;
+	char** last;
+	char** email;
 	char** address;
-	char** home_phone_number;
-	char** cell_phone_number;
-	char** marital_status;
-	char** social_security_number;
-	unsigned long long int start_date;
-	char** emergency_contact;
+	char** phone;
+	unsigned long long int start;
+	char** emergency;
 	char** gender;
 	char** ethnicity;
-	char** residency;
-	char** job_title;
+	char** title;
 	unsigned long int salary;
-} employee;
+} Employee;
 
 #endif
 

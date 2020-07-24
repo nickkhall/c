@@ -1,7 +1,9 @@
 #ifndef HANDLERS_H
 #define HANDLERS_H
 
-void search_employee(const char* query); 
+#include "employee.h"
+
+Employee* search_employee(const char* query); 
 
 #endif
 

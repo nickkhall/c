@@ -4,7 +4,7 @@
 #include "headers/handlers.h"
 #include "headers/db.h"
 
-void search_employee(const char* query) {
+Employee* search_employee(const char* query) {
 	if (!*(query)) {
 		exit(1);
 	}
