@@ -3,10 +3,10 @@
 #include "headers/window.h"
 #include "headers/screen.h"
 
-void print_to_screen(Window* win, const int y, const int x, char** msg, const int msg_size) {
-	for (int w = 0; w < msg_size; w++) {	
-		for (int c = 0; *(*(msg + w) + (c + 1)) != '\n'; c++) {
-			
+void print_data(Window* win, const char*** data, const int rows, const int cols) {
+	for (int y = 0; y < rows; y++) {
+		for (int x = 0; x < cols; x++) {
+			const char* cur = *(*(data + y) + x);
 		}
 	}
 }

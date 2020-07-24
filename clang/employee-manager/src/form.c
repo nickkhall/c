@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <ncurses.h>
 
+// #include "headers/libpq-fe.h"
 #include "headers/window.h"
 #include "headers/form.h"
 #include "headers/employee.h"
@@ -8,6 +9,7 @@
 
 #define SEARCH_LABEL "Search by ID, First and/or Last name:"
 #define KEY_SIZE 100
+#define MAX_STR_SIZE 100
 
 char** create(Window *window, const char** form_labels, const int *num_of_fields) {
   // enable cursor
@@ -95,4 +97,33 @@ char* print_search_form(Window* win) {
   clear_screen(win);
 
 	return key;
+}
+
+void* convert_query_to_data(PGresult* res, const int* rows, const int* cols) {
+	// @TODO: separate this logic into function if successful
+	char*** query_data;
+	query_data = calloc(*rows, sizeof(char**));
+
+	if (query_data == NULL) {
+		system("reset");
+		printf("failure to allocate heap memory for convert_query_to_data()");
+		PQclear(res);
+		
+		void* null_pointer = NULL;
+		return null_pointer;
+	}
+
+	for (int r = 0; r < *rows; r++) {
+		*(query_data + r) = calloc(*cols, sizeof(char*));
+
+		for (int c = 0; c < *cols; c++) {	
+			*(*(query_data + r) + c) = calloc(MAX_STR_SIZE, (sizeof(char)));
+
+			char* value = PQgetvalue(res, r, c);
+
+			*(*(*(query_data + r) + c)) = *value;
+		}
+	}
+
+	return query_data;
 }

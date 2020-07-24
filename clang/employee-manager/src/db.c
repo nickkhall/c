@@ -5,8 +5,7 @@
 #include <libpq-fe.h>
 
 #include "headers/postgres_info.h"
-
-#define MAX_STR_SIZE 100
+#include "headers/form.h"
 
 // @NOTE: sanitize data
 // connect
@@ -62,29 +61,7 @@ char*** query_db(const char* query, const char* const* queryParams, const int nu
 	int rows = PQntuples(res);
 	int cols = PQnfields(res);
 
-	// @TODO: separate this logic into function if successful
-	char*** query_data;
-	query_data = calloc(rows, sizeof(char**));
-
-	if (query_data == NULL) {
-		system("reset");
-		printf("failure to allocate heap memory for search emp response");
-		PQclear(res);
-		disconnect_from_db(conn);
-		exit(1);
-	}
-
-	for (int r = 0; r < rows; r++) {
-		*(query_data + r) = calloc(cols, sizeof(char*));
-
-		for (int c = 0; c < cols; c++) {	
-			*(*(query_data + r) + c) = calloc(MAX_STR_SIZE, (sizeof(char)));
-
-			char* value = PQgetvalue(res, r, c);
-
-			*(*(*(query_data + r) + c)) = *value;
-		}
-	}
+	char*** query_data = convert_query_to_data(res, &rows, &cols);
 
 	PQclear(res);
 	
