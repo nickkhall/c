@@ -22,14 +22,15 @@ void print_employee(Window* win, struct Employee* employees, const int rows) {
     for (int x = 0; x < 11; x++) {
       mvwprintw(
         win->window,
-        ((win->y_max / 2) + (rows + y)),
+        ((win->y_max / 2) - (rows + x)),
         ((win->x_max) / 2) - strlen(*(Employee_Labels + x)),
-        (*(Employee_Labels + x))
+        *(Employee_Labels + x)
       );
+
+      refresh();
+      wrefresh(win->window);
     }
   }
-
-  clear_screen(win);
 }
 
 void print_search_label(Window* win, const char* label) {
