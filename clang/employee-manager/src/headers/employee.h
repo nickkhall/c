@@ -6,13 +6,13 @@
 #include <string.h>
 
 typedef struct e {
-	const char* id;
+	char* id;
 	char* first;
 	char* last;
 	char* email;
 	char* address;
 	char* phone;
-	const time_t start;
+	time_t start;
 	char* gender;
 	char* ethnicity;
 	char* title;

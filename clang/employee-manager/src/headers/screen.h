@@ -2,8 +2,13 @@
 #define SCREEN_H
 
 #include "window.h"
+#include "employee.h"
 
-void print_employee_data(Window* win, const char*** data, const int rows);
+void print_employee(Window* win, Employee** employees, const int rows);
+
+void print_error(const char* err);
+
+void print_search_label(const char* label);
 
 #endif
 

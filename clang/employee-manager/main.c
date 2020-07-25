@@ -5,7 +5,7 @@
 #include "src/headers/menu.h"
 #include "src/headers/window.h"
 #include "src/headers/employee.h"
-#include "src/headers/form.h"
+#include "src/headers/input.h"
 #include "src/headers/utils.h"
 #include "src/headers/uuid.h"
 #include "src/headers/db.h"
@@ -50,18 +50,22 @@ int main() {
       }
       // search employee
       case 1: {
-				// get user input
-				const char* user_input = print_search_form(&window);
-				
-				// store user input as query param format 
-				const char* const* query_params = &user_input;
+				handle_search(&window);
+				//  search (menu.c)
+				//    - print_label (input.c)
+				//    - get_search_input (input.c)
+				//    - **Employees <- get_emp(user_input) (handlers.c)
+				//			- connect
+				//			- query
+				//			- disconnect
+				//			- return list of employees
+				//		- **Employees -> print_employee
+				//		- return to menu
 
-				// select sql query string
-				const char* sql_query = "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1";
 
 				// query db
 				//const char*** query_result = query_db(sql_query, queryParams, 1);
-				Employee* employee = query_db_by_id(sql_query, query_params);
+				// Employee* employee = query_db_by_id(sql_query, query_params);
 
 				// print data to screen
 				// print_data(query_result);

@@ -3,7 +3,7 @@
 
 // #include "headers/libpq-fe.h"
 #include "headers/window.h"
-#include "headers/form.h"
+#include "headers/input.h"
 #include "headers/employee.h"
 #include "headers/utils.h"
 
@@ -64,8 +64,7 @@ char** create(Window *window, const char** form_labels, const int *num_of_fields
   return form_data;
 };
 
-
-char* print_search_form(Window* win) {
+void print_search_label(Window* win) {
   // get length of search form label
   int label_len = strlen(SEARCH_LABEL);
 
@@ -75,6 +74,12 @@ char* print_search_form(Window* win) {
   // print search form label
   mvwprintw(win->window, win->y_max / 2, win->x_max / 2 - (label_len / 2) - 1, SEARCH_LABEL);
 
+  refresh();
+  wrefresh(win->window);
+};
+
+
+char* get_search_input(Window* win) {
   // enable cursor and output
   curs_set(1);
   echo();
@@ -86,6 +91,7 @@ char* print_search_form(Window* win) {
 		exit(1);
 	}
 
+  int label_len = strlen(SEARCH_LABEL);
   // get label for search (max 100 chars)
   mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, key, KEY_SIZE);
 
