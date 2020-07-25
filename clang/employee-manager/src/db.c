@@ -6,6 +6,7 @@
 
 #include "headers/postgres_info.h"
 #include "headers/form.h"
+#include "headers/screen.h"
 
 // @NOTE: sanitize data
 // connect
@@ -34,7 +35,7 @@ void disconnect_from_db(PGconn* conn) {
 }
 
 // search
-char*** query_db(const char* query, const char* const* queryParams, const int num_of_queries) {
+PGresult* query_db_by_id(const char* query, const char* const* queryParams, const int num_of_queries) {
 	PGresult* res;
 	// create connection with db
 	PGconn* conn = connect_to_db();
@@ -57,18 +58,14 @@ char*** query_db(const char* query, const char* const* queryParams, const int nu
 		disconnect_from_db(conn);
 		exit(1);
 	}
-	
-	int rows = PQntuples(res);
-	int cols = PQnfields(res);
 
-	char*** query_data = convert_query_to_data(res, &rows, &cols);
+	PGresult* temp = res;
 
 	PQclear(res);
-	
 	// disconnect from db
 	disconnect_from_db(conn);
 
-	return query_data;
+	return temp;
 };
 
 // insert

@@ -9,6 +9,7 @@
 #include "src/headers/utils.h"
 #include "src/headers/uuid.h"
 #include "src/headers/db.h"
+#include "src/headers/screen.h"
 
 // main menu items
 const int main_menu_size = 5;
@@ -51,19 +52,22 @@ int main() {
       case 1: {
 				// get user input
 				const char* user_input = print_search_form(&window);
-				const char* const* queryParams = &user_input;
+				
+				// store user input as query param format 
+				const char* const* query_params = &user_input;
+
+				// select sql query string
 				const char* sql_query = "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1";
 
 				// query db
-				const char*** query_result = query_db(sql_query, queryParams, 1);
+				//const char*** query_result = query_db(sql_query, queryParams, 1);
+				Employee* employee = query_db_by_id(sql_query, query_params);
 
-				print_data(query_result);
+				// print data to screen
+				// print_data(query_result);
 
-				// update menu state to 0 to return to main menu
-        MainMenu.state = 0;
-        
-        // free up pointer returned from `print_search_form`
-        free((char*)user_input);
+				// back to main menu
+        MainMenu.state = 0; 
         break;
       }
       // create employee

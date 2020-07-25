@@ -1,7 +1,9 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-void print_to_screen(Window* win, const int y, const int x, char** msg, const int msg_size);
+#include "window.h"
+
+void print_employee_data(Window* win, const char*** data, const int rows);
 
 #endif
 
