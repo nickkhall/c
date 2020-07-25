@@ -4,12 +4,7 @@
 // #include "headers/libpq-fe.h"
 #include "headers/window.h"
 #include "headers/input.h"
-#include "headers/employee.h"
 #include "headers/utils.h"
-
-#define SEARCH_LABEL "Search by ID, First and/or Last name:"
-#define KEY_SIZE 100
-#define MAX_STR_SIZE 100
 
 char** create(Window *window, const char** form_labels, const int *num_of_fields) {
   // enable cursor
@@ -64,21 +59,6 @@ char** create(Window *window, const char** form_labels, const int *num_of_fields
   return form_data;
 };
 
-void print_search_label(Window* win) {
-  // get length of search form label
-  int label_len = strlen(SEARCH_LABEL);
-
-  // clear screen
-  clear_screen(win);
-
-  // print search form label
-  mvwprintw(win->window, win->y_max / 2, win->x_max / 2 - (label_len / 2) - 1, SEARCH_LABEL);
-
-  refresh();
-  wrefresh(win->window);
-};
-
-
 char* get_search_input(Window* win) {
   // enable cursor and output
   curs_set(1);
@@ -86,14 +66,14 @@ char* get_search_input(Window* win) {
 
   // temp buffer for user input
   // (ncurses `mvngetnstr` sanitizes so no buffer overflow)
-  char* key = (char*)malloc(sizeof(char) * KEY_SIZE);
-	if (key == NULL) {
+  char* buffer = (char*)malloc(sizeof(char) * BUFFER_SIZE);
+	if (buffer == NULL) {
 		exit(1);
 	}
 
   int label_len = strlen(SEARCH_LABEL);
   // get label for search (max 100 chars)
-  mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, key, KEY_SIZE);
+  mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, buffer, BUFFER_SIZE);
 
   // disable cursor and output
   curs_set(0);
@@ -102,7 +82,7 @@ char* get_search_input(Window* win) {
   // clear screen again
   clear_screen(win);
 
-	return key;
+	return buffer;
 }
 
 void* convert_query_to_data(PGresult* res, const int* rows, const int* cols) {

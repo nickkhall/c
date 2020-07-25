@@ -5,7 +5,7 @@
 
 #include <string.h>
 
-typedef struct e {
+struct Employee {
 	char* id;
 	char* first;
 	char* last;
@@ -16,21 +16,7 @@ typedef struct e {
 	char* gender;
 	char* ethnicity;
 	char* title;
-	unsigned long int salary;
-} Employee;
-
-const char* Employee_Labels[11] = {
-	"id",
-	"first",
-	"last",
-	"email",
-	"address",
-	"phone",
-	"start",
-	"gender",
-	"ethnicity",
-	"title",
-	"salary"
+	unsigned long long int salary;
 };
 
 #endif

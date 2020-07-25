@@ -3,13 +3,13 @@
 
 #include "employee.h"
 
-Employee** get_employees();
+struct Employee* get_employees();
 
-Employee* get_employee(const char* const* params); 
+struct Employee* get_employee(const char* const* params); 
 
-Employee* create_employee(Employee* employee);
+struct Employee* create_employee(struct Employee* employee);
 
-Employee* update_employee(Employee* employee);
+struct Employee* update_employee(struct Employee* employee);
 
 int delete_employee(const char* id);
 

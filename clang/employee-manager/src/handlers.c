@@ -6,7 +6,7 @@
 
 #define SEARCH_QUERY "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1"
 
-Employee* get_employee(const char* const* params) {
+struct Employee* get_employee(const char* const* params) {
 	if (!*(params)) {
 		exit(1);
 	}
@@ -40,25 +40,24 @@ Employee* get_employee(const char* const* params) {
 	const int rows = PQntuples(res);
 	const int cols = PQnfields(res);
 
-	Employee* employees[rows];	
+	struct Employee employees[rows];	
 
 	for (int y = 0; y < rows; y++) {
-		// create new employee per row
-		Employee* temp_emp = (Employee*)malloc(sizeof(Employee*));
-
-		temp_emp->id = PQgetvalue(res, 0, 0);
-		temp_emp->first = PQgetvalue(res, 0, 1);
-		temp_emp->last = PQgetvalue(res, 0, 2);
-		temp_emp->email = PQgetvalue(res, 0, 3);
-		temp_emp->address = PQgetvalue(res, 0, 4);
-		temp_emp->phone = PQgetvalue(res, 0, 5);
-		temp_emp->start = PQgetvalue(res, 0, 6);
-		temp_emp->gender = PQgetvalue(res, 0, 7);
-		temp_emp->ethnicity = PQgetvalue(res, 0, 8);
-		temp_emp->title = PQgetvalue(res, 0, 9);
-		temp_emp->start = PQgetvalue(res, 0, 10);
+		employees[y].id =					(char*)*(PQgetvalue(res, y, 0));
+		employees[y].first =			(char*)*(PQgetvalue(res, y, 1));
+		employees[y].last =				(char*)*(PQgetvalue(res, y, 2));
+		employees[y].email =			(char*)*(PQgetvalue(res, y, 3));
+		employees[y].address =		(char*)*(PQgetvalue(res, y, 4));
+		employees[y].phone =			(char*)*(PQgetvalue(res, y, 5));
+		employees[y].start =			(time_t)*(PQgetvalue(res, y, 6));
+		employees[y].gender =			(char*)*(PQgetvalue(res, y, 7));
+		employees[y].ethnicity =	(char*)*(PQgetvalue(res, y, 8));
+		employees[y].title =			(char*)*(PQgetvalue(res, y, 9));
+		employees[y].salary =			(unsigned long long int)*(PQgetvalue(res, y, 10));
 	}
 
 	disconnect_from_db(conn);
+
+	return employees;
 }
 

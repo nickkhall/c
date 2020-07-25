@@ -5,8 +5,8 @@
 #include "headers/menu.h"
 #include "headers/window.h"
 #include "headers/input.h"
-#include "headers/employee.h"
 #include "headers/screen.h"
+#include "headers/handlers.h"
 
 const short int* get_state(Menu *menu) {
 	return &menu->state;
@@ -80,7 +80,7 @@ void handle_navigation(Menu *menu, int key_code, int items_size) {
 
 void handle_search(Window* win) {
 	// print search by id/first/last label
-	print_search_label(win);
+	print_search_label(win, SEARCH_LABEL);
 
 	// get user input
 	const char* user_input = get_search_input(win);
@@ -89,7 +89,7 @@ void handle_search(Window* win) {
 	const char* const* query_params = &user_input;
 
 	// get employee(s) data
-	Employee** employees = get_emp(query_params);
+	struct Employee* employees = get_employee(query_params);
 
 	// print employee(s) data to screen
 	print_employee(win, employees, (sizeof(employees) / sizeof(*employees)));
