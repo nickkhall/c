@@ -4,10 +4,10 @@
 #include <ncurses.h>
 
 typedef struct w {
-	unsigned int y_max;
-	unsigned int x_max;
+  unsigned int y_max;
+  unsigned int x_max;
 
-	WINDOW *window;
+  WINDOW *window;
 } Window;
 
 void print_header(Window *window);

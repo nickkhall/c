@@ -4,24 +4,24 @@
 #include "headers/window.h"
 
 void print_employee(Window* win, struct Employee* employees, const int rows) {
-	const char* Employee_Labels[11] = {
-		"id",
-		"first",
-		"last",
-		"email",
-		"address",
-		"phone",
-		"start",
-		"gender",
-		"ethnicity",
-		"title",
-		"salary"
-	};
+  const char* Employee_Labels[11] = {
+    "id",
+    "first",
+    "last",
+    "email",
+    "address",
+    "phone",
+    "start",
+    "gender",
+    "ethnicity",
+    "title",
+    "salary"
+  };
 
-	for (int y = 0; y < rows; y++) {
-		for (int x = 0; x < 12; x++) {
-		}
-	}
+  for (int y = 0; y < rows; y++) {
+    for (int x = 0; x < 12; x++) {
+    }
+  }
 }
 
 void print_search_label(Window* win, const char* label) {

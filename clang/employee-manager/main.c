@@ -49,27 +49,27 @@ int main() {
       }
       // search employee
       case 1: {
-				handle_search(&window);
-				//  search (menu.c)
-				//    - print_label (input.c)
-				//    - get_search_input (input.c)
-				//    - **Employees <- get_emp(user_input) (handlers.c)
-				//			- connect
-				//			- query
-				//			- disconnect
-				//			- return list of employees
-				//		- **Employees -> print_employee
-				//		- return to menu
+        handle_search(&window);
+        //  search (menu.c)
+        //    - print_label (input.c)
+        //    - get_search_input (input.c)
+        //    - **Employees <- get_emp(user_input) (handlers.c)
+        //      - connect
+        //      - query
+        //      - disconnect
+        //      - return list of employees
+        //    - **Employees -> print_employee
+        //    - return to menu
 
 
-				// query db
-				//const char*** query_result = query_db(sql_query, queryParams, 1);
-				// Employee* employee = query_db_by_id(sql_query, query_params);
+        // query db
+        //const char*** query_result = query_db(sql_query, queryParams, 1);
+        // Employee* employee = query_db_by_id(sql_query, query_params);
 
-				// print data to screen
-				// print_data(query_result);
+        // print data to screen
+        // print_data(query_result);
 
-				// back to main menu
+        // back to main menu
         MainMenu.state = 0; 
         break;
       }

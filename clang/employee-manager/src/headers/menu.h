@@ -6,9 +6,9 @@
 #include "window.h"
 
 typedef struct m {
-	const char** items;
-	short int highlighted;
-	short int state;
+  const char** items;
+  short int highlighted;
+  short int state;
 } Menu;
 
 void render_main_menu(Window *window, Menu *menu, const char** items, const int* items_size);

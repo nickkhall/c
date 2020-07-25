@@ -13,29 +13,29 @@
  * @return {void}
  **/
 void write_to_file(const char** labels, char **string, const int *size) {
-	// create file pointer to data file
-	FILE *file = fopen("data/employees.txt", "a");
+  // create file pointer to data file
+  FILE *file = fopen("data/employees.txt", "a");
 
-	// add new line to separate entries
-	if (feof(file)) fputs("---------------------------------------------------------------\n", file);
-	else fputs("\n---------------------------------------------------------------\n", file);
-	
-	for (int i = 0; i < *size; i++) {
-		// add label
-		fputs(*(labels + i), file);
-		// add data
-		fputs(*(string + i), file);
-		// if not end of data
-		if (i < *size - 1) {
-			// input comma with new line
-			fputs(",\n", file);
-		}
-	}
+  // add new line to separate entries
+  if (feof(file)) fputs("---------------------------------------------------------------\n", file);
+  else fputs("\n---------------------------------------------------------------\n", file);
+  
+  for (int i = 0; i < *size; i++) {
+    // add label
+    fputs(*(labels + i), file);
+    // add data
+    fputs(*(string + i), file);
+    // if not end of data
+    if (i < *size - 1) {
+      // input comma with new line
+      fputs(",\n", file);
+    }
+  }
 
-	// add new line to separate entries
-	fputs("\n---------------------------------------------------------------\n", file);
+  // add new line to separate entries
+  fputs("\n---------------------------------------------------------------\n", file);
 
-	// close file stream
-	fclose(file);
+  // close file stream
+  fclose(file);
 };
 
