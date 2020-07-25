@@ -18,10 +18,18 @@ void print_employee(Window* win, struct Employee* employees, const int rows) {
     "salary"
   };
 
-  for (int y = 0; y < rows; y++) {
-    for (int x = 0; x < 12; x++) {
+  for (int y = 0; y < (rows + 1); y++) {
+    for (int x = 0; x < 11; x++) {
+      mvwprintw(
+        win->window,
+        ((win->y_max / 2) + (rows + y)),
+        ((win->x_max) / 2) - strlen(*(Employee_Labels + x)),
+        (*(Employee_Labels + x))
+      );
     }
   }
+
+  clear_screen(win);
 }
 
 void print_search_label(Window* win, const char* label) {
