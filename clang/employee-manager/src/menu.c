@@ -92,6 +92,6 @@ void handle_search(Window* win) {
   Employee** employees = get_employee(query_params);
 
   // print employee(s) data to screen
-  print_employee(win, employees, sizeof(employees) / sizeof(*employees));
+  print_employee(win, &employees, sizeof(employees) / sizeof(*employees));
 };
 

@@ -19,5 +19,7 @@ typedef struct {
   unsigned long long int salary;
 } Employee;
 
+Employee* create_employee_pointer();
+
 #endif
 

@@ -34,26 +34,32 @@ void print_employee(Window* win, Employee** employees, const int rows) {
   };
 
   for (int y = 0; y < (rows + 1); y++) {
-    //char** emp_data = convert_emp_to_data(*(employees + y));
+    char** emp_data = NULL;
+    emp_data = convert_emp_to_data(*(employees + y));
 
-    //for (int x = 0; x < 11; x++) {
-    //  mvwprintw(
-    //    win->window,
-    //    ((win->y_max / 2) - (rows + x)),
-    //    ((win->x_max / 2) - strlen(*(Employee_Labels + x))),
-    //    *(Employee_Labels + x)
-    //  ); 
+    if (!emp_data) {
+      printf("ERROR::Failed to allocate memorty for employee data in print_employee\n");
+      exit(1);
+    }
 
-    //  mvwprintw(
-    //    win->window,
-    //    ((win->y_max / 2) - (rows + x)),
-    //    ((win->x_max / 2) - strlen(*(Employee_Labels + x))) - (strlen(current_value) / 2),
-    //    current_value
-    //  ); 
-    //  
-    //  refresh();
-    //  wrefresh(win->window);
-    //}
+    for (int x = 0; x < 11; x++) {
+      mvwprintw(
+        win->window,
+        ((win->y_max / 2) - (rows + x)),
+        ((win->x_max / 2) - strlen(*(Employee_Labels + x))),
+        *(Employee_Labels + x)
+      ); 
+
+      mvwprintw(
+        win->window,
+        ((win->y_max / 2) - (rows + x)),
+        ((win->x_max / 2) -  25),
+        *(emp_data + y) + x
+      ); 
+      
+      refresh();
+      wrefresh(win->window);
+    }
   }
 };
 

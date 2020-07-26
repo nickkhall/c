@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "headers/handlers.h"
+#include "headers/employee.h"
 #include "headers/db.h"
 
 #define SEARCH_QUERY "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1"
@@ -40,26 +41,30 @@ Employee** get_employee(const char* const* params) {
   const int rows = PQntuples(res);
   const int cols = PQnfields(res);
 
-  Employee** employees = malloc(sizeof(Employee*) * rows);
+  Employee** employees = NULL;
+  employees = malloc(sizeof(Employee*) * rows);
+  if (!employees) {
+    free(employees);
+    printf("ERROR::Failed to allocate memory for employees list\n");
+    exit(1);
+  }
 
   for (int y = 0; y < rows; y++) {
-    Employee emp = { 
-      PQgetvalue(res, y, 0),
-      PQgetvalue(res, y, 1),
-      PQgetvalue(res, y, 2),
-      PQgetvalue(res, y, 3),
-      PQgetvalue(res, y, 4),
-      PQgetvalue(res, y, 5),
-      PQgetvalue(res, y, 6),
-      PQgetvalue(res, y, 7),
-      PQgetvalue(res, y, 8),
-      PQgetvalue(res, y, 9),
-      PQgetvalue(res, y, 10)
-    };
+    Employee* employee = create_employee_pointer();
 
-    Employee* emp_ptr = &emp;
+    employee->id        = *(PQgetvalue(res, y, 0));
+    employee->first     = *(PQgetvalue(res, y, 1));
+    employee->last      = *(PQgetvalue(res, y, 2));
+    employee->email     = *(PQgetvalue(res, y, 3));
+    employee->address   = *(PQgetvalue(res, y, 4));
+    employee->phone     = *(PQgetvalue(res, y, 5));
+    employee->start     = *(PQgetvalue(res, y, 6));
+    employee->gender    = *(PQgetvalue(res, y, 7));
+    employee->ethnicity = *(PQgetvalue(res, y, 8));
+    employee->title     = *(PQgetvalue(res, y, 9));
+    employee->salary    = *(PQgetvalue(res, y, 10));
 
-    *(employees + y) = emp_ptr;
+    *(employees + y) = employee;
   }
 
   disconnect_from_db(conn);
