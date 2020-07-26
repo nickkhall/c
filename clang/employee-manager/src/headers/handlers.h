@@ -3,15 +3,6 @@
 
 #include "employee.h"
 
-Employee** get_employees();
-
-Employee** get_employee(const char* const* params); 
-
-Employee** create_employee(struct Employee* employee);
-
-Employee** update_employee(struct Employee* employee);
-
-int delete_employee(const char* id);
-
+Employee* get_employee(const char* const* params);
 #endif
 

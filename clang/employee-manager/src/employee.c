@@ -4,6 +4,39 @@
 
 #include "headers/employee.h"
 
+Employee* create_employee(Employee* employee, const int num, char** data) {
+  if (!employee || employee == NULL) {
+    printf("ERROR:: create_employee received a bad pointer: %p\n", employee);
+    free(employee);
+    exit(1);
+  }
+
+  for (int e = 0; e < num; e++) {
+    employee->id        = *(data);
+    employee->first     = *(data + 1);
+    employee->last      = *(data + 2);
+    employee->email     = *(data + 3);
+    employee->address   = *(data + 4);
+    employee->phone     = *(data + 5);
+    employee->start     = *(data + 6);
+    employee->gender    = *(data + 7);
+    employee->ethnicity = *(data + 8);
+    employee->title     = *(data + 9);
+    employee->salary    = *(data + 10);
+
+    if (e == (num - 1)) {
+      employee->next_employee = NULL;
+    } else {
+      Employee* next_emp = malloc(sizeof(Employee));
+      if (!next_emp || next_emp == NULL) exit(1);
+      employee->next_employee = next_emp;
+    }
+  }
+
+
+  return employee;
+};
+
 //Employee* create_employee_pointer(Employee* employee){ 
 //  if (!employee || employee == NULL) {
 //    printf("\n-------------------------------\nERROR::Employee pointer in create employees is %p..\nTRASH!\n-------------------------------\n", employee);
@@ -60,12 +93,12 @@ typedef struct emp {
 Employee* create_employee(Employee* employee, const int* num, char** data) {
   if (!employee || employee == NULL) exit(1);
 
-  for (int e = 0; e < *num; e++) {
+  for (int e = 0; e < num; e++) {
     employee->id = *(data);
     employee->first = *(data + 1);
     employee->last = *(data + 2);
 
-    if (e == (*num - 1)) {
+    if (e == (num - 1)) {
       employee->next_employee = NULL;
     } else {
       Employee* next_emp = malloc(sizeof(Employee));

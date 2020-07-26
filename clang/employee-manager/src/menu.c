@@ -89,9 +89,9 @@ void handle_search(Window* win) {
   const char* const* query_params = &user_input;
 
   // get employee(s) data
-  Employee** employees = get_employee(query_params);
+  Employee* employee = get_employee(query_params);
 
   // print employee(s) data to screen
-  print_employee(win, &employees, sizeof(employees) / sizeof(*employees));
+  print_employee(win, employee, sizeof(employee) / sizeof(*employee));
 };
 
