@@ -6,7 +6,6 @@
 #include "src/headers/window.h"
 #include "src/headers/input.h"
 #include "src/headers/utils.h"
-#include "src/headers/uuid.h"
 #include "src/headers/db.h"
 #include "src/headers/screen.h"
 

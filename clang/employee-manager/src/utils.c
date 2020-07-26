@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "headers/employee.h"
+
 #define LINE_SIZE 100
 
 // @TODO: REMOVE AFTER POST IS UPDATED
@@ -37,5 +39,24 @@ void write_to_file(const char** labels, char **string, const int *size) {
 
   // close file stream
   fclose(file);
+};
+
+char** convert_emp_to_data(Employee* employee) {
+  char** data = NULL;
+  data = malloc(sizeof(char*) * 11);
+
+  *(data)     = employee->id;
+  *(data + 1) = employee->first;
+  *(data + 2) = employee->last;
+  *(data + 3) = employee->email;
+  *(data + 4) = employee->address;
+  *(data + 5) = employee->phone;
+  *(data + 6) = (char*)employee->start;
+  *(data + 7) = employee->gender;
+  *(data + 8) = employee->ethnicity;
+  *(data + 9) = employee->title;
+  *(data + 10) = (char*)employee->salary;
+
+  return data;
 };
 

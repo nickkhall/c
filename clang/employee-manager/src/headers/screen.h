@@ -4,7 +4,7 @@
 #include "window.h"
 #include "employee.h"
 
-void print_employee(Window* win, struct Employee* employees, const int rows);
+void print_employee(Window* win, Employee** employees, const int rows);
 
 void print_error(const char* err);
 
