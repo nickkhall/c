@@ -50,19 +50,28 @@ Employee** get_employee(const char* const* params) {
   }
 
   for (int y = 0; y < rows; y++) {
-    Employee* employee = create_employee_pointer();
+    //PQgetvalue(res, y, 0), PQgetvalue(res, y, 1), PQgetvalue(res, y, 2),
+    //PQgetvalue(res, y, 4), PQgetvalue(res, y, 5), PQgetvalue(res, y, 6),
+    //PQgetvalue(res, y, 7), PQgetvalue(res, y, 8), PQgetvalue(res, y, 9),
+    //PQgetvalue(res, y, 10)
+    // Employee* employee = create_employee_pointer();
+    
+    Employee* employee = malloc(sizeof(Employee));
+    if (!employee || employee == NULL) {
+      printf("\n-------------------------------\nERROR::Employee pointer in create employees is %p..\nTRASH!\n-------------------------------\n", employee);
+      free(employee);
+      exit(1);
+    }
 
-    employee->id        = *(PQgetvalue(res, y, 0));
-    employee->first     = *(PQgetvalue(res, y, 1));
-    employee->last      = *(PQgetvalue(res, y, 2));
-    employee->email     = *(PQgetvalue(res, y, 3));
-    employee->address   = *(PQgetvalue(res, y, 4));
-    employee->phone     = *(PQgetvalue(res, y, 5));
-    employee->start     = *(PQgetvalue(res, y, 6));
-    employee->gender    = *(PQgetvalue(res, y, 7));
-    employee->ethnicity = *(PQgetvalue(res, y, 8));
-    employee->title     = *(PQgetvalue(res, y, 9));
-    employee->salary    = *(PQgetvalue(res, y, 10));
+  employee->id =        (char*)malloc(sizeof(char) *  33);
+  employee->first =     (char*)malloc(sizeof(char) *  51);
+  employee->last =      (char*)malloc(sizeof(char) *  51);
+  employee->email =     (char*)malloc(sizeof(char) * 101);
+  employee->address =   (char*)malloc(sizeof(char) *  76);
+  employee->phone =     (char*)malloc(sizeof(char) *  51);
+  employee->gender =    (char*)malloc(sizeof(char) *   7);
+  employee->ethnicity = (char*)malloc(sizeof(char) *  51);
+  employee->title =     (char*)malloc(sizeof(char) *  51);
 
     *(employees + y) = employee;
   }

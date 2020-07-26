@@ -2,7 +2,7 @@
 #define EMPLOYEE_H
 
 #include <time.h>
-
+#include <libpq-fe.h>
 #include <string.h>
 
 typedef struct {
@@ -19,7 +19,11 @@ typedef struct {
   unsigned long long int salary;
 } Employee;
 
-Employee* create_employee_pointer();
+typedef struct {
+  Employee employee;
+  Employees* next_employee;
+} Employees;
 
+// Employee* create_employee_pointer(PGresult* res);
 #endif
 
