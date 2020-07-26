@@ -55,7 +55,7 @@ void print_employee(Window* win, Employee** employees, const int rows) {
     //  wrefresh(win->window);
     //}
   }
-}
+};
 
 void print_search_label(Window* win, const char* label) {
   // get length of search form label
@@ -69,4 +69,4 @@ void print_search_label(Window* win, const char* label) {
 
   refresh();
   wrefresh(win->window);
-}
+};

@@ -21,15 +21,15 @@ void handle_navigation(Menu *menu, int key_code, int items_size);
 void handle_search(Window* win);
 
 // create
-void handle_create();
+// void handle_create();
 
 // update
-void handle_update();
+// void handle_update();
 
 // remove
-void handle_remove();
+// void handle_remove();
 
 // quit
-void quit();
+// void quit();
 
 #endif

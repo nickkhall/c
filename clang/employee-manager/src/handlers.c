@@ -40,21 +40,21 @@ Employee** get_employee(const char* const* params) {
   const int rows = PQntuples(res);
   const int cols = PQnfields(res);
 
-  Employee** employees = (Employee*)malloc(sizeof(Employee*) * rows);
+  Employee** employees = malloc(sizeof(Employee*) * rows);
 
   for (int y = 0; y < rows; y++) {
     Employee emp = { 
-      (char*)*(PQgetvalue(res, y, 0)),
-      (char*)*(PQgetvalue(res, y, 1)),
-      (char*)*(PQgetvalue(res, y, 2)),
-      (char*)*(PQgetvalue(res, y, 3)),
-      (char*)*(PQgetvalue(res, y, 4)),
-      (char*)*(PQgetvalue(res, y, 5)),
-      (time_t)*(PQgetvalue(res, y, 6)),
-      (char*)*(PQgetvalue(res, y, 7)),
-      (char*)*(PQgetvalue(res, y, 8)),
-      (char*)*(PQgetvalue(res, y, 9)),
-      (unsigned long long int)*(PQgetvalue(res, y, 10))
+      PQgetvalue(res, y, 0),
+      PQgetvalue(res, y, 1),
+      PQgetvalue(res, y, 2),
+      PQgetvalue(res, y, 3),
+      PQgetvalue(res, y, 4),
+      PQgetvalue(res, y, 5),
+      PQgetvalue(res, y, 6),
+      PQgetvalue(res, y, 7),
+      PQgetvalue(res, y, 8),
+      PQgetvalue(res, y, 9),
+      PQgetvalue(res, y, 10)
     };
 
     Employee* emp_ptr = &emp;
