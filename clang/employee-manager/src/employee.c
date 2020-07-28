@@ -4,37 +4,47 @@
 
 #include "headers/employee.h"
 
-Employee* create_employee(Employee* employee, const int num, char** data) {
-  if (!employee || employee == NULL) {
-    printf("ERROR:: create_employee received a bad pointer: %p\n", employee);
-    free(employee);
+Employee* push_employee(Employee* employee_head, char** data) {
+  if (!employee_head || employee_head == NULL) {
+    printf("ERROR:: create_employee received a bad pointer: %p\n", employee_head);
+    free(employee_head);
     exit(1);
   }
 
-  for (int e = 0; e < num; e++) {
-    employee->id        = *(data);
-    employee->first     = *(data + 1);
-    employee->last      = *(data + 2);
-    employee->email     = *(data + 3);
-    employee->address   = *(data + 4);
-    employee->phone     = *(data + 5);
-    employee->start     = *(data + 6);
-    employee->gender    = *(data + 7);
-    employee->ethnicity = *(data + 8);
-    employee->title     = *(data + 9);
-    employee->salary    = *(data + 10);
+  Employee* head = NULL;
+  head = (Employee*) malloc(sizeof(Employee));
+  if (!head || head == NULL) exit(1);
 
-    if (e == (num - 1)) {
-      employee->next_employee = NULL;
-    } else {
-      Employee* next_emp = malloc(sizeof(Employee));
-      if (!next_emp || next_emp == NULL) exit(1);
-      employee->next_employee = next_emp;
-    }
-  }
+  head->id = (char*)malloc(sizeof(char) * 33);
+  head->first = (char*)malloc(sizeof(char) * 51);
+  head->last = (char*)malloc(sizeof(char) * 51);
+  head->email = (char*)malloc(sizeof(char) * 76);
+  head->address = (char*)malloc(sizeof(char) * 76);
+  head->phone = (char*)malloc(sizeof(char) * 51);
+  head->start = malloc(sizeof(time_t));
+  head->gender = (char*)malloc(sizeof(char) * 7);
+  head->ethnicity = (char*)malloc(sizeof(char) * 51);
+  head->title = (char*)malloc(sizeof(char) * 51);
+  head->salary = malloc(sizeof(unsigned long long int));
+
+  head->next_employee = employee_head;
+
+  head->id        = *(data);
+  head->first     = *(data + 1);
+  head->last      = *(data + 2);
+  head->email     = *(data + 3);
+  head->address   = *(data + 4);
+  head->phone     = *(data + 5);
+  head->start     = (time_t)(data + 6);
+  head->gender    = *(data + 7);
+  head->ethnicity = *(data + 8);
+  head->title     = *(data + 9);
+  head->salary    = (unsigned long long int)(data + 10);
+
+  employee_head - head;
 
 
-  return employee;
+  return employee_head;
 };
 
 //Employee* create_employee_pointer(Employee* employee){ 

@@ -54,69 +54,22 @@ Employee* get_employee(const char* const* params) {
     exit(1);
   }
 
-  for (int y = 0; y < rows; y++) { 
-    char* id = malloc(sizeof(char) * 33);
-    if (!id || id == NULL) exit(1);
-    strcpy(id, PQgetvalue(res, y, 0));
+  for (int c = 0; c < cols; c++) {
+    char** data = NULL;
+    data = convert_emp_to_data(res, c);  
 
-    char* first = malloc(sizeof(char) * 51);
-    if (!first || first == NULL) exit(1);
-    strcpy(first, PQgetvalue(res, y, 1));
+    if (!data || data == NULL) {
+      printf("ERROR::Failed to allocate memory for data memory for convert employee\n");
+      free(data);
+      exit(1);
+    }
 
-    char* last = malloc(sizeof(char) * 51);
-    if (!last || last == NULL) exit(1);
-    strcpy(last, PQgetvalue(res, y, 2));
+    push_employee(employee_head, data);
 
-    char* email = malloc(sizeof(char) * 101);
-    if (!email || email == NULL) exit(1);
-    strcpy(email, PQgetvalue(res, y, 3));
-
-    char* address = malloc(sizeof(char) * 76);
-    if (!address || address == NULL) exit(1);
-    strcpy(address, PQgetvalue(res, y, 4));
-
-    char* phone = malloc(sizeof(char) * 51);
-    if (!phone || phone == NULL) exit(1);
-    strcpy(phone, PQgetvalue(res, y, 5));
-
-    char* start = malloc(sizeof(char) * 100);
-    if (!start || start == NULL) exit(1);
-    strcpy(start, PQgetvalue(res, y, 6));
-
-    char* gender = malloc(sizeof(char) * 7);
-    if (!gender || gender == NULL) exit(1);
-    strcpy(gender, PQgetvalue(res, y, 7));
-
-    char* ethnicity = malloc(sizeof(char) * 51);
-    if (!ethnicity || ethnicity == NULL) exit(1);
-    strcpy(ethnicity, PQgetvalue(res, y, 8));
-
-    char* title = malloc(sizeof(char) * 51);
-    if (!title || title == NULL) exit(1);
-    strcpy(title, PQgetvalue(res, y, 9));
-
-    char* salary = malloc(sizeof(char) * 100);
-    if (!salary || salary == NULL) exit(1);
-    strcpy(salary, PQgetvalue(res, y, 10));
-
-    char** data = (char*)malloc(sizeof(char*) * rows);
-    if (!data || data == NULL) exit(1);
-
-    *(data + rows)       = id;
-    (*(data + rows) + 1)  = first;
-    (*(data + rows) + 2)  = last;
-    (*(data + rows) + 3)  = email;
-    (*(data + rows) + 4)  = address;
-    (*(data + rows) + 5)  = phone;
-    (*(data + rows) + 6)  = start;
-    (*(data + rows) + 7)  = gender;
-    (*(data + rows) + 8)  = ethnicity;
-    (*(data + rows) + 9)  = title;
-    (*(data + rows) + 10) = salary;
-
-    create_employee(employee_head, rows, data);
+    free(data);
   }
 
+  // disconnect from db
   disconnect_from_db(conn);
 
   return employee_head;

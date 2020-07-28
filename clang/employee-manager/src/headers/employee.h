@@ -20,6 +20,6 @@ typedef struct emp {
   struct Employee* next_employee;
 } Employee;
 
-Employee* create_employee(Employee* employee, const int num, char** data);
+Employee* push_employee(Employee* employee, char** data);
 #endif
 

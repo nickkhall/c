@@ -1,61 +1,33 @@
 #include <stdlib.h>
 #include <string.h>
+#include <libpq-fe.h>
 #include <stdio.h>
 
 #include "headers/employee.h"
 
 #define LINE_SIZE 100
 
-// @TODO: REMOVE AFTER POST IS UPDATED
-/**
- * Writes a series of strings to a file.
- * @param {char**} labels The labels / description of the data.
- * @param {char**} string The string / data to write to the file.
- * @param {int*} size The size of the strings array.
- * @return {void}
- **/
-void write_to_file(const char** labels, char **string, const int *size) {
-  // create file pointer to data file
-  FILE *file = fopen("data/employees.txt", "a");
-
-  // add new line to separate entries
-  if (feof(file)) fputs("---------------------------------------------------------------\n", file);
-  else fputs("\n---------------------------------------------------------------\n", file);
-  
-  for (int i = 0; i < *size; i++) {
-    // add label
-    fputs(*(labels + i), file);
-    // add data
-    fputs(*(string + i), file);
-    // if not end of data
-    if (i < *size - 1) {
-      // input comma with new line
-      fputs(",\n", file);
-    }
-  }
-
-  // add new line to separate entries
-  fputs("\n---------------------------------------------------------------\n", file);
-
-  // close file stream
-  fclose(file);
-};
-
-char** convert_emp_to_data(Employee* employee) {
+char** convert_emp_to_data(PGresult* res, const int row) {
   char** data = NULL;
-  data = malloc(sizeof(char*) * 11);
 
-  *(data)     = employee->id;
-  *(data + 1) = employee->first;
-  *(data + 2) = employee->last;
-  *(data + 3) = employee->email;
-  *(data + 4) = employee->address;
-  *(data + 5) = employee->phone;
-  *(data + 6) = (char*)employee->start;
-  *(data + 7) = employee->gender;
-  *(data + 8) = employee->ethnicity;
-  *(data + 9) = employee->title;
-  *(data + 10) = (char*)employee->salary;
+  data = (char*) malloc(sizeof(char*) * 11);
+  if (!data || data == NULL) exit(1);
+
+  *data = (char*) malloc(sizeof(char) * 33);
+  *(data + 1) = (char*) malloc(sizeof(char) * 33);
+  *(data + 2)= (char*) malloc(sizeof(char) * 51);
+  *(data + 3) = (char*) malloc(sizeof(char) * 101);
+  *(data + 4) = (char*) malloc(sizeof(char) * 76);
+  *(data + 5) = (char*) malloc(sizeof(char) * 51);
+  *(data + 6) = (char*) malloc(sizeof(char) * 51);
+  *(data + 7) = (char*) malloc(sizeof(char) * 7);
+  *(data + 8) = (char*) malloc(sizeof(char) * 51);
+  *(data + 9) = (char*) malloc(sizeof(char) * 51);
+  *(data + 10) = (char*) malloc(sizeof(char) * 51);
+
+  for (int col = 0; col < 11; col++) {
+    strcpy(*(data + col), PQgetvalue(res, row, col));
+  }
 
   return data;
 };
