@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-char** convert_emp_to_data(PGresult* res, const int col_number);
+char** convert_emp_to_data(PGresult* res, const int row);
 
 #endif
 
