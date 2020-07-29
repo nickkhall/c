@@ -55,18 +55,20 @@ Employee* get_employee(const char* const* params) {
   }
 
   for (int c = 0; c < cols; c++) {
-    char** data = NULL;
-    data = convert_emp_to_data(res, c);  
+    char** data_pointer = (char*) malloc(sizeof(char*) * 11);
+    if (!data_pointer || data_pointer == NULL) exit(1);
 
-    if (!data || data == NULL) {
+    data_pointer = convert_emp_to_data(data_pointer, res, c);  
+
+    if (!data_pointer || data_pointer == NULL) {
       printf("ERROR::Failed to allocate memory for data memory for convert employee\n");
-      free(data);
+      free(data_pointer);
       exit(1);
     }
 
-    push_employee(employee_head, data);
+    push_employee(employee_head, data_pointer);
 
-    free(data);
+    free(data_pointer);
   }
 
   PQclear(res);
