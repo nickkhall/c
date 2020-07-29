@@ -69,6 +69,8 @@ Employee* get_employee(const char* const* params) {
     free(data);
   }
 
+  PQclear(res);
+
   // disconnect from db
   disconnect_from_db(conn);
 

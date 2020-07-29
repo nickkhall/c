@@ -13,9 +13,9 @@ char** convert_emp_to_data(PGresult* res, const int row) {
   data = (char*) malloc(sizeof(char*) * 11);
   if (!data || data == NULL) exit(1);
 
-  *data = (char*) malloc(sizeof(char) * 33);
+  *data       = (char*) malloc(sizeof(char) * 33);
   *(data + 1) = (char*) malloc(sizeof(char) * 33);
-  *(data + 2)= (char*) malloc(sizeof(char) * 51);
+  *(data + 2) = (char*) malloc(sizeof(char) * 51);
   *(data + 3) = (char*) malloc(sizeof(char) * 101);
   *(data + 4) = (char*) malloc(sizeof(char) * 76);
   *(data + 5) = (char*) malloc(sizeof(char) * 51);
@@ -26,10 +26,13 @@ char** convert_emp_to_data(PGresult* res, const int row) {
   *(data + 10) = (char*) malloc(sizeof(char) * 51);
 
   for (int col = 0; col < 11; col++) {
-    strcpy(*(data + col), PQgetvalue(res, row, col));
-  }
+    const char* current_pq = PQgetvalue(res, row, col);
+    unsigned long int current_pq_length = strlen(current_pq);
+    char* current_string = (char*) malloc(sizeof(char) * (current_pq_length + 1));
 
-  PQclear(res);
+    strcpy(current_string, current_pq);
+    *(data + col) = current_string;
+ }
 
   return data;
 };
