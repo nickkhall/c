@@ -29,6 +29,8 @@ char** convert_emp_to_data(PGresult* res, const int row) {
     strcpy(*(data + col), PQgetvalue(res, row, col));
   }
 
+  PQclear(res);
+
   return data;
 };
 
