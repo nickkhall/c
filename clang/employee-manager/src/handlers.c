@@ -58,7 +58,7 @@ Employee* get_employee(const char* const* params) {
     char** data_pointer = (char*) malloc(sizeof(char*) * 11);
     if (!data_pointer || data_pointer == NULL) exit(1);
 
-    data_pointer = convert_emp_to_data(data_pointer, res, c);  
+    convert_emp_to_data(data_pointer, res, c);  
 
     if (!data_pointer || data_pointer == NULL) {
       printf("ERROR::Failed to allocate memory for data memory for convert employee\n");
@@ -68,6 +68,11 @@ Employee* get_employee(const char* const* params) {
 
     push_employee(employee_head, data_pointer);
 
+    // free all data in data_pointer
+    for (int d = 0; d < 11; d++)
+      free(*(data +));
+
+    // free data_pointer
     free(data_pointer);
   }
 
