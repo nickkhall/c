@@ -19,10 +19,10 @@ void print_employee(Window* win, char*** data, const int rows) {
     "salary"
   };
 
-  for (int y = 0; y < (rows + 1); y++) {
+  for (int y = 0; y < rows; y++) {
     int counter = 11;
 
-    for (int x = 11; x >= 0; x--) {
+    for (int x = 11; x > 0; x--) {
       mvwprintw(
         win->window,
         ((win->y_max / 2) - (rows + x)),
