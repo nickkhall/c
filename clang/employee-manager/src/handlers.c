@@ -8,7 +8,7 @@
 
 #define SEARCH_QUERY "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1"
 
-Employee* get_employee(const char* const* params) {
+char** get_employee(const char* const* params, char*** employee_data) {
   if (!*(params)) {
     exit(1);
   }
@@ -42,38 +42,41 @@ Employee* get_employee(const char* const* params) {
   const int rows = PQntuples(res);
   const int cols = PQnfields(res);
 
-  Employee* employee_head = malloc(sizeof(Employee));
-  if (!employee_head || employee_head == NULL) {
-    printf(
-        "\n-------------------------------\nERROR::Employee pointer in create employees is %p..\nTRASH!\n-------------------------------\n",
-        employee_head
-    );
+  if (rows < 1) {
+    printf("NO USERS FOUND! NEED TO IMPLEMENT ERRORS/NOTIFICATIONS\n");
+    PQclear(res);
 
-    // release pointer memory
-    free(employee_head);
+    PQfinish(conn);
     exit(1);
-  }
+  };
+  
+  for (int r = 0; r < rows; r++) {
+    employee_data = (char***) malloc((sizeof(char*) + (sizeof(char*))) * rows);
+    if (!employee_data || employee_data == NULL) exit(1);
 
-  for (int c = 0; c < cols; c++) {
-    char** data_pointer = (char*) malloc(sizeof(char*) * 11);
-    if (!data_pointer || data_pointer == NULL) exit(1);
+    *(employee_data + r) = (char**) malloc(sizeof(char*) * cols);
+    if (!*(employee_data + r) || *(employee_data + r) == NULL) exit(1);
 
-    convert_emp_to_data(data_pointer, res, c);  
+    convert_emp_to_data(*(employee_data + r), res, r);  
 
-    if (!data_pointer || data_pointer == NULL) {
+    // if there is a failure, ABORT
+    if (!*(employee_data + r) || *(employee_data + r) == NULL) {
       printf("ERROR::Failed to allocate memory for data memory for convert employee\n");
-      free(data_pointer);
+      
+      // free up all data pointer's memory
+      for (int rr = 0; rr < rows; rr++)
+        for (int d = 0; d < 11; d++) {
+          free(*(employee_data + r) + d);
+        }
+
+      // free up data memory
+      free(employee_data);
+
+      PQclear(res);
+      PQfinish(conn);
+
       exit(1);
     }
-
-    push_employee(employee_head, data_pointer);
-
-    // free all data in data_pointer
-    for (int d = 0; d < 11; d++)
-      free(*(data +));
-
-    // free data_pointer
-    free(data_pointer);
   }
 
   PQclear(res);
@@ -81,6 +84,6 @@ Employee* get_employee(const char* const* params) {
   // disconnect from db
   disconnect_from_db(conn);
 
-  return employee_head;
+  return employee_data;
 }
 

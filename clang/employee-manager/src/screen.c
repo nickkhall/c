@@ -4,22 +4,8 @@
 #include "headers/window.h"
 #include "headers/utils.h"
 
-void print_employee(Window* win, Employee** employees, const int rows) {
-  enum label {
-    id,
-    first,
-    last,
-    email,
-    address,
-    phone,
-    start,
-    gender,
-    ethnicity,
-    title,
-    salary
-  };
-
-  const char* Employee_Labels[11] = {
+void print_employee(Window* win, char*** data, const int rows) {
+  const char* Employee_Labels[] = {
     "id",
     "first",
     "last",
@@ -33,34 +19,28 @@ void print_employee(Window* win, Employee** employees, const int rows) {
     "salary"
   };
 
-  //for (int y = 0; y < (rows + 1); y++) {
-  //  char** emp_data = NULL;
-  //  emp_data = convert_emp_to_data(*(employees + y));
+  for (int y = 0; y < (rows + 1); y++) {
+    int counter = 11;
 
-  //  if (!emp_data) {
-  //    printf("ERROR::Failed to allocate memorty for employee data in print_employee\n");
-  //    exit(1);
-  //  }
+    for (int x = 11; x >= 0; x--) {
+      mvwprintw(
+        win->window,
+        ((win->y_max / 2) - (rows + x)),
+        ((win->x_max / 2) - strlen(*(Employee_Labels + (counter - x)))),
+        *(Employee_Labels + (counter - x))
+      ); 
 
-  //  for (int x = 0; x < 11; x++) {
-  //    mvwprintw(
-  //      win->window,
-  //      ((win->y_max / 2) - (rows + x)),
-  //      ((win->x_max / 2) - strlen(*(Employee_Labels + x))),
-  //      *(Employee_Labels + x)
-  //    ); 
-
-  //    mvwprintw(
-  //      win->window,
-  //      ((win->y_max / 2) - (rows + x)),
-  //      ((win->x_max / 2) -  25),
-  //      *(emp_data + y) + x
-  //    ); 
-  //    
-  //    refresh();
-  //    wrefresh(win->window);
-  //  }
-  //}
+      mvwprintw(
+        win->window,
+        ((win->y_max / 2) - (rows + x)),
+        ((win->x_max / 2) -  25),
+        *(*(data + y) + (counter - x))
+      ); 
+      
+      refresh();
+      wrefresh(win->window);
+    }
+  }
 };
 
 void print_search_label(Window* win, const char* label) {
