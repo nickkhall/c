@@ -95,5 +95,11 @@ void handle_search(Window* win) {
 
   // print employee(s) data to screen
   print_employee(win, data, sizeof(data) / sizeof(*data));
+
+  char* key = 0;
+
+  while(key != 10 || key != 27) {
+    key = getch();
+  }
 };
 
