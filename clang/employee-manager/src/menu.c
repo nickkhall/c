@@ -1,0 +1,109 @@
+#include <string.h>
+#include <stdio.h>
+#include <ncurses.h>
+
+#include "headers/menu.h"
+#include "headers/window.h"
+#include "headers/input.h"
+#include "headers/screen.h"
+#include "headers/handlers.h"
+
+const short int* get_state(Menu *menu) {
+  return &menu->state;
+};
+
+Menu* update_state(Menu *menu, int new_state) {
+  menu->state = new_state;
+  return menu;
+};
+
+void render_main_menu(Window *window,Menu *menu, const char** items, const int* items_size) {
+  int key_code = 0;
+
+  do {
+    refresh();
+    wrefresh(window->window);
+
+    for (int i = 0; i < *items_size; i++) {
+      if (i == menu->highlighted) {
+        wattron(window->window, A_REVERSE);
+      }
+
+      mvwprintw(
+        window->window,
+        window->y_max / 2 + (i + 2),
+        window->x_max / 2 - *items_size,
+        *(items + i)
+      );
+
+      // Turn off reverse attribute
+      wattroff(window->window, A_REVERSE);
+
+      refresh();
+      wrefresh(window->window);
+    }
+
+    refresh();
+    wrefresh(window->window);
+
+    key_code = wgetch(window->window);
+
+    // Update the menu with the currently selected item
+    handle_navigation(menu, key_code, *items_size);
+  } while (key_code != 27 && key_code != 10); // As long as the user does not hit the "Escape" or "Enter" key
+};
+
+void handle_navigation(Menu *menu, int key_code, int items_size) {
+  switch(key_code) {
+    case 74:
+    case 106:
+    case KEY_DOWN:
+      // Prevent the user from selecting item above the list
+      if (menu->highlighted + 1 < items_size) {
+        menu->highlighted += 1;
+      }
+      break;
+    case 75:
+    case 107:
+    case KEY_UP:
+      // Prevent user from selecting item below the list
+      if (menu->highlighted - 1 > -1) {
+        menu->highlighted -= 1;
+      }
+      break;
+    default:
+      break;
+    };
+
+  menu->state = menu->highlighted + 1;
+};
+
+void handle_search(Window* win) {
+  // print search by id/first/last label
+  print_search_label(win, SEARCH_LABEL);
+
+  // get user input
+  const char* user_input = get_search_input(win);
+
+  // create query params from user input
+  const char* const* query_params = &user_input;
+
+  // get employee(s) data
+  char*** data = NULL;
+  data = get_employee(query_params, data);
+  if (!data || data == NULL) exit(1);
+
+  // print employee(s) data to screen
+  print_employee(win, data, sizeof(data) / sizeof(*data));
+
+  noecho();
+  int key = 0;
+  if ((key = getch()) != ERR) {
+    while(key != 27) {
+      key = getch();
+    }
+  }
+
+  clear_screen(win);
+};
+
