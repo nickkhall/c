@@ -94,7 +94,7 @@ void print_employee(Window* win, char*** data, const int rows) {
     offset = 0;
   }
 
-  char return_label[] = "Press \"Escape\" or \"Enter\" to return to the main menu";
+  char return_label[] = "Press \"Escape\" to return to the main menu";
   mvwprintw(
     win->window,
     win->y_max - 5,

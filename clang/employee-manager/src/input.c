@@ -73,7 +73,13 @@ char* get_search_input(Window* win) {
 
   int label_len = strlen(SEARCH_LABEL);
   // get label for search (max 100 chars)
-  mvwgetnstr(win->window, win->y_max / 2, win->x_max / 2 + (label_len / 2) + 1, buffer, BUFFER_SIZE);
+  mvwgetnstr(
+      win->window,
+      win->y_max / 2,
+      win->x_max / 2 + (label_len / 2) + 3,
+      buffer,
+      BUFFER_SIZE
+    );
 
   // disable cursor and output
   curs_set(0);
