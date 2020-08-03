@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <ncurses.h>
+#include <stdlib.h>
 
 #include "headers/menu.h"
 #include "headers/window.h"
@@ -94,7 +95,7 @@ void handle_search(Window* win) {
   if (!data || data == NULL) exit(1);
 
   // print employee(s) data to screen
-  print_employee(win, data, sizeof(data) / sizeof(*data));
+  print_employee(win, data, (sizeof(data) / sizeof(char*)));
 
   noecho();
   int key = 0;

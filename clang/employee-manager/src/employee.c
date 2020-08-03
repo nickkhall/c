@@ -4,7 +4,7 @@
 
 #include "headers/employee.h"
 
-extern const char* employee_labels[] = {
+const char* employee_labels[] = {
   "Name",     // 1 / 2
   "Email",    // 3
   "Address",  // 4
@@ -23,17 +23,17 @@ Employee* push_employee(Employee* employee_head, char** data) {
   head = (Employee*) malloc(sizeof(Employee));
   if (!head || head == NULL) exit(1);
 
-  head->id = (char*)malloc(sizeof(char) * 33);
-  head->first = (char*)malloc(sizeof(char) * 51);
-  head->last = (char*)malloc(sizeof(char) * 51);
-  head->email = (char*)malloc(sizeof(char) * 76);
-  head->address = (char*)malloc(sizeof(char) * 76);
-  head->phone = (char*)malloc(sizeof(char) * 51);
-  head->start = malloc(sizeof(time_t));
-  head->gender = (char*)malloc(sizeof(char) * 7);
-  head->ethnicity = (char*)malloc(sizeof(char) * 51);
-  head->title = (char*)malloc(sizeof(char) * 51);
-  head->salary = malloc(sizeof(unsigned long long int));
+  head->id = (char*) malloc(sizeof(char) * 33);
+  head->first = (char*) malloc(sizeof(char) * 51);
+  head->last = (char*) malloc(sizeof(char) * 51);
+  head->email = (char*) malloc(sizeof(char) * 76);
+  head->address = (char*) malloc(sizeof(char) * 76);
+  head->phone = (char*) malloc(sizeof(char) * 51);
+  head->start = (time_t) malloc(sizeof(time_t));
+  head->gender = (char*) malloc(sizeof(char) * 7);
+  head->ethnicity = (char*) malloc(sizeof(char) * 51);
+  head->title = (char*) malloc(sizeof(char) * 51);
+  head->salary = (unsigned long long int) malloc(sizeof(unsigned long long int));
 
   head->next_employee = employee_head;
 
@@ -49,7 +49,7 @@ Employee* push_employee(Employee* employee_head, char** data) {
   head->title     = *(data + 9);
   head->salary    = (unsigned long long int)(data + 10);
 
-  employee_head - head;
+  employee_head = head;
 
 
   return employee_head;

@@ -49,24 +49,6 @@ int main() {
       // search employee
       case 1: {
         handle_search(&window);
-        //  search (menu.c)
-        //    - print_label (input.c)
-        //    - get_search_input (input.c)
-        //    - **Employees <- get_emp(user_input) (handlers.c)
-        //      - connect
-        //      - query
-        //      - disconnect
-        //      - return list of employees
-        //    - **Employees -> print_employee
-        //    - return to menu
-
-
-        // query db
-        //const char*** query_result = query_db(sql_query, queryParams, 1);
-        // Employee* employee = query_db_by_id(sql_query, query_params);
-
-        // print data to screen
-        // print_data(query_result);
 
         // back to main menu
         MainMenu.state = 0; 
@@ -76,32 +58,6 @@ int main() {
       case 2: {
         // @TODO: (nickkhall) Refactor me to be a more functional approach, this is a mess
         clear_screen(&window);
-        const int size = 16;
-        const char* temp_form_labels[] = {
-          "First Name: ",
-          "Middle Name: ",
-          "Last Name: ",
-          "Suffix: ",
-          "Email: ",
-          "Home Phone: ",
-          "Cell Phone: ",
-          "Marital Status: ",
-          "Social Security: ",
-          "Hire Date: ",
-          "Emergency Contact: ",
-          "Gender: ",
-          "Ethnicity: ",
-          "Residence: ",
-          "Job Title: ",
-          "Salary: "
-        };
-
-        // user input data
-        // char** user_input = create(&window, temp_form_labels, &size);
-
-        // write user input to data as employee
-        //write_to_file(temp_form_labels, user_input, &size);
-
         MainMenu.state = 0;
         break;
       }
@@ -125,6 +81,7 @@ int main() {
   curs_set(1);
   echo();
   endwin();
+  system("reset");
 
   return 0;
 }

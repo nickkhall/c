@@ -11,7 +11,7 @@
 #define BUFFER_SIZE 100
 #define MAX_STR_SIZE 100
 
-static const char* SEARCH_LABEL = "Search by ID, First and/or Last name:";
+extern const char* SEARCH_LABEL;
 
 char** create(Window *window, const char** form_labels, const int *num_of_fields);
 

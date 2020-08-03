@@ -5,7 +5,7 @@
 #include <libpq-fe.h>
 #include <string.h>
 
-typedef struct emp {
+typedef struct Employee {
   char* id;
   char* first;
   char* last;

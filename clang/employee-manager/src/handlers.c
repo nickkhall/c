@@ -5,10 +5,11 @@
 #include "headers/handlers.h"
 #include "headers/employee.h"
 #include "headers/db.h"
+#include "headers/utils.h"
 
 #define SEARCH_QUERY "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1"
 
-char** get_employee(const char* const* params, char*** employee_data) {
+char*** get_employee(const char* const* params, char*** employee_data) {
   if (!*(params)) {
     exit(1);
   }
@@ -46,7 +47,7 @@ char** get_employee(const char* const* params, char*** employee_data) {
     printf("NO USERS FOUND! NEED TO IMPLEMENT ERRORS/NOTIFICATIONS\n");
     PQclear(res);
 
-    PQfinish(conn);
+    disconnect_from_db(conn);
     exit(1);
   };
   
@@ -73,7 +74,7 @@ char** get_employee(const char* const* params, char*** employee_data) {
       free(employee_data);
 
       PQclear(res);
-      PQfinish(conn);
+      disconnect_from_db(conn);
 
       exit(1);
     }

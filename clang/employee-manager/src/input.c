@@ -6,6 +6,8 @@
 #include "headers/input.h"
 #include "headers/utils.h"
 
+const char* SEARCH_LABEL = "Search by ID, First and/or Last name:";
+
 char** create(Window *window, const char** form_labels, const int *num_of_fields) {
   // enable cursor
   curs_set(1);

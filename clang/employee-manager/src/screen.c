@@ -5,7 +5,7 @@
 #include "headers/window.h"
 #include "headers/utils.h"
 
-void print_word(Window* win, const int y, const int x, char* word) {
+void print_word(Window* win, const int y, const int x, const char* word) {
   mvwprintw(win->window, y, x, word);
   
   refresh();
