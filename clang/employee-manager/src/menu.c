@@ -95,7 +95,7 @@ void handle_search(Window* win) {
   if (!data || data == NULL) exit(1);
 
   // print employee(s) data to screen
-  print_employee(win, data, (sizeof(data) / sizeof(char*)));
+  print_employee(win, data, 2);
 
   noecho();
   int key = 0;

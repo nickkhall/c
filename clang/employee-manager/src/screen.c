@@ -117,7 +117,7 @@ void print_employee_row(Window* win, char** data, const int row) {
 
     print_word(
       win,
-      ((win->y_max + 1) - win->y_max + 4) + row,
+      (row + 4),
       (((win->x_max + 1) - win->x_max) + word_offset + offset) - ((current_value_length / 2) - x),
       current_value
     );
