@@ -51,11 +51,12 @@ char*** get_employee(const char* const* params, char*** employee_data) {
     exit(1);
   };
 
-  employee_data = (char*) malloc(sizeof(char*) * rows);
+  unsigned long int employee_size = (sizeof(char*) * rows);
+  employee_data = (char***) malloc(employee_size);
   if (!employee_data || employee_data == NULL) exit(1);
   
   for (int r = 0; r < rows; r++) {
-    *(employee_data + r) = (char*) malloc(sizeof(char*) * cols);
+    *(employee_data + r) = (char**) malloc(sizeof(char*) * cols);
     if (!*(employee_data + r) || *(employee_data + r) == NULL) exit(1);
 
     convert_emp_to_data(*(employee_data + r), res, r);  
