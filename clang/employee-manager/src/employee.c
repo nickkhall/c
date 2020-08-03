@@ -4,6 +4,14 @@
 
 #include "headers/employee.h"
 
+extern const char* employee_labels[] = {
+  "Name",     // 1 / 2
+  "Email",    // 3
+  "Address",  // 4
+  "Phone",    // 6
+  "Title"     // 9
+};
+
 Employee* push_employee(Employee* employee_head, char** data) {
   if (!employee_head || employee_head == NULL) {
     printf("ERROR:: create_employee received a bad pointer: %p\n", employee_head);

@@ -21,5 +21,7 @@ typedef struct emp {
 } Employee;
 
 Employee* push_employee(Employee* employee, char** data);
+
+extern const char* employee_labels[];
 #endif
 
