@@ -95,6 +95,9 @@ void handle_search(Window* win) {
   if (!data || data == NULL) exit(1);
 
   // print employee(s) data to screen
+  // @TODO: WARNING:Find solution for num of rows
+  // 2 is hard coded to test multiple rows render,
+  // but will break if try 1. Still learning here :)
   print_employee(win, data, 2);
 
   noecho();
