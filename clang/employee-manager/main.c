@@ -40,9 +40,11 @@ int main() {
   Menu MainMenu = {main_menu_items, 0, 0};
 
   do {
+    print_border(&window);
+
     switch(MainMenu.state) {
       case 0: {
-        print_header(&window);
+        print_title(&window);
         render_main_menu(&window, &MainMenu, main_menu_items, &main_menu_size);
         break;
       }
@@ -58,6 +60,7 @@ int main() {
       case 2: {
         // @TODO: (nickkhall) Refactor me to be a more functional approach, this is a mess
         clear_screen(&window);
+        print_border(&window);
         MainMenu.state = 0;
         break;
       }

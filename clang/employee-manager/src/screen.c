@@ -12,6 +12,56 @@ void print_word(Window* win, const int y, const int x, const char* word) {
   wrefresh(win->window);
 }
 
+void print_border(Window* win) {
+  for (int y = 0; y < win->y_max; y++) {
+    for (int x = 0; x < win->x_max; x++) {
+      if (y > 0) {
+        // print corners
+        if (
+          (y == 1 && x == 2)
+          || (y == 1 && x == win->x_max - 3)
+          || (y == win->y_max - 2 && x == 2)
+          || (y == win->y_max - 2 && x == win->x_max - 3)
+        ) { 
+          mvwprintw(win->window, y, x, "+");
+          
+          refresh();
+          wrefresh(win->window);
+        } else if (y > 1 && y < win->y_max - 2 && (x == 2 || x == win->x_max - 3)) {
+          mvwprintw(
+            win->window,
+            y,
+            x,
+            "|"
+          );
+
+          refresh();
+          wrefresh(win->window);
+        } else if (x > 2 && x < (win->x_max - 3) && (y == 1 || y == win->y_max - 2)) {
+          char x_open = '\\';
+          char x_close = '/';
+          char x_char[2];
+          if (x % 2 == 0) *x_char = x_close;
+          else *x_char = x_open;
+
+          mvwprintw(
+            win->window,
+            y,
+            x,
+            x_char
+          );
+
+          refresh();
+          wrefresh(win->window);
+        }
+      }
+    }
+  }
+
+  refresh();
+  wrefresh(win->window);
+};
+
 void print_screen_line(Window* win, const int y) {
   // render a horizonal line for data separation
   char* screen_line = (char*) malloc((sizeof(char) * win->x_max) - 4);
@@ -147,4 +197,29 @@ void print_search_label(Window* win, const char* label) {
 
   refresh();
   wrefresh(win->window);
+};
+
+void print_title(Window *window) {
+  const char* header[] = {
+    " ______                 _                         __  __",
+    "|  ____|               | |                       |  \\/  |",
+    "| |__   _ __ ___  _ __ | | ___  _   _  ___  ___  | \\  / | __ _ _ __   __ _  __ _  ___ _ __",
+    "|  __| | '_ ` _ \\| '_ \\| |/ _ \\| | | |/ _ \\/ _ \\ | |\\/| |/ _` | '_ \\ / _` |/ _` |/ _ \\ '__|",
+    "| |____| | | | | | |_) | | (_) | |_| |  __/  __/ | |  | | (_| | | | | (_| | (_| |  __/ |",
+    "|______|_| |_| |_| .__/|_|\\___/ \\__, |\\___|\\___| |_|  |_|\\__,_|_| |_|\\__,_|\\__, |\\___|_|",
+    "                 | |             __/ |                                      __/ |",
+    "                 |_|            |___/                                      |___/"
+  };
+
+  for (short int i = 0; i < 8; i++) {
+    mvwprintw(
+      window->window,
+      i + 10,
+      ((window->x_max / 2) - (91 / 2) + 2),
+      *(header + i)
+    );
+  }
+
+  refresh();
+  wrefresh(window->window);
 };
