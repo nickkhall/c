@@ -27,6 +27,7 @@ void print_border(Window* win) {
           
           refresh();
           wrefresh(win->window);
+          // print vertical borders
         } else if (y > 1 && y < win->y_max - 2 && (x == 2 || x == win->x_max - 3)) {
           mvwprintw(
             win->window,
@@ -37,18 +38,13 @@ void print_border(Window* win) {
 
           refresh();
           wrefresh(win->window);
+          // print horizontal borders
         } else if (x > 2 && x < (win->x_max - 3) && (y == 1 || y == win->y_max - 2)) {
-          char x_open = '\\';
-          char x_close = '/';
-          char x_char[2];
-          if (x % 2 == 0) *x_char = x_close;
-          else *x_char = x_open;
-
           mvwprintw(
             win->window,
             y,
             x,
-            x_char
+            "-"
           );
 
           refresh();
