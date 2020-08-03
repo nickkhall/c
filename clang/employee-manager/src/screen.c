@@ -12,7 +12,7 @@ void print_word(Window* win, const int y, const int x, char* word) {
   wrefresh(win->window);
 }
 
-void print_screen_line(Window* win) {
+void print_screen_line(Window* win, const int y) {
   // render a horizonal line for data separation
   char* screen_line = (char*) malloc((sizeof(char) * win->x_max) - 4);
   if (!screen_line || screen_line == NULL) exit(1); 
@@ -24,7 +24,7 @@ void print_screen_line(Window* win) {
   print_word(
     win,
     ((win->y_max + 1) - win->y_max + 2),
-    1,
+    y,
     screen_line
   );
 
@@ -78,15 +78,15 @@ void print_employee(Window* win, char*** data, const int rows) {
       print_word(
         win,
         1,
-        ((win->x_max + 1) - win->x_max) + word_offset + offset - (current_label_length / 2),
+        ((((win->x_max + 1) - win->x_max) + word_offset + offset) - (current_label_length / 2)) + (l + 1),
         current_label
       );
 
       // increase the x axis offset for next label
-      offset += max_offset - ((((max_offset - current_label_length) / 2) + 1) + word_offset);
+      offset += ((current_label_length / 2) + word_offset) + (l + 1);
     }
 
-    print_screen_line(win);
+    print_screen_line(win, 1);
 
     // reset offset for employee data row(s)
     offset = 0;
@@ -95,16 +95,19 @@ void print_employee(Window* win, char*** data, const int rows) {
     for (int x = 0; x < 5; x++) {
       const char* current_value = *(temp_data + x);
       const unsigned long int current_value_length = strlen(current_value);
+      const char* current_label = *(employee_labels + x);
+      const unsigned long int current_label_length = strlen(current_label);
 
       print_word(
         win,
         ((win->y_max + 1) - win->y_max + 4) + y,
-        (((win->x_max + 1) - win->x_max) + word_offset + offset) - (current_value_length / 2),
+        (((win->x_max + 1) - win->x_max) + word_offset + offset) - ((current_value_length / 2) - x),
         current_value
       );
 
       // increase offset of current data length
-      offset += ((current_value_length + word_offset) + 2) - (current_value_length / 2);
+      //offset += ((current_label_length / 2) - (x + 1)) + (current_value_length / 2) + word_offset;
+      offset += ((current_label_length) + word_offset);
     } 
   
     // reset offset for next row
