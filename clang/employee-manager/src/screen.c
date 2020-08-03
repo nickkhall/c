@@ -32,15 +32,58 @@ void print_screen_line(Window* win, const int y) {
   free(screen_line);
 };
 
-void print_employee(Window* win, char*** data, const int rows) {
-  clear_screen(win);
-
-  // keep track of offset that labels should render apart from eachother (x axis)
-  const unsigned short max_offset = 100;
+void print_employee_headers(Window* win) {
   const unsigned long int word_offset = (win->x_max / 7);
 
   // keep track of current x axis offset for n value
   unsigned int offset = 0;
+
+  // print the employee table header labels
+  for (int l = 0; l < 5; l++) {
+    const char* current_label = *(employee_labels + l);
+    const unsigned long int current_label_length = strlen(current_label);
+
+    print_word(
+      win,
+      1,
+      ((((win->x_max + 1) - win->x_max) + word_offset + offset) - (current_label_length / 2)) + (l + 1),
+      current_label
+    );
+
+    // increase the x axis offset for next label
+    offset += ((current_label_length / 2) + word_offset) + (l + 1);
+  }
+};
+
+void print_employee_row(Window* win, char** data, const int row) {
+  // keep track of offset that labels should render apart from eachother (x axis)
+  const unsigned long int word_offset = (win->x_max / 7);
+
+  // keep track of current x axis offset for n value
+  unsigned int offset = 0;
+
+  // render minified employee data
+  for (int x = 0; x < 5; x++) {
+    const char* current_value = *(data + x);
+    const unsigned long int current_value_length = strlen(current_value);
+    const char* current_label = *(employee_labels + x);
+    const unsigned long int current_label_length = strlen(current_label);
+
+    print_word(
+      win,
+      ((win->y_max + 1) - win->y_max + 4) + row,
+      (((win->x_max + 1) - win->x_max) + word_offset + offset) - ((current_value_length / 2) - x),
+      current_value
+    );
+
+    // increase offset of current data length
+    //offset += ((current_label_length / 2) - (x + 1)) + (current_value_length / 2) + word_offset;
+    offset += ((current_label_length) + word_offset);
+  } 
+};
+
+void print_employee(Window* win, char*** data, const int rows) {
+  clear_screen(win);
 
   // print out employee(s) data in table format
   for (int y = 0; y < rows; y++) {
@@ -70,48 +113,11 @@ void print_employee(Window* win, char*** data, const int rows) {
       *(*(data + y) + 9),
     };
 
-    // print the employee table header labels
-    for (int l = 0; l < 5; l++) {
-      const char* current_label = *(employee_labels + l);
-      const unsigned long int current_label_length = strlen(current_label);
-
-      print_word(
-        win,
-        1,
-        ((((win->x_max + 1) - win->x_max) + word_offset + offset) - (current_label_length / 2)) + (l + 1),
-        current_label
-      );
-
-      // increase the x axis offset for next label
-      offset += ((current_label_length / 2) + word_offset) + (l + 1);
-    }
+    print_employee_headers(win);
 
     print_screen_line(win, 1);
 
-    // reset offset for employee data row(s)
-    offset = 0;
-
-    // render minified employee data
-    for (int x = 0; x < 5; x++) {
-      const char* current_value = *(temp_data + x);
-      const unsigned long int current_value_length = strlen(current_value);
-      const char* current_label = *(employee_labels + x);
-      const unsigned long int current_label_length = strlen(current_label);
-
-      print_word(
-        win,
-        ((win->y_max + 1) - win->y_max + 4) + y,
-        (((win->x_max + 1) - win->x_max) + word_offset + offset) - ((current_value_length / 2) - x),
-        current_value
-      );
-
-      // increase offset of current data length
-      //offset += ((current_label_length / 2) - (x + 1)) + (current_value_length / 2) + word_offset;
-      offset += ((current_label_length) + word_offset);
-    } 
-  
-    // reset offset for next row
-    offset = 0;
+    print_employee_row(win, temp_data, y);
   }
 
   // print helper label text for returning to menu at bottom of screen
