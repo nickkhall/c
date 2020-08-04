@@ -17,38 +17,18 @@ void print_border(Window* win) {
     for (int x = 0; x < win->x_max; x++) {
       if (y > 0) {
         // print corners
-        if (
-          (y == 1 && x == 2)
+        if ((y == 1 && x == 2)
           || (y == 1 && x == win->x_max - 3)
           || (y == win->y_max - 2 && x == 2)
           || (y == win->y_max - 2 && x == win->x_max - 3)
         ) { 
           mvwprintw(win->window, y, x, "+");
-          
-          refresh();
-          wrefresh(win->window);
           // print vertical borders
         } else if (y > 1 && y < win->y_max - 2 && (x == 2 || x == win->x_max - 3)) {
-          mvwprintw(
-            win->window,
-            y,
-            x,
-            "|"
-          );
-
-          refresh();
-          wrefresh(win->window);
+          mvwprintw(win->window, y, x, "|");
           // print horizontal borders
         } else if (x > 2 && x < (win->x_max - 3) && (y == 1 || y == win->y_max - 2)) {
-          mvwprintw(
-            win->window,
-            y,
-            x,
-            "-"
-          );
-
-          refresh();
-          wrefresh(win->window);
+          mvwprintw(win->window, y, x, "-");
         }
       }
     }
