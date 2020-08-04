@@ -17,19 +17,38 @@ void print_border(Window* win) {
     for (int x = 0; x < win->x_max; x++) {
       if (y > 0) {
         // print corners
+        //if ((y == 1 && x == 2)
+        //  || (y == 1 && x == win->x_max - 3)
+        //  || (y == win->y_max - 2 && x == 2)
+        //  || (y == win->y_max - 2 && x == win->x_max - 3)
+        //) { 
+        //  mvwprintw(win->window, y, x, "+");
+        //  // print vertical borders
+        //} else if (y > 1 && y < win->y_max - 2 && (x == 2 || x == win->x_max - 3)) {
+        //  mvwprintw(win->window, y, x, "|");
+        //  // print horizontal borders
+        //} else if (x > 2 && x < (win->x_max - 3) && (y == 1 || y == win->y_max - 2)) {
+        //  mvwprintw(win->window, y, x, "-");
+        //}
+
+        char character[2];
         if ((y == 1 && x == 2)
           || (y == 1 && x == win->x_max - 3)
           || (y == win->y_max - 2 && x == 2)
           || (y == win->y_max - 2 && x == win->x_max - 3)
-        ) { 
-          mvwprintw(win->window, y, x, "+");
-          // print vertical borders
+        ) {
+          *(character) = '+';
         } else if (y > 1 && y < win->y_max - 2 && (x == 2 || x == win->x_max - 3)) {
-          mvwprintw(win->window, y, x, "|");
-          // print horizontal borders
-        } else if (x > 2 && x < (win->x_max - 3) && (y == 1 || y == win->y_max - 2)) {
-          mvwprintw(win->window, y, x, "-");
+          *(character) = '|';
+        } else if () {
+          *(character) = '-';
         }
+        
+        // end char string with null terminater
+        *(character + 1) = 0x00;
+
+        // print character to screen
+        mvwprintw(win->window, y, x, character);
       }
     }
   }
