@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-char** convert_emp_to_data(char** data_pointer, PGresult* res, const int row);
+char** convert_response_to_data(char** data_pointer, PGresult* res, const int row);
 
 #endif
 

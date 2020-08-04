@@ -59,7 +59,11 @@ char*** get_employee(const char* const* params, char*** employee_data) {
     *(employee_data + r) = (char**) malloc(sizeof(char*) * cols);
     if (!*(employee_data + r) || *(employee_data + r) == NULL) exit(1);
 
-    convert_emp_to_data(*(employee_data + r), res, r);  
+    convert_response_to_data(*(employee_data + r), res, r);
+
+    Employee* employee;
+    push_employee(employee, *(employee_data + r), rows);
+    if (!employee || employee == NULL) exit(1);
 
     // if there is a failure, ABORT
     if (!*(employee_data + r) || *(employee_data + r) == NULL) {

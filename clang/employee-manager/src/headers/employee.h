@@ -17,11 +17,12 @@ typedef struct Employee {
   char* ethnicity;
   char* title;
   unsigned long long int salary;
+  unsigned long long int num_of_employees;
   struct Employee* next_employee;
 } Employee;
 
-Employee* push_employee(Employee* employee, char** data);
+Employee* push_employee(Employee* employee, char** data, unsigned long long int num_of_employees);
 
-extern const char* employee_labels[];
+extern const char* employee_labels_mini[];
 #endif
 

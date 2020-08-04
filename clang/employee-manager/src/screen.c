@@ -86,7 +86,7 @@ void print_employee_headers(Window* win) {
 
   // print the employee table header labels
   for (int l = 0; l < 5; l++) {
-    const char* current_label = *(employee_labels + l);
+    const char* current_label = *(employee_labels_mini + l);
     const unsigned long int current_label_length = strlen(current_label);
 
     print_word(
@@ -112,7 +112,7 @@ void print_employee_row(Window* win, char** data, const int row) {
   for (int x = 0; x < 5; x++) {
     const char* current_value = *(data + x);
     const unsigned long int current_value_length = strlen(current_value);
-    const char* current_label = *(employee_labels + x);
+    const char* current_label = *(employee_labels_mini + x);
     const unsigned long int current_label_length = strlen(current_label);
 
     print_word(
