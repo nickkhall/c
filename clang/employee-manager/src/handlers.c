@@ -9,7 +9,7 @@
 
 #define SEARCH_QUERY "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1"
 
-char*** get_employee(const char* const* params, char*** employee_data) {
+Employee* get_employee(const char* const* params, Employee* employee) {
   if (!*(params)) {
     exit(1);
   }
@@ -52,6 +52,7 @@ char*** get_employee(const char* const* params, char*** employee_data) {
   };
 
   unsigned long int employee_size = (sizeof(char*) * rows);
+  char*** employee_data = NULL;
   employee_data = (char***) malloc(employee_size);
   if (!employee_data || employee_data == NULL) exit(1);
   
@@ -61,8 +62,7 @@ char*** get_employee(const char* const* params, char*** employee_data) {
 
     convert_response_to_data(*(employee_data + r), res, r);
 
-    Employee* employee;
-    push_employee(employee, *(employee_data + r), rows);
+    push_employee(employee, *(employee_data + r));
     if (!employee || employee == NULL) exit(1);
 
     // if there is a failure, ABORT
@@ -90,6 +90,6 @@ char*** get_employee(const char* const* params, char*** employee_data) {
   // disconnect from db
   disconnect_from_db(conn);
 
-  return employee_data;
+  return employee;
 }
 

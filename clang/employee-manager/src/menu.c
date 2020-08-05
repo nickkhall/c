@@ -90,15 +90,15 @@ void handle_search(Window* win) {
   const char* const* query_params = &user_input;
 
   // get employee(s) data
-  char*** data = NULL;
-  data = get_employee(query_params, data);
-  if (!data || data == NULL) exit(1);
+  Employee* employee;
+  employee = get_employee(query_params, employee);
+  if (!employee || employee == NULL) exit(1);
 
   // print employee(s) data to screen
   // @TODO: WARNING:Find solution for num of rows
   // 2 is hard coded to test multiple rows render,
   // but will break if try 1. Still learning here :)
-  print_employee(win, data, 2);
+  print_employee(win, employee);
 
   noecho();
   int key = 0;

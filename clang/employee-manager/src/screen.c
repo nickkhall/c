@@ -17,38 +17,19 @@ void print_border(Window* win) {
     for (int x = 0; x < win->x_max; x++) {
       if (y > 0) {
         // print corners
-        //if ((y == 1 && x == 2)
-        //  || (y == 1 && x == win->x_max - 3)
-        //  || (y == win->y_max - 2 && x == 2)
-        //  || (y == win->y_max - 2 && x == win->x_max - 3)
-        //) { 
-        //  mvwprintw(win->window, y, x, "+");
-        //  // print vertical borders
-        //} else if (y > 1 && y < win->y_max - 2 && (x == 2 || x == win->x_max - 3)) {
-        //  mvwprintw(win->window, y, x, "|");
-        //  // print horizontal borders
-        //} else if (x > 2 && x < (win->x_max - 3) && (y == 1 || y == win->y_max - 2)) {
-        //  mvwprintw(win->window, y, x, "-");
-        //}
-
-        char character[2];
         if ((y == 1 && x == 2)
           || (y == 1 && x == win->x_max - 3)
           || (y == win->y_max - 2 && x == 2)
           || (y == win->y_max - 2 && x == win->x_max - 3)
-        ) {
-          *(character) = '+';
+        ) { 
+          mvwprintw(win->window, y, x, "+");
+          // print vertical borders
         } else if (y > 1 && y < win->y_max - 2 && (x == 2 || x == win->x_max - 3)) {
-          *(character) = '|';
-        } else if () {
-          *(character) = '-';
+          mvwprintw(win->window, y, x, "|");
+          // print horizontal borders
+        } else if (x > 2 && x < (win->x_max - 3) && (y == 1 || y == win->y_max - 2)) {
+          mvwprintw(win->window, y, x, "-");
         }
-        
-        // end char string with null terminater
-        *(character + 1) = 0x00;
-
-        // print character to screen
-        mvwprintw(win->window, y, x, character);
       }
     }
   }
@@ -127,43 +108,47 @@ void print_employee_row(Window* win, char** data, const int row) {
   } 
 };
 
-void print_employee(Window* win, char*** data, const int rows) {
+void print_employee(Window* win, Employee* employee) {
   clear_screen(win);
 
-  // print out employee(s) data in table format
-  for (int y = 0; y < rows; y++) {
-    // get first name
-    char* first = *(*(data + y) + 1);
-    // get last name
-    char* last = *(*(data + y) + 2);
-    // combined first and last name
-    char* full_name = (char*) malloc((strlen(first) + strlen(last)) + 1);
-    if (!full_name || full_name == NULL) {
-      printf("ERROR: Failure to allocate memory for full name in print_employee\n");
-      exit(1);
-    }
-
-    // copy first and last to combined string
-    strcpy(full_name, first);
-    strcat(full_name, " ");
-    strcat(full_name, last);
-
-    // cherry pick data
-    // @TODO: Remove when screen size logic is added to allow for more data to be displayed
-    char* temp_data[5] = {
-      full_name,
-      *(*(data + y) + 3),
-      *(*(data + y) + 4),
-      *(*(data + y) + 5),
-      *(*(data + y) + 9),
-    };
-
-    print_employee_headers(win);
-
-    print_screen_line(win, 1);
-
-    print_employee_row(win, temp_data, y);
+  while(employee->next_employee) {
+    char name[(sizeof(employee->first) + sizeof(employee->last) + 2)];
   }
+
+  // print out employee(s) data in table format
+  //for (int y = 0; y < rows; y++) {
+  //  // get first name
+  //  char* first = *(*(data + y) + 1);
+  //  // get last name
+  //  char* last = *(*(data + y) + 2);
+  //  // combined first and last name
+  //  char* full_name = (char*) malloc((strlen(first) + strlen(last)) + 1);
+  //  if (!full_name || full_name == NULL) {
+  //    printf("ERROR: Failure to allocate memory for full name in print_employee\n");
+  //    exit(1);
+  //  }
+
+  //  // copy first and last to combined string
+  //  strcpy(full_name, first);
+  //  strcat(full_name, " ");
+  //  strcat(full_name, last);
+
+  //  // cherry pick data
+  //  // @TODO: Remove when screen size logic is added to allow for more data to be displayed
+  //  char* temp_data[5] = {
+  //    full_name,
+  //    *(*(data + y) + 3),
+  //    *(*(data + y) + 4),
+  //    *(*(data + y) + 5),
+  //    *(*(data + y) + 9),
+  //  };
+
+  //  print_employee_headers(win);
+
+  //  print_screen_line(win, 1);
+
+  //  print_employee_row(win, temp_data, y);
+  //}
 
   // print helper label text for returning to menu at bottom of screen
   char return_label[] = "Press \"Escape\" to return to the main menu";

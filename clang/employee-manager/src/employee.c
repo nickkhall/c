@@ -12,7 +12,7 @@ const char* employee_labels_mini[] = {
   "Title"     // 9
 };
 
-Employee* push_employee(Employee* employee_head, char** data, unsigned long long int num_of_employees) {
+Employee* push_employee(Employee* employee_head, char** data) {
   if (!employee_head || employee_head == NULL) {
     printf("ERROR:: create_employee received a bad pointer: %p\n", employee_head);
     free(employee_head);
@@ -35,7 +35,6 @@ Employee* push_employee(Employee* employee_head, char** data, unsigned long long
   head->ethnicity         = (char*) malloc(sizeof(char) * 51);
   head->title             = (char*) malloc(sizeof(char) * 51);
   head->salary            = (unsigned long long int) malloc(sizeof(unsigned long long int));
-  head->num_of_employees  = (unsigned long long int) malloc(sizeof(unsigned long long int));
 
   // set next pointer to pointer head
   head->next_employee = employee_head;
@@ -52,7 +51,6 @@ Employee* push_employee(Employee* employee_head, char** data, unsigned long long
   head->ethnicity         = *(data + 8);
   head->title             = *(data + 9);
   head->salary            = (unsigned long long int)(data + 10);
-  head->num_of_employees  = num_of_employees;
 
   // change the current head to new head
   employee_head = head;
