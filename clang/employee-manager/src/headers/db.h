@@ -3,11 +3,13 @@
 
 #include "employee.h"
 
-PGconn* connect_to_db();
+PGconn* db_connect();
 
-PGresult* query(const char* query, const char* const* queryParams, const int num_of_queries);
+PGresult* db_query(const char* query,
+									const char* const* queryParams,
+									const int num_of_queries);
 
-void disconnect_from_db(PGconn* conn);
+void db_disconnect(PGconn* conn);
 
 #endif
 

@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <ncurses.h>
 
+#include "src/headers/employee.h"
 #include "src/headers/menu.h"
 #include "src/headers/window.h"
-#include "src/headers/employee.h"
+#include "src/headers/app.h"
 
 int main() {
   // create window

@@ -3,7 +3,12 @@
 
 #include <string.h>
 
+#include "menu.h"
 #include "window.h"
+#include "input.h"
+#include "screen.h"
+#include "handlers.h"
+#include "employee.h"
 
 extern const char* main_menu_items[];
 
@@ -17,19 +22,13 @@ Menu* menu_create(Menu* menu);
 
 void menu_update(Menu* menu, int key_code, int items_size);
 
-// search
-void handle_search(Window* win);
+void menu_destroy(Menu* menu);
 
-// create
-// void handle_create();
+void menu_search_handler();
 
-// update
-// void handle_update();
+void menu_create_handler();
 
-// remove
-// void handle_remove();
+void menu_update_handler();
 
-// quit
-// void quit();
-
+void menu_remove_handler();
 #endif

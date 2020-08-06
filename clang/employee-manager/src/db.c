@@ -8,9 +8,14 @@
 #include "headers/input.h"
 #include "headers/screen.h"
 
-// @NOTE: sanitize data
-// connect
-PGconn* connect_to_db() {
+/*
+ * -----------------------------------------------
+ * function: db_connect
+ * -----------------------------------------------
+ * Creates and returns a connection to a database.
+ * -----------------------------------------------
+ */
+PGconn* db_connect() {
   // establish connection to db
   PGconn* conn =  PQconnectdb(SQL_INFO);
 
@@ -29,13 +34,16 @@ PGconn* connect_to_db() {
   return conn;
 }
 
-// disconnect
-void disconnect_from_db(PGconn* conn) {
-  PQfinish(conn);
-}
-
-// search
-PGresult* query_db_by_id(const char* query, const char* const* queryParams, const int num_of_queries) {
+/*
+ * ----------------------------------------------------------------------------------
+ * function: db_connect
+ * ----------------------------------------------------------------------------------
+ * Queries a database with a given string, given params, and given number of queries.
+ * ----------------------------------------------------------------------------------
+ * Returns a pointer to the postgres result (PGresult).
+ * ----------------------------------------------------------------------------------
+ */
+PGresult* db_query(const char* query, const char* const* queryParams, const int num_of_queries) {
   PGresult* res;
   // create connection with db
   PGconn* conn = connect_to_db();
@@ -68,6 +76,13 @@ PGresult* query_db_by_id(const char* query, const char* const* queryParams, cons
   return temp;
 };
 
-// insert
-
-// delete
+/*
+ * -----------------------------------------------
+ * function: db_disconnect
+ * -----------------------------------------------
+ * Destroys a connection to a database.
+ * -----------------------------------------------
+ */
+void db_disconnect(PGconn* conn) {
+  PQfinish(conn);
+}

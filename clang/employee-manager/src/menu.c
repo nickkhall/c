@@ -4,11 +4,9 @@
 #include <stdlib.h>
 
 #include "headers/menu.h"
-#include "headers/window.h"
 #include "headers/input.h"
 #include "headers/screen.h"
 #include "headers/handlers.h"
-#include "headers/employee.h"
 
 const char* main_menu_items[] = {
   "  Search  Employee  " ,
@@ -62,39 +60,11 @@ void menu_update(Menu* menu, int key_code, int items_size) {
   menu->state = menu->highlighted + 1;
 };
 
-// handle_search
-// Handles printing search label to the screen,
-// getting user input,
-// and printing employee data to the screen.
-void handle_search(Window* win) {
-  // print search by id/first/last label
-  print_search_label(win, SEARCH_LABEL);
+// menu_handle_search
+ // print_search_label(win, SEARCH_LABEL);
+ // // get user input
+ // const char* user_input = get_search_input(win);
 
-  // get user input
-  const char* user_input = get_search_input(win);
-
-  // create query params from user input
-  const char* const* query_params = &user_input;
-
-  // get employee(s) data
-  Employee* employee = NULL;
-  employee = get_employee(query_params, employee);
-  if (!employee || employee == NULL) exit(1);
-
-  // print employee data to screen
-  print_employee(win, employee);
-
-  // wait for user to press "Escape"
-  noecho();
-  int key = 0;
-  if ((key = getch()) != ERR) {
-    while(key != 27) {
-      key = getch();
-    }
-  }
-
-  destroy_employees(employee);
-
-  clear_screen(win);
-};
+ // // create query params from user input
+ // const char* const* query_params = &user_input;
 

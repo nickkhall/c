@@ -7,93 +7,40 @@
 #include "headers/db.h"
 #include "headers/utils.h"
 
-#define SEARCH_QUERY "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1"
+// handle_search
+// Handles printing search label to the screen,
+// getting user input,
+// and printing employee data to the screen.
+void handle_get_id(Window* win, const char* const* query_params) {
+  // print search by id/first/last label
+  const char select_query[] = "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1";
 
-Employee* get_employee(const char* const* params, Employee* employee) {
-  if (!*(params)) {
-    exit(1);
-  }
+  print_search_label(win, SEARCH_LABEL);
+  // get user input
+  const char* user_input = get_search_input(win);
 
-  PGconn* conn = connect_to_db();
+  // create query params from user input
+  const char* const* query_params = &user_input;
 
-  // start transaction block
-  PGresult* res = PQexec(conn, "BEGIN");
-  if (PQresultStatus(res) != PGRES_COMMAND_OK) {
-    PQclear(res);
+  // get employee(s) data
+  Employee* employee = NULL;
+  employee = get_employee(query_params, employee);
+  if (!employee || employee == NULL) exit(1);
 
-    PQfinish(conn);
-    exit(1);
-  }
+  // print employee data to screen
+  print_employee(win, employee);
 
-  // clear result to avoid mem leaks
-  PQclear(res);
-
-  // fetch rows from db
-  res = PQexecParams(conn,
-                    SEARCH_QUERY,
-                    1, NULL,
-                    params, NULL,
-                    NULL, 0);
-
-  if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-    system("reset");
-    printf("\n--------------------\n%s\n--------------------\n", PQerrorMessage(conn));
-    PQclear(res);
-
-    disconnect_from_db(conn);
-    exit(1);
-  }
-  
-  const int rows = PQntuples(res);
-  const int cols = PQnfields(res);
-
-  if (rows < 1) {
-    printf("NO USERS FOUND! NEED TO IMPLEMENT ERRORS/NOTIFICATIONS\n");
-    PQclear(res);
-
-    disconnect_from_db(conn);
-    exit(1);
-  };
-
-  unsigned long int employee_size = (sizeof(char*) * rows);
-  char*** employee_data = NULL;
-  employee_data = (char***) malloc(employee_size);
-  if (!employee_data || employee_data == NULL) exit(1);
-  
-  for (int r = 0; r < rows; r++) {
-    *(employee_data + r) = (char**) malloc(sizeof(char*) * cols);
-    if (!*(employee_data + r) || *(employee_data + r) == NULL) exit(1);
-
-    convert_response_to_data(*(employee_data + r), res, r);
-
-    employee = push_employee(employee, *(employee_data + r));
-    if (!employee || employee == NULL) exit(1);
-
-    // if there is a failure, ABORT
-    if (!*(employee_data + r) || *(employee_data + r) == NULL) {
-      printf("ERROR::Failed to allocate memory for data memory for convert employee\n");
-      
-      // free up all data pointer's memory
-      for (int rr = 0; rr < rows; rr++)
-        for (int d = 0; d < 11; d++) {
-          free(*(employee_data + r) + d);
-        }
-
-      // free up data memory
-      free(employee_data);
-
-      PQclear(res);
-      disconnect_from_db(conn);
-
-      exit(1);
+  // wait for user to press "Escape"
+  noecho();
+  int key = 0;
+  if ((key = getch()) != ERR) {
+    while(key != 27) {
+      key = getch();
     }
   }
 
-  PQclear(res);
+  destroy_employees(employee);
 
-  // disconnect from db
-  disconnect_from_db(conn);
-
-  return employee;
-}
+  clear_screen(win);
+};
 

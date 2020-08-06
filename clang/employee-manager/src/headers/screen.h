@@ -1,8 +1,9 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "window.h"
 #include "employee.h"
+#include "window.h"
+#include "utils.h"
 
 // print_word
 // Prints a word to the screen with a given x and y axis

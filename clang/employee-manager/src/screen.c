@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "headers/employee.h"
-#include "headers/window.h"
-#include "headers/utils.h"
+//#include "headers/employee.h"
+//#include "headers/window.h"
+//#include "headers/utils.h"
 
 void screen_print_word(Window* win, const int y, const int x, const char* word) {
   mvwprintw(win->window, y, x, word);
@@ -36,8 +36,7 @@ void screen_print_border(Window* win) {
     }
   }
 
-  refresh();
-  wrefresh(win->window);
+  window_refresh_window(win);
 };
 
 void screen_print_line(Window* win, const int y) {
@@ -49,11 +48,10 @@ void screen_print_line(Window* win, const int y) {
   }
 
   // print horizontal line
-  screen_print_word(
-    win,
-    ((win->y_max + 1) - win->y_max + 2),
-    y,
-    screen_print_line
+  screen_print_word(win,
+                    ((win->y_max + 1) - win->y_max + 2),
+                    y,
+                    screen_print_line
   );
 
   // free screen line memory
