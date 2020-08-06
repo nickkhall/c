@@ -111,7 +111,7 @@ void print_employee_row(Window* win, char** data, const int row) {
 void print_employee(Window* win, Employee* employee) {
   clear_screen(win);
 
-  while(employee->next_employee) {
+  while(employee->next_employee != NULL) {
     char name[(sizeof(employee->first) + sizeof(employee->last) + 2)];
   }
 

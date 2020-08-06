@@ -90,7 +90,7 @@ void handle_search(Window* win) {
   const char* const* query_params = &user_input;
 
   // get employee(s) data
-  Employee* employee;
+  Employee* employee = NULL;
   employee = get_employee(query_params, employee);
   if (!employee || employee == NULL) exit(1);
 
@@ -108,6 +108,8 @@ void handle_search(Window* win) {
     }
   }
 
+  // @TODO: create destroy_employee function for freeing employee data
+  free(employee);
   clear_screen(win);
 };
 

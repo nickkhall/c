@@ -22,6 +22,8 @@ typedef struct Employee {
 
 Employee* push_employee(Employee* employee, char** data);
 
+Employee* populate_employee_data(Employee* employee, char** data);
+
 extern const char* employee_labels_mini[];
 #endif
 

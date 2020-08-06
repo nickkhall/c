@@ -29,7 +29,11 @@ Employee* get_employee(const char* const* params, Employee* employee) {
   PQclear(res);
 
   // fetch rows from db
-  res = PQexecParams(conn, SEARCH_QUERY, 1, NULL, params, NULL, NULL, 0);
+  res = PQexecParams(conn,
+                    SEARCH_QUERY,
+                    1, NULL,
+                    params, NULL,
+                    NULL, 0);
 
   if (PQresultStatus(res) != PGRES_TUPLES_OK) {
     system("reset");
@@ -62,7 +66,7 @@ Employee* get_employee(const char* const* params, Employee* employee) {
 
     convert_response_to_data(*(employee_data + r), res, r);
 
-    push_employee(employee, *(employee_data + r));
+    employee = push_employee(employee, *(employee_data + r));
     if (!employee || employee == NULL) exit(1);
 
     // if there is a failure, ABORT
