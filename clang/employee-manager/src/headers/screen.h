@@ -12,7 +12,7 @@ void print_screen_line(Window* win, const int y);
 
 void print_employee_headers(Window* win);
 
-void print_employee_row(Window* win, char** data, const int row);
+void print_employee_row(Window* win, Employee* employee, const int row);
 
 void print_employee(Window* win, Employee* employee);
 

@@ -49,8 +49,10 @@ Employee* populate_employee_data(Employee* employee, char** data) {
   employee->gender    = (char*) malloc(sizeof(char) * 7);
   employee->ethnicity = (char*) malloc(sizeof(char) * 51);
   employee->title     = (char*) malloc(sizeof(char) * 51);
-  employee->salary    = (unsigned long long int) malloc(sizeof(unsigned long long int));
+  employee->salary    = (int*) malloc(sizeof(int));
 
+  int* salary = (int*) malloc(sizeof(int));
+  scanf(*(data + 10), "%d", &*salary);
   // assign data to employee struct
   employee->id        = *(data);
   employee->first     = *(data + 1);
@@ -62,7 +64,7 @@ Employee* populate_employee_data(Employee* employee, char** data) {
   employee->gender    = *(data + 7);
   employee->ethnicity = *(data + 8);
   employee->title     = *(data + 9);
-  employee->salary    = (unsigned long long int)(data + 10);
+  employee->salary    = salary;
 
   return employee;
 }

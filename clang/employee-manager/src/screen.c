@@ -1,5 +1,7 @@
 #include <ncurses.h>
 #include <string.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "headers/employee.h"
 #include "headers/window.h"
@@ -62,102 +64,75 @@ void print_employee_headers(Window* win) {
   const unsigned long int word_offset = (win->x_max / 7);
 
   // keep track of current x axis offset for n value
-  unsigned int offset = 0;
+  unsigned int offset = word_offset;
 
   // print the employee table header labels
   for (int l = 0; l < 5; l++) {
     const char* current_label = *(employee_labels_mini + l);
     const unsigned long int current_label_length = strlen(current_label);
 
-    print_word(
-      win,
-      1,
-      ((((win->x_max + 1) - win->x_max) + word_offset + offset) - (current_label_length / 2)) + (l + 1),
-      current_label
-    );
+    print_word(win, 1, offset, current_label);
 
     // increase the x axis offset for next label
-    offset += ((current_label_length / 2) + word_offset) + (l + 1);
+    offset += word_offset + current_label_length;
   }
 };
 
-void print_employee_row(Window* win, char** data, const int row) {
+void print_employee_row(Window* win, Employee* employee, const int row) {
+  // allocate memory for first and last name string
+  char* name = malloc(strlen(employee->first) + strlen(employee->last) + 2);
+  if (!name || name == NULL) {
+    printf("ERROR::Failed to allocate memory for name in print_employee_row\n");
+    free(name);
+    exit(1);
+  }
+
+  // generate string for first and last name
+  strcpy(name, employee->first);
+  strcat(name, " ");
+  strcat(name, employee->last);
+
+  char* temp_data[5] = {name,
+                        employee->email,
+                        employee->address,
+                        employee->phone,
+                        employee->title};
+
   // keep track of offset that labels should render apart from eachother (x axis)
-  const unsigned long int word_offset = (win->x_max / 7);
+  unsigned long int word_offset = (win->x_max / 7);
 
   // keep track of current x axis offset for n value
-  unsigned int offset = 0;
+  unsigned int offset = (word_offset - strlen(*(temp_data)) / 2);
 
-  // render minified employee data
-  for (int x = 0; x < 5; x++) {
-    const char* current_value = *(data + x);
-    const unsigned long int current_value_length = strlen(current_value);
-    const char* current_label = *(employee_labels_mini + x);
-    const unsigned long int current_label_length = strlen(current_label);
+  for (int e = 0; e < 5; e++) {
+    char * cur_value = *(temp_data + e);
+    print_word(win, (row + 4), offset, cur_value); 
 
-    print_word(
-      win,
-      (row + 4),
-      (((win->x_max + 1) - win->x_max) + word_offset + offset) - ((current_value_length / 2) - x),
-      current_value
-    );
+    offset += word_offset + (strlen(cur_value) / 2);
+  }
 
-    // increase offset of current data length
-    //offset += ((current_label_length / 2) - (x + 1)) + (current_value_length / 2) + word_offset;
-    offset += ((current_label_length) + word_offset);
-  } 
+  free(name);
 };
 
 void print_employee(Window* win, Employee* employee) {
+  int cur_row = 0;
   clear_screen(win);
 
+  print_employee_headers(win);
+
+  print_screen_line(win, 1);
+
   while(employee->next_employee != NULL) {
-    char name[(sizeof(employee->first) + sizeof(employee->last) + 2)];
+    print_employee_row(win, employee, cur_row++);
+    employee = employee->next_employee;
   }
-
-  // print out employee(s) data in table format
-  //for (int y = 0; y < rows; y++) {
-  //  // get first name
-  //  char* first = *(*(data + y) + 1);
-  //  // get last name
-  //  char* last = *(*(data + y) + 2);
-  //  // combined first and last name
-  //  char* full_name = (char*) malloc((strlen(first) + strlen(last)) + 1);
-  //  if (!full_name || full_name == NULL) {
-  //    printf("ERROR: Failure to allocate memory for full name in print_employee\n");
-  //    exit(1);
-  //  }
-
-  //  // copy first and last to combined string
-  //  strcpy(full_name, first);
-  //  strcat(full_name, " ");
-  //  strcat(full_name, last);
-
-  //  // cherry pick data
-  //  // @TODO: Remove when screen size logic is added to allow for more data to be displayed
-  //  char* temp_data[5] = {
-  //    full_name,
-  //    *(*(data + y) + 3),
-  //    *(*(data + y) + 4),
-  //    *(*(data + y) + 5),
-  //    *(*(data + y) + 9),
-  //  };
-
-  //  print_employee_headers(win);
-
-  //  print_screen_line(win, 1);
-
-  //  print_employee_row(win, temp_data, y);
-  //}
 
   // print helper label text for returning to menu at bottom of screen
   char return_label[] = "Press \"Escape\" to return to the main menu";
-  print_word(
-    win,
-    win->y_max - 5,
-    (win->x_max / 2) - (strlen(return_label) / 2),
-    return_label
-  );
+  print_word(win,
+            win->y_max - 5,
+            (win->x_max / 2) - (strlen(return_label) / 2),
+            return_label);
 };
 
 void print_search_label(Window* win, const char* label) {

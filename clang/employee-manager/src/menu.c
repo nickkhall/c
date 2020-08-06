@@ -94,12 +94,10 @@ void handle_search(Window* win) {
   employee = get_employee(query_params, employee);
   if (!employee || employee == NULL) exit(1);
 
-  // print employee(s) data to screen
-  // @TODO: WARNING:Find solution for num of rows
-  // 2 is hard coded to test multiple rows render,
-  // but will break if try 1. Still learning here :)
+  // print employee data to screen
   print_employee(win, employee);
 
+  // wait for user to press "Escape"
   noecho();
   int key = 0;
   if ((key = getch()) != ERR) {

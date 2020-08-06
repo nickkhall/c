@@ -16,7 +16,7 @@ typedef struct Employee {
   char* gender;
   char* ethnicity;
   char* title;
-  unsigned long long int salary;
+  int* salary;
   struct Employee* next_employee;
 } Employee;
 
