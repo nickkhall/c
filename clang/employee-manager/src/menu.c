@@ -8,6 +8,7 @@
 #include "headers/input.h"
 #include "headers/screen.h"
 #include "headers/handlers.h"
+#include "headers/employee.h"
 
 const short int* get_state(Menu *menu) {
   return &menu->state;
@@ -106,8 +107,8 @@ void handle_search(Window* win) {
     }
   }
 
-  // @TODO: create destroy_employee function for freeing employee data
-  free(employee);
+  destroy_employees(employee);
+
   clear_screen(win);
 };
 

@@ -24,6 +24,8 @@ Employee* push_employee(Employee* employee, char** data);
 
 Employee* populate_employee_data(Employee* employee, char** data);
 
+void destroy_employees(Employee* employee);
+
 extern const char* employee_labels_mini[];
 #endif
 

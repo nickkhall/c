@@ -9,7 +9,7 @@
 #include "src/headers/db.h"
 #include "src/headers/screen.h"
 
-// main menu items
+// @TODO: (nickkhall) REFACTOR MAIN MENU LOGIC HERE IN MAIN BESIDES SWITCH CASE
 const int main_menu_size = 5;
 const char* main_menu_items[] = {
   "  Search  Employee  " ,
@@ -60,7 +60,6 @@ int main() {
       case 2: {
         // @TODO: (nickkhall) Refactor me to be a more functional approach, this is a mess
         clear_screen(&window);
-        print_border(&window);
         MainMenu.state = 0;
         break;
       }

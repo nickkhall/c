@@ -74,3 +74,10 @@ Employee* populate_employee_data(Employee* employee, char** data) {
 
   return employee;
 }
+
+void destroy_employees(Employee* employee) {
+  while (employee != NULL) {
+    free(employee);
+    employee = employee->next_employee;
+  }
+}
