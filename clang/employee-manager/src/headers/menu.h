@@ -5,17 +5,17 @@
 
 #include "window.h"
 
+extern const char* main_menu_items[];
+
 typedef struct m {
-  const char** items;
   short int highlighted;
   short int state;
+  const char* items[];
 } Menu;
 
-void render_main_menu(Window *window, Menu *menu, const char** items, const int* items_size);
+Menu* menu_create(Menu* menu);
 
-Menu* update_state(Menu *menu, int state);
-
-void handle_navigation(Menu *menu, int key_code, int items_size);
+void menu_update(Menu* menu, int key_code, int items_size);
 
 // search
 void handle_search(Window* win);
