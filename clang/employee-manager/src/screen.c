@@ -122,7 +122,7 @@ void print_employee(Window* win, Employee* employee) {
 
   print_screen_line(win, 1);
 
-  while(employee->next_employee != NULL) {
+  while(employee != NULL) {
     print_employee_row(win, employee, cur_row++);
     employee = employee->next_employee;
   }
