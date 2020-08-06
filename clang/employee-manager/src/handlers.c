@@ -5,10 +5,11 @@
 #include "headers/handlers.h"
 #include "headers/employee.h"
 #include "headers/db.h"
+#include "headers/utils.h"
 
 #define SEARCH_QUERY "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1"
 
-char** get_employee(const char* const* params, char*** employee_data) {
+Employee* get_employee(const char* const* params, Employee* employee) {
   if (!*(params)) {
     exit(1);
   }
@@ -28,7 +29,11 @@ char** get_employee(const char* const* params, char*** employee_data) {
   PQclear(res);
 
   // fetch rows from db
-  res = PQexecParams(conn, SEARCH_QUERY, 1, NULL, params, NULL, NULL, 0);
+  res = PQexecParams(conn,
+                    SEARCH_QUERY,
+                    1, NULL,
+                    params, NULL,
+                    NULL, 0);
 
   if (PQresultStatus(res) != PGRES_TUPLES_OK) {
     system("reset");
@@ -46,18 +51,23 @@ char** get_employee(const char* const* params, char*** employee_data) {
     printf("NO USERS FOUND! NEED TO IMPLEMENT ERRORS/NOTIFICATIONS\n");
     PQclear(res);
 
-    PQfinish(conn);
+    disconnect_from_db(conn);
     exit(1);
   };
+
+  unsigned long int employee_size = (sizeof(char*) * rows);
+  char*** employee_data = NULL;
+  employee_data = (char***) malloc(employee_size);
+  if (!employee_data || employee_data == NULL) exit(1);
   
   for (int r = 0; r < rows; r++) {
-    employee_data = (char***) malloc((sizeof(char*) + (sizeof(char*))) * rows);
-    if (!employee_data || employee_data == NULL) exit(1);
-
     *(employee_data + r) = (char**) malloc(sizeof(char*) * cols);
     if (!*(employee_data + r) || *(employee_data + r) == NULL) exit(1);
 
-    convert_emp_to_data(*(employee_data + r), res, r);  
+    convert_response_to_data(*(employee_data + r), res, r);
+
+    employee = push_employee(employee, *(employee_data + r));
+    if (!employee || employee == NULL) exit(1);
 
     // if there is a failure, ABORT
     if (!*(employee_data + r) || *(employee_data + r) == NULL) {
@@ -73,7 +83,7 @@ char** get_employee(const char* const* params, char*** employee_data) {
       free(employee_data);
 
       PQclear(res);
-      PQfinish(conn);
+      disconnect_from_db(conn);
 
       exit(1);
     }
@@ -84,6 +94,6 @@ char** get_employee(const char* const* params, char*** employee_data) {
   // disconnect from db
   disconnect_from_db(conn);
 
-  return employee_data;
+  return employee;
 }
 

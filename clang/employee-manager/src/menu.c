@@ -1,12 +1,14 @@
 #include <string.h>
 #include <stdio.h>
 #include <ncurses.h>
+#include <stdlib.h>
 
 #include "headers/menu.h"
 #include "headers/window.h"
 #include "headers/input.h"
 #include "headers/screen.h"
 #include "headers/handlers.h"
+#include "headers/employee.h"
 
 const short int* get_state(Menu *menu) {
   return &menu->state;
@@ -89,13 +91,14 @@ void handle_search(Window* win) {
   const char* const* query_params = &user_input;
 
   // get employee(s) data
-  char*** data = NULL;
-  data = get_employee(query_params, data);
-  if (!data || data == NULL) exit(1);
+  Employee* employee = NULL;
+  employee = get_employee(query_params, employee);
+  if (!employee || employee == NULL) exit(1);
 
-  // print employee(s) data to screen
-  print_employee(win, data, sizeof(data) / sizeof(*data));
+  // print employee data to screen
+  print_employee(win, employee);
 
+  // wait for user to press "Escape"
   noecho();
   int key = 0;
   if ((key = getch()) != ERR) {
@@ -103,6 +106,8 @@ void handle_search(Window* win) {
       key = getch();
     }
   }
+
+  destroy_employees(employee);
 
   clear_screen(win);
 };

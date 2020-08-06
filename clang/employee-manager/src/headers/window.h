@@ -10,7 +10,6 @@ typedef struct w {
   WINDOW *window;
 } Window;
 
-void print_header(Window *window);
 void clear_screen(Window *window);
 
 #endif

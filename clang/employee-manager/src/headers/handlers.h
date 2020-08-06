@@ -3,6 +3,6 @@
 
 #include "employee.h"
 
-char** get_employee(const char* const* params, char*** data);
+Employee* get_employee(const char* const* params, Employee* employee);
 #endif
 

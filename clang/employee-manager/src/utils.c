@@ -7,7 +7,7 @@
 
 #define LINE_SIZE 100
 
-char** convert_emp_to_data(char** data_pointer, PGresult* res, const int row) {
+char** convert_response_to_data(char** data_pointer, PGresult* res, const int row) {
   for (int col = 0; col < 11; col++) {
     const char* current_pq = PQgetvalue(res, row, col);
     unsigned long int current_pq_length = strlen(current_pq);

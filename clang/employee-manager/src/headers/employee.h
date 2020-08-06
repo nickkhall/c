@@ -5,7 +5,7 @@
 #include <libpq-fe.h>
 #include <string.h>
 
-typedef struct emp {
+typedef struct Employee {
   char* id;
   char* first;
   char* last;
@@ -16,10 +16,16 @@ typedef struct emp {
   char* gender;
   char* ethnicity;
   char* title;
-  unsigned long long int salary;
+  int* salary;
   struct Employee* next_employee;
 } Employee;
 
 Employee* push_employee(Employee* employee, char** data);
+
+Employee* populate_employee_data(Employee* employee, char** data);
+
+void destroy_employees(Employee* employee);
+
+extern const char* employee_labels_mini[];
 #endif
 
