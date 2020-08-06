@@ -16,7 +16,7 @@ Employee* push_employee(Employee* employee_head, char** data) {
   if (employee_head == NULL) {
     employee_head = (Employee*) malloc(sizeof(Employee));
 
-    employee_head = populate_employee_data(employee_head, data);
+    populate_employee_data(employee_head, data);
     employee_head->next_employee = NULL;
   } else {
     Employee* head = NULL;
@@ -52,7 +52,13 @@ Employee* populate_employee_data(Employee* employee, char** data) {
   employee->salary    = (int*) malloc(sizeof(int));
 
   int* salary = (int*) malloc(sizeof(int));
-  scanf(*(data + 10), "%d", &*salary);
+  if (!salary || salary == NULL) {
+    printf("ERROR::Failure to allocate memory for salary in populate_employee_data.\n");
+    free(salary);
+    exit(1);
+  }
+
+  *salary = atoi(*(data + 10));
   // assign data to employee struct
   employee->id        = *(data);
   employee->first     = *(data + 1);
