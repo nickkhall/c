@@ -12,10 +12,13 @@
 
 Employee* handlers_get_id(Window* win, Employee* employee) {
   // get user input
-  const char* const* user_input = input_get_search_input(win);
-
-  // create query params from user input
-  const char* const* query_params = user_input;
+  const char* query_params = NULL;
+  query_params = input_get_search_input(win);
+  if (!query_params || query_params == NULL) {
+    printf("ERROR: Failure to assign query_params from input_get_search_input in handlers_get_by_id\n");
+    free(query_params);
+    exit(1);
+  }
 
   PGconn* conn = db_connect();
 
