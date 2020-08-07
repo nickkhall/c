@@ -16,7 +16,7 @@ int main() {
   }
 
   Menu* main_menu = NULL;
-  main_menu = menu_create(main_menu);
+  main_menu = menu_create_main_menu();
   if (!main_menu || main_menu == NULL) {
     free(main_menu);
     return 1;
@@ -28,7 +28,7 @@ int main() {
   }
 
   // destroy window
-  window_destroy_window(win);
+  window_destroy(win);
   free(main_menu);
   return 0;
 }

@@ -14,10 +14,7 @@ int app(Window* win, Menu* main_menu) {
         screen_print_title(win);
 
         // print main menu
-        screen_print_menu(win,
-                          main_menu,
-                          main_menu_items,
-                          5);
+        screen_print_menu(win, main_menu, 5);
         break;
       }
       // search employee

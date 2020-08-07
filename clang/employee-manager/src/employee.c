@@ -3,6 +3,7 @@
 #include <libpq-fe.h>
 
 #include "headers/employee.h"
+#include "headers/utils.h"
 
 const char* employee_labels_mini[] = {
   "Name",     // 1 / 2
@@ -23,19 +24,19 @@ Employee* employee_push(Employee* employee_head, char** data) {
   if (employee_head == NULL) {
     employee_head = (Employee*) malloc(sizeof(Employee));
 
-    populate_employee_data(employee_head, data);
+    employee_populate(employee_head, data);
     employee_head->next_employee = NULL;
   } else {
     Employee* head = NULL;
     head = (Employee*) malloc(sizeof(Employee));
     if (!head || head == NULL) {
-      printf("ERROR:: Failure to allocate memory for employee head in push_employee\n");
+      printf("ERROR:: Failure to allocate memory for employee head in employee_push\n");
       free(head);
       free(employee_head);
       exit(1);
     }
 
-    populate_employee_data(head, data);
+    employee_populate(head, data);
 
     head->next_employee = employee_head;
     employee_head = head;
@@ -68,7 +69,7 @@ Employee* employee_populate(Employee* employee, char** data) {
 
   int* salary = (int*) malloc(sizeof(int));
   if (!salary || salary == NULL) {
-    printf("ERROR::Failure to allocate memory for salary in populate_employee_data.\n");
+    printf("ERROR::Failure to allocate memory for salary in employee_populate.\n");
     free(salary);
     exit(1);
   }
@@ -116,51 +117,26 @@ void employee_destroy(Employee* employee) {
 
 /*
  * -----------------------------------------------------------------
- * function: employee_handle_search
+ * function: employee_convert
  * -----------------------------------------------------------------
  * Handles querying database and returning linked list of Employees.
  * -----------------------------------------------------------------
  */
 // this needs to use db_query to query and return employee data
-Employee* employee_handle_search(const char* const* params, Employee* employee) {
+void* employee_convert(PGresult* res, const char* const* params, Employee* employee) {
   if (!*(params)) {
     exit(1);
   }
 
-  PGconn* conn = connect_to_db();
-
-  // start transaction block
-  PGresult* res = PQexec(conn, "BEGIN");
-  if (PQresultStatus(res) != PGRES_COMMAND_OK) {
-    PQclear(res);
-
-    PQfinish(conn);
-    exit(1);
-  }
-
-  // clear result to avoid mem leaks
-  PQclear(res);
-
-  res = db_query_id(params);
   if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-    system("reset");
-    printf("\n--------------------\n%s\n--------------------\n", PQerrorMessage(conn));
+    printf("ERROR:: %s\n", PQresultErrorMessage(res));
     PQclear(res);
 
-    disconnect_from_db(conn);
-    exit(1);
+    return NULL;
   }
   
   const int rows = PQntuples(res);
   const int cols = PQnfields(res);
-
-  if (rows < 1) {
-    printf("NO USERS FOUND! NEED TO IMPLEMENT ERRORS/NOTIFICATIONS\n");
-    PQclear(res);
-
-    disconnect_from_db(conn);
-    exit(1);
-  };
 
   unsigned long int employee_size = (sizeof(char*) * rows);
   char*** employee_data = NULL;
@@ -173,7 +149,7 @@ Employee* employee_handle_search(const char* const* params, Employee* employee) 
 
     convert_response_to_data(*(employee_data + r), res, r);
 
-    employee = push_employee(employee, *(employee_data + r));
+    employee = employee_push(employee, *(employee_data + r));
     if (!employee || employee == NULL) exit(1);
 
     // if there is a failure, ABORT
@@ -190,16 +166,11 @@ Employee* employee_handle_search(const char* const* params, Employee* employee) 
       free(employee_data);
 
       PQclear(res);
-      disconnect_from_db(conn);
-
-      exit(1);
+      return NULL;
     }
   }
 
   PQclear(res);
-
-  // disconnect from db
-  disconnect_from_db(conn);
 
   return employee;
 }

@@ -7,7 +7,7 @@
 
 PGconn* db_connect();
 
-PGresult* db_query(PGresult* res,
+PGresult* db_query(PGconn* conn,
 									const char* query,
 									const char* const* queryParams,
 									const int num_of_queries);

@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "headers/screen.h"
+
 #include "headers/employee.h"
 #include "headers/window.h"
 #include "headers/menu.h"
@@ -157,7 +159,7 @@ void screen_print_search_label(Window* win) {
   wrefresh(win->window);
 };
 
-void screen_print_title(Window *window) {
+void screen_print_title(Window *win) {
   const char* header[] = {
     " ______                 _                         __  __",
     "|  ____|               | |                       |  \\/  |",
@@ -170,25 +172,24 @@ void screen_print_title(Window *window) {
   };
 
   for (short int i = 0; i < 8; i++) {
-    mvwprintw(
-      window->window,
+    screen_print_word(
+      win,
       i + 10,
-      ((window->x_max / 2) - (91 / 2) + 2),
+      ((win->x_max / 2) - (91 / 2) + 2),
       *(header + i)
     );
   }
 
-  refresh();
-  wrefresh(window->window);
+  window_refresh(win);
 };
 
-void screen_print_menu(Window *win, Menu* menu, const char** items, const int items_size) {
+void screen_print_menu(Window *win, Menu* menu, int menu_items_size) {
   int key_code = 0;
 
   do {
     window_refresh(win);
 
-    for (int i = 0; i < items_size; i++) {
+    for (int i = 0; i < menu_items_size; i++) {
       if (i == menu->highlighted) {
         // reverse colors to denote highlight
         wattron(win->window, A_REVERSE);
@@ -197,8 +198,8 @@ void screen_print_menu(Window *win, Menu* menu, const char** items, const int it
       screen_print_word(
         win,
         win->y_max / 2 + (i + 2),
-        (win->x_max / 2) - items_size,
-        *(items + i)
+        (win->x_max / 2) - menu_items_size,
+        *(menu->items + i)
       );
 
       // Turn off reverse attribute
@@ -211,7 +212,7 @@ void screen_print_menu(Window *win, Menu* menu, const char** items, const int it
     key_code = wgetch(win->window);
 
     // Update the menu with the currently selected item
-    menu_update(menu, key_code, items_size);
+    menu_update(menu, key_code, menu_items_size);
   } while (key_code != 27 && key_code != 10);
 }
 

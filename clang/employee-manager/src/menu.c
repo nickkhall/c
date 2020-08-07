@@ -16,7 +16,7 @@ char* main_menu_items[] = {
   "       Quit         "
 };
 
-Menu* menu_create(Menu* menu) {
+Menu* menu_create(char** menu_items, const int menu_items_size) {
   Menu* main_menu = (Menu*) malloc(sizeof(Menu));
   if (!main_menu || main_menu == NULL) {
     printf("ERROR::Failure to allocate memory for main in menu_create\n");
@@ -28,12 +28,30 @@ Menu* menu_create(Menu* menu) {
   // set default main menu states
   main_menu->highlighted = 0;
   main_menu->state = 0;
+  main_menu->items = (char**) malloc(sizeof(char*) * menu_items_size);
+  if (!main_menu->items || main_menu->items == NULL) {
+    printf("ERROR:: Failed to allocate memory for menu items in menu_create");
+    free(main_menu->items);
+    exit(1);
+  }
 
-  for (int m = 0; m < 5; m++) {
-    strcpy(*(main_menu->items + m), *(main_menu_items + m));
+  for (int m = 0; m < menu_items_size; m++) {
+    *(main_menu->items + m) = (char*) malloc(sizeof(char) * strlen(*(menu_items + m)));
+    strcpy(*(main_menu->items + m), *(menu_items + m));
   }
 
   return main_menu;
+}
+
+Menu* menu_create_main_menu() {
+  Menu* menu = menu_create(main_menu_items, 5);
+  if (!menu || menu == NULL) {
+    printf("ERROR:: Failed to assign menu from menu_create in menu_create_main_menu\n");
+    free(menu);
+    exit(1);
+  }
+
+  return menu;
 }
 
 // menu_update

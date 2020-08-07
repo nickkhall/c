@@ -41,7 +41,7 @@ void screen_print_title(Window* window);
 
 // print_menu
 // Prints a menu to the screen
-void screen_print_menu(Window *window, Menu* menu, char** items, int items_size);
+void screen_print_menu(Window *window, Menu* menu, int menu_items_size);
 
 #endif
 

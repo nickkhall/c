@@ -33,3 +33,12 @@ void window_clear(Window *win) {
   window_refresh(win);
 };
 
+void window_destroy(Window* win) {
+  curs_set(1);
+  echo();
+
+  endwin();
+  free(win);
+  system("reset");
+}
+

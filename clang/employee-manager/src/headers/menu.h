@@ -8,10 +8,12 @@ extern char* main_menu_items[];
 typedef struct m {
   short int highlighted;
   short int state;
-  char* items[];
+  char** items;
 } Menu;
 
-Menu* menu_create(Menu* menu);
+Menu* menu_create(char** menu_items, const int menu_items_size);
+
+Menu* menu_create_main_menu();
 
 void menu_update(Menu* menu, int key_code, int items_size);
 

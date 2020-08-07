@@ -16,7 +16,7 @@ void window_refresh(Window* win);
 
 void window_clear(Window *window);
 
-void window_destroy_window(Window* win);
+void window_destroy(Window* win);
 
 #endif
 
