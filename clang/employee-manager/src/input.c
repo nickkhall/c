@@ -1,14 +1,11 @@
 #include <stdlib.h>
+#include <string.h>
 #include <ncurses.h>
 
-// #include "headers/libpq-fe.h"
-#include "headers/window.h"
 #include "headers/input.h"
-#include "headers/utils.h"
+#include "headers/window.h"
 
-const char* SEARCH_LABEL = "Search by ID, First and/or Last name:";
-
-char** create(Window *window, const char** form_labels, const int *num_of_fields) {
+char** input_create(Window *window, const char** form_labels, const int *num_of_fields) {
   // enable cursor
   curs_set(1);
 
@@ -61,26 +58,25 @@ char** create(Window *window, const char** form_labels, const int *num_of_fields
   return form_data;
 };
 
-char* get_search_input(Window* win) {
+const char* const* input_get_search_input(Window* win) {
   // enable cursor and output
   curs_set(1);
   echo();
 
   // temp buffer for user input
   // (ncurses `mvngetnstr` sanitizes so no buffer overflow)
-  char* buffer = (char*)malloc(sizeof(char) * BUFFER_SIZE);
+  char* buffer = (char*)malloc(sizeof(char) * 101);
   if (buffer == NULL) {
     exit(1);
   }
 
-  int label_len = strlen(SEARCH_LABEL);
   // get label for search (max 100 chars)
   mvwgetnstr(
       win->window,
       win->y_max / 2,
-      win->x_max / 2 + (label_len / 2) + 3,
+      win->x_max / 2 + (33 / 2) + 3,
       buffer,
-      BUFFER_SIZE
+      101
     );
 
   // disable cursor and output
@@ -88,8 +84,8 @@ char* get_search_input(Window* win) {
   noecho();
 
   // clear screen again
-  clear_screen(win);
+  window_clear(win);
 
-  return buffer;
+  return (const char* const*)buffer;
 }
 

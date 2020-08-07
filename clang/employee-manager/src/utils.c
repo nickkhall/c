@@ -1,11 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
-#include <libpq-fe.h>
 #include <stdio.h>
+#include <libpq-fe.h>
 
+#include "headers/utils.h"
 #include "headers/employee.h"
-
-#define LINE_SIZE 100
 
 char** convert_response_to_data(char** data_pointer, PGresult* res, const int row) {
   for (int col = 0; col < 11; col++) {

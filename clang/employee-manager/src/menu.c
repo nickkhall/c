@@ -4,11 +4,11 @@
 #include <stdlib.h>
 
 #include "headers/menu.h"
-#include "headers/input.h"
+#include "headers/window.h"
 #include "headers/screen.h"
 #include "headers/handlers.h"
 
-const char* main_menu_items[] = {
+char* main_menu_items[] = {
   "  Search  Employee  " ,
   "  Create  Employee  ",
   "  Update  Employee  ",
@@ -28,7 +28,10 @@ Menu* menu_create(Menu* menu) {
   // set default main menu states
   main_menu->highlighted = 0;
   main_menu->state = 0;
-  main_menu->items = main_items;
+
+  for (int m = 0; m < 5; m++) {
+    strcpy(*(main_menu->items + m), *(main_menu_items + m));
+  }
 
   return main_menu;
 }
@@ -61,10 +64,37 @@ void menu_update(Menu* menu, int key_code, int items_size) {
 };
 
 // menu_handle_search
- // print_search_label(win, SEARCH_LABEL);
- // // get user input
- // const char* user_input = get_search_input(win);
+void menu_handle_search(Window* win) {
+  screen_print_search_label(win);
 
- // // create query params from user input
- // const char* const* query_params = &user_input;
+  Employee* employee = (Employee*) malloc(sizeof(Employee));
+  if (!employee || employee == NULL) {
+    printf("ERROR::Failure to assign memory allocation to employee in menu_handle_search\n");
+    free(employee);
+    exit(1);
+  }
+
+  handlers_get_id(win, employee); 
+
+  if (!employee || employee == NULL) {
+    printf("ERROR::Failure to assign memory allocation to employee in menu_handle_search\n");
+    free(employee);
+    exit(1);
+  }
+  // print employee data to screen
+  screen_print_employee(win, employee);
+
+  // wait for user to press "Escape"
+  noecho();
+  int key = 0;
+  if ((key = getch()) != ERR) {
+    while(key != 27) {
+      key = getch();
+    }
+  }
+
+  employee_destroy(employee);
+
+  window_clear(win);
+}
 

@@ -3,15 +3,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#include "headers/employee.h"
-//#include "headers/window.h"
-//#include "headers/utils.h"
+#include "headers/employee.h"
+#include "headers/window.h"
+#include "headers/menu.h"
+#include "headers/utils.h"
+
+const char SEARCH_LABEL[] = "Search by ID, First and/or Last name:";
 
 void screen_print_word(Window* win, const int y, const int x, const char* word) {
   mvwprintw(win->window, y, x, word);
   
-  refresh();
-  wrefresh(win->window);
+  window_refresh(win);
 }
 
 void screen_print_border(Window* win) {
@@ -36,13 +38,13 @@ void screen_print_border(Window* win) {
     }
   }
 
-  window_refresh_window(win);
+  window_refresh(win);
 };
 
 void screen_print_line(Window* win, const int y) {
   // render a horizonal line for data separation
   char* screen_print_line = (char*) malloc((sizeof(char) * win->x_max) - 4);
-  if (!screen_print_line || screen_line == NULL) exit(1); 
+  if (!screen_print_line || screen_print_line == NULL) exit(1); 
   for (int s = 0; s < win->x_max - 1; s++) {
     *(screen_print_line + s) = '-';
   }
@@ -78,7 +80,10 @@ void screen_print_employee_headers(Window* win) {
 
 void screen_print_employee_row(Window* win, Employee* employee, const int row) {
   // allocate memory for first and last name string
-  char* name = malloc(strlen(employee->first) + strlen(employee->last) + 2);
+  unsigned long int first_size = strlen(employee->first);
+  unsigned long int last_size = strlen(employee->last);
+
+  char* name = malloc(first_size + last_size);
   if (!name || name == NULL) {
     printf("ERROR::Failed to allocate memory for name in screen_print_employee_row\n");
     free(name);
@@ -114,11 +119,11 @@ void screen_print_employee_row(Window* win, Employee* employee, const int row) {
 
 void screen_print_employee(Window* win, Employee* employee) {
   int cur_row = 0;
-  clear_screen(win);
+  window_clear(win);
 
   screen_print_employee_headers(win);
 
-  screen_print_screen_line(win, 1);
+  screen_print_line(win, 1);
 
   while(employee != NULL) {
     screen_print_employee_row(win, employee, cur_row++);
@@ -133,19 +138,19 @@ void screen_print_employee(Window* win, Employee* employee) {
             return_label);
 };
 
-void screen_print_search_label(Window* win, const char* label) {
+void screen_print_search_label(Window* win) {
   // get length of search form label
-  int label_len = strlen(label);
+  int label_len = strlen(SEARCH_LABEL);
 
   // clear screen
-  clear_screen(win);
+  window_clear(win);
 
   // print search form label
   screen_print_word(
     win,
     win->y_max / 2,
     ((win->x_max / 2) - ((label_len / 2) - 1)),
-    label
+    SEARCH_LABEL
   );
 
   refresh();
@@ -177,12 +182,11 @@ void screen_print_title(Window *window) {
   wrefresh(window->window);
 };
 
-void screen_print_main_menu(Window *win, Menu* menu, const char** items) {
+void screen_print_menu(Window *win, Menu* menu, const char** items, const int items_size) {
   int key_code = 0;
-  int items_size = 5;
 
   do {
-    window_refresh_screen(win);
+    window_refresh(win);
 
     for (int i = 0; i < items_size; i++) {
       if (i == menu->highlighted) {
@@ -191,7 +195,7 @@ void screen_print_main_menu(Window *win, Menu* menu, const char** items) {
       }
 
       screen_print_word(
-        win->window,
+        win,
         win->y_max / 2 + (i + 2),
         (win->x_max / 2) - items_size,
         *(items + i)
@@ -202,12 +206,12 @@ void screen_print_main_menu(Window *win, Menu* menu, const char** items) {
     }
 
     // refresh window
-    window_refresh_screen(win);
+    window_refresh(win);
 
     key_code = wgetch(win->window);
 
     // Update the menu with the currently selected item
-    handle_navigation(menu, key_code, items_size);
+    menu_update(menu, key_code, items_size);
   } while (key_code != 27 && key_code != 10);
 }
 

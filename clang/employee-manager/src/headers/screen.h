@@ -3,7 +3,9 @@
 
 #include "employee.h"
 #include "window.h"
-#include "utils.h"
+#include "menu.h"
+
+extern const char SEARCH_LABEL[];
 
 // print_word
 // Prints a word to the screen with a given x and y axis
@@ -31,7 +33,7 @@ void screen_print_employee(Window* win, Employee* employee);
 
 // print_search_label
 // Displays a given search label to the screen
-void screen_print_search_label(Window* win, const char* label);
+void screen_print_search_label(Window* win);
 
 // print_title
 // Prints the Employee Manager title to the screen
@@ -39,7 +41,7 @@ void screen_print_title(Window* window);
 
 // print_menu
 // Prints a menu to the screen
-void screen_print_menu(Window *window, Menu* menu, const char** items);
+void screen_print_menu(Window *window, Menu* menu, char** items, int items_size);
 
 #endif
 

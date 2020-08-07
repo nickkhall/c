@@ -1,12 +1,13 @@
 #include <stddef.h>
-#include <stdio.h>
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <libpq-fe.h>
 
 #include "headers/postgres_info.h"
-#include "headers/input.h"
-#include "headers/screen.h"
+#include "headers/db.h"
+
+#define SEARCH_BY_ID_QUERY "SELECT * FROM employees WHERE id = $1 OR first = $1 OR last = $1"
 
 /*
  * -----------------------------------------------
@@ -43,27 +44,29 @@ PGconn* db_connect() {
  * Returns a pointer to the postgres result (PGresult).
  * ----------------------------------------------------------------------------------
  */
-PGresult* db_query(const char* query, const char* const* queryParams, const int num_of_queries) {
-  PGresult* res;
+PGresult* db_query(PGresult* res, const char* query, const char* const* query_params, const int num_of_queries) {
+  // clear res pointer
+  PQclear(res);
+
   // create connection with db
-  PGconn* conn = connect_to_db();
+  PGconn* conn = db_connect();
 
   res = PQexec(conn, "BEGIN");
   if (PQresultStatus(res) != PGRES_COMMAND_OK) {
     PQclear(res);
-    disconnect_from_db(conn);
+    db_disconnect(conn);
     exit(1);
   }
 
   PQclear(res);
 
-  res = PQexecParams(conn, query, num_of_queries, NULL, queryParams, NULL, NULL, 0);
+  res = PQexecParams(conn, query, num_of_queries, NULL, query_params, NULL, NULL, 0);
 
   if (PQresultStatus(res) != PGRES_TUPLES_OK) {
     system("reset");
     printf("\n-----------------------------\n%s\n-----------------------------", PQerrorMessage(conn));
     PQclear(res);
-    disconnect_from_db(conn);
+    db_disconnect(conn);
     exit(1);
   }
 
@@ -71,10 +74,28 @@ PGresult* db_query(const char* query, const char* const* queryParams, const int 
 
   PQclear(res);
   // disconnect from db
-  disconnect_from_db(conn);
+  db_disconnect(conn);
 
   return temp;
 };
+
+PGresult* db_query_by_id(const char* const* query_params) {
+  if (!query_params || query_params == NULL) {
+    printf("ERROR:: Query data is invalid in db_query_by_id");
+    exit(1);
+  }
+
+  PGresult* res = NULL;
+  db_query(res, SEARCH_BY_ID_QUERY, query_params, 1);
+  if (!res || res == NULL) {
+    printf("ERROR:: Failed to get PQ response from db_query in db_query_by_id\n");
+    PQclear(res);
+    free(res);
+    exit(1);
+  }
+
+  return res;
+}
 
 /*
  * -----------------------------------------------
