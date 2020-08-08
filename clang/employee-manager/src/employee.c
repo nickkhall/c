@@ -37,9 +37,12 @@ Employee* employee_push(Employee* employee_head, char** data) {
     }
 
     employee_populate(head, data);
+    employee_head->next_employee = NULL;
 
     head->next_employee = employee_head;
     employee_head = head;
+
+
   }
 
   return employee_head;
