@@ -22,6 +22,7 @@ const char SEARCH_BY_ID_QUERY[] = "SELECT * FROM employees WHERE id = $1 OR firs
  * -----------------------------------------------------------------------------
  */
 PGresult* db_query(PGconn* conn,
+                  PGresult* res,
                   const char* query,
                   const char* const* query_params,
                   const int num_of_queries)
@@ -31,7 +32,8 @@ PGresult* db_query(PGconn* conn,
     exit(1);
   }
 
-  PGresult* res = PQexec(conn, "BEGIN");
+  PQclear(res);
+  res = PQexec(conn, "BEGIN");
   if (PQresultStatus(res) != PGRES_COMMAND_OK) {
     PQclear(res);
     db_disconnect(conn);
@@ -53,25 +55,10 @@ PGresult* db_query(PGconn* conn,
     exit(1);
   }
 
-  PGresult* return_res = NULL;
-  return_res = (PGresult*) malloc(PQfsize(res, 1));
-
-  if (!return_res || return_res == NULL) {
-    printf("ERROR:: Failed to allocate memory for PGresult res in db_query\n");
-    PQclear(res);
-    free(return_res);
-    free(res);
-    db_disconnect(conn);
-    exit(1);
-  }
-
-  return_res = res;
-
-  PQclear(res);
   // disconnect from db
   db_disconnect(conn);
 
-  return return_res;
+  return res;
 };
 
 
@@ -84,7 +71,7 @@ PGresult* db_query(PGconn* conn,
  * returns:  pointer to PGresult type
  * --------------------------------------------------------------------
  */
-PGresult* db_query_by_id(const char* const* query_params) {
+PGresult* db_query_by_id(PGresult* res, const char* const* query_params) {
   PGconn* conn = PQconnectdb(SQL_INFO);
   if (!conn || conn == NULL) {
     printf("ERROR:: Failed to connect to postgres db.\n");
@@ -97,8 +84,10 @@ PGresult* db_query_by_id(const char* const* query_params) {
     exit(1);
   }
 
-  PGresult* res = NULL;
-  res = db_query(conn, SEARCH_BY_ID_QUERY, query_params, 1);
+  res = db_query(conn,
+                res, SEARCH_BY_ID_QUERY,
+                query_params, 1);
+
   if (!res || res == NULL) {
     printf("ERROR:: Failed to get PQ response from db_query in db_query_by_id\n");
     PQclear(res);
@@ -106,8 +95,6 @@ PGresult* db_query_by_id(const char* const* query_params) {
     db_disconnect(conn);
     exit(1);
   }
-
-  db_disconnect(conn);
 
   return res;
 }
@@ -123,4 +110,21 @@ PGresult* db_query_by_id(const char* const* query_params) {
  */
 void db_disconnect(PGconn* conn) {
   PQfinish(conn);
+}
+
+/*
+ * ------------------------------------------
+ * function: db_clean_up
+ * ------------------------------------------
+ * params  : 
+ *          > conn - pointer to PGconn type
+ *          > res  - pointer to PGresult type
+ * ------------------------------------------
+ * Destroys a response,
+ * and a connection to a database
+ * ------------------------------------------
+ */
+void db_clean_up(PGconn* conn, PGresult* res) {
+  PQclear(res);
+  db_disconnect(conn);
 }

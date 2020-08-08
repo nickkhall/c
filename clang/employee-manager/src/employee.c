@@ -122,8 +122,7 @@ void employee_destroy(Employee* employee) {
  * Handles querying database and returning linked list of Employees.
  * -----------------------------------------------------------------
  */
-// this needs to use db_query to query and return employee data
-void* employee_convert(PGresult* res, const char* const* params, Employee* employee) {
+Employee* employee_convert(PGresult* res, const char* const* params, Employee* employee) {
   if (!*(params)) {
     exit(1);
   }

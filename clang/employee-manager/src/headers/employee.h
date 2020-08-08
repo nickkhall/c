@@ -31,7 +31,7 @@ Employee* employee_remove(Employee* employee, const char* id);
 
 void employee_destroy(Employee* employee);
 
-void* employee_convert(PGresult* res, const char* const* params, Employee* employee);
+Employee* employee_convert(PGresult* res, const char* const* params, Employee* employee);
 
 #endif
 

@@ -92,7 +92,7 @@ void menu_handle_search(Window* win) {
     exit(1);
   }
 
-  handlers_get_id(win, employee); 
+  employee = handlers_get_id(win, employee); 
 
   if (!employee || employee == NULL) {
     printf("ERROR::Failure to assign memory allocation to employee in menu_handle_search\n");
@@ -103,6 +103,7 @@ void menu_handle_search(Window* win) {
   screen_print_employee(win, employee);
 
   // wait for user to press "Escape"
+  // @TODO: make me into function
   noecho();
   int key = 0;
   if ((key = getch()) != ERR) {

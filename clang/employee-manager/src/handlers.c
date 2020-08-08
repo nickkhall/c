@@ -22,18 +22,20 @@ Employee* handlers_get_id(Window* win, Employee* employee) {
   }
 
   // query db with query params
-  PGresult* res = db_query_by_id(query_params);
+  PGresult* res = NULL;
+  res = db_query_by_id(res, query_params);
 
   // get employee(s) data
   employee = employee_convert(res, query_params, employee);
 
   if (!employee || employee == NULL) {
     printf("ERROR:: Failed to assign employee data to employee from get_employee in handlers_get_id\n");
+    PQclear(res);
     free(employee);
     free(win);
     exit(1);
   }
-
+  
   return employee;
 };
 
