@@ -8,10 +8,10 @@
 extern const char SEARCH_BY_ID_QUERY[];
 
 PGresult* db_query(PGconn* conn,
-									PGresult* res,
-									const char* query,
-									const char* const* queryParams,
-									const int num_of_queries);
+                  PGresult* res,
+                  const char* query,
+                  const char* const* queryParams,
+                  const int num_of_queries);
 
 PGresult* db_query_by_id(PGresult* res, const char* const* query_params);
 
