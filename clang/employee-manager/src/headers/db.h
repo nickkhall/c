@@ -5,7 +5,7 @@
 
 #include "employee.h"
 
-PGconn* db_connect();
+extern const char SEARCH_BY_ID_QUERY[];
 
 PGresult* db_query(PGconn* conn,
 									const char* query,

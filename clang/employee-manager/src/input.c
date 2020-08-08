@@ -68,7 +68,7 @@ char* input_get_search_input(Window* win) {
   char* buffer = (char*) malloc(sizeof(char) * 101);
   if (!buffer || buffer == NULL) {
     printf("ERROR:: Failed to alloctate memory for buffer in input_get_search_input\n");
-    free(buffer);
+    free((char*) buffer);
     exit(1);
   }
 
