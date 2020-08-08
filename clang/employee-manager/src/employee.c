@@ -41,8 +41,6 @@ Employee* employee_push(Employee* employee_head, char** data) {
 
     head->next_employee = employee_head;
     employee_head = head;
-
-
   }
 
   return employee_head;

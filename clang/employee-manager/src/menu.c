@@ -85,20 +85,9 @@ void menu_update(Menu* menu, int key_code, int items_size) {
 void menu_handle_search(Window* win) {
   screen_print_search_label(win);
 
-  Employee* employee = (Employee*) malloc(sizeof(Employee));
-  if (!employee || employee == NULL) {
-    printf("ERROR::Failure to assign memory allocation to employee in menu_handle_search\n");
-    free(employee);
-    exit(1);
-  }
-
+  Employee* employee = NULL;
   employee = handlers_get_id(win, employee); 
 
-  if (!employee || employee == NULL) {
-    printf("ERROR::Failure to assign memory allocation to employee in menu_handle_search\n");
-    free(employee);
-    exit(1);
-  }
   // print employee data to screen
   screen_print_employee(win, employee);
 
