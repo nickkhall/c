@@ -3,6 +3,7 @@
 #include <libpq-fe.h>
 
 #include "headers/employee.h"
+#include "headers/utils.h"
 
 const char* employee_labels_mini[] = {
   "Name",     // 1 / 2
@@ -12,23 +13,31 @@ const char* employee_labels_mini[] = {
   "Title"     // 9
 };
 
-Employee* push_employee(Employee* employee_head, char** data) {
+/*
+ * ----------------------------------------------
+ * function: employee_push
+ * ----------------------------------------------
+ * Creates or adds to a linked list of Employees.
+ * ----------------------------------------------
+ */
+Employee* employee_push(Employee* employee_head, char** data) {
   if (employee_head == NULL) {
     employee_head = (Employee*) malloc(sizeof(Employee));
 
-    populate_employee_data(employee_head, data);
+    employee_populate(employee_head, data);
     employee_head->next_employee = NULL;
   } else {
     Employee* head = NULL;
     head = (Employee*) malloc(sizeof(Employee));
     if (!head || head == NULL) {
-      printf("ERROR:: Failure to allocate memory for employee head in push_employee\n");
+      printf("ERROR:: Failure to allocate memory for employee head in employee_push\n");
       free(head);
       free(employee_head);
       exit(1);
     }
 
-    populate_employee_data(head, data);
+    employee_populate(head, data);
+    employee_head->next_employee = NULL;
 
     head->next_employee = employee_head;
     employee_head = head;
@@ -37,7 +46,15 @@ Employee* push_employee(Employee* employee_head, char** data) {
   return employee_head;
 };
 
-Employee* populate_employee_data(Employee* employee, char** data) {
+/*
+ * -------------------------------------
+ * function: employee_populate
+ * -------------------------------------
+ * Allocates memory for Employee struct, 
+ * and assigns it data.
+ * -------------------------------------
+ */
+Employee* employee_populate(Employee* employee, char** data) {
   // allocate memory for employee data
   employee->id        = (char*) malloc(sizeof(char) * 33);
   employee->first     = (char*) malloc(sizeof(char) * 51);
@@ -53,7 +70,7 @@ Employee* populate_employee_data(Employee* employee, char** data) {
 
   int* salary = (int*) malloc(sizeof(int));
   if (!salary || salary == NULL) {
-    printf("ERROR::Failure to allocate memory for salary in populate_employee_data.\n");
+    printf("ERROR::Failure to allocate memory for salary in employee_populate.\n");
     free(salary);
     exit(1);
   }
@@ -75,9 +92,88 @@ Employee* populate_employee_data(Employee* employee, char** data) {
   return employee;
 }
 
-void destroy_employees(Employee* employee) {
+/*
+ * ----------------------------------
+ * function: employee_update
+ * ----------------------------------
+ * Updates an Employee by a given ID.
+ * ----------------------------------
+ */
+
+
+
+/*
+ * ---------------------------------------------
+ * function: employee_destroy
+ * ---------------------------------------------
+ * Destroys the entire linked list of Employees.
+ * ---------------------------------------------
+ */
+void employee_destroy(Employee* employee) {
   while (employee != NULL) {
     free(employee);
     employee = employee->next_employee;
   }
+}
+
+/*
+ * -----------------------------------------------------------------
+ * function: employee_convert
+ * -----------------------------------------------------------------
+ * Handles querying database and returning linked list of Employees.
+ * -----------------------------------------------------------------
+ */
+Employee* employee_convert(PGresult* res, const char* const* params, Employee* employee) {
+  // if there are no parameters, error out, something went wrong
+  if (!*(params)) {
+    printf("ERROR:: Something went wrong. The query params passed were invalid.\n");
+    exit(1);
+  }
+
+  if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+    printf("ERROR:: %s\n", PQresultErrorMessage(res));
+    PQclear(res);
+
+    return NULL;
+  }
+  
+  // num of employees returned (row)
+  const int rows = PQntuples(res);
+  // num of data items in employee (column)
+  const int cols = PQnfields(res);
+
+  // allocate memory for employee data to be used to populate an employee struct
+  char*** employee_data = NULL;
+  employee_data = (char***) malloc((sizeof(char*) * rows));
+  if (!employee_data || employee_data == NULL) {
+    printf("ERROR:: Failed to allocate memory for employee_data in employee_convert\n");
+    free(employee_data);
+    exit(1);
+  }
+  
+  // if there are no employees,
+  // return null for soft fail
+  if (rows < 1) {
+    return NULL;
+  }
+
+  // else create data for employees
+  for (int r = 0; r < rows; r++) {
+    *(employee_data + r) = (char**) malloc(sizeof(char*) * cols);
+    if (!*(employee_data + r) || *(employee_data + r) == NULL) {
+      printf("ERROR:: Failed to allocate memory for employee_data array in employee_convert\n");
+      employee_destroy(employee);
+      exit(1);
+    }
+
+    // transfer Postgres response data to Employee struct(s)
+    convert_response_to_data(*(employee_data + r), res, r);
+
+    // create or add to employee linked list with current employee struct
+    employee = employee_push(employee, *(employee_data + r));
+  }
+
+  PQclear(res);
+
+  return employee;
 }

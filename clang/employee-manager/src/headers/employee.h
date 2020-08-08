@@ -1,9 +1,10 @@
 #ifndef EMPLOYEE_H
 #define EMPLOYEE_H
 
-#include <time.h>
 #include <libpq-fe.h>
-#include <string.h>
+#include <time.h>
+
+extern const char* employee_labels_mini[];
 
 typedef struct Employee {
   char* id;
@@ -20,12 +21,17 @@ typedef struct Employee {
   struct Employee* next_employee;
 } Employee;
 
-Employee* push_employee(Employee* employee, char** data);
+Employee* employee_push(Employee* employee, char** data);
 
-Employee* populate_employee_data(Employee* employee, char** data);
+Employee* employee_populate(Employee* employee, char** data);
 
-void destroy_employees(Employee* employee);
+Employee* employee_update(Employee* employee, const char** data);
 
-extern const char* employee_labels_mini[];
+Employee* employee_remove(Employee* employee, const char* id);
+
+void employee_destroy(Employee* employee);
+
+Employee* employee_convert(PGresult* res, const char* const* params, Employee* employee);
+
 #endif
 

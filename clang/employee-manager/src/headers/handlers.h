@@ -2,7 +2,17 @@
 #define HANDLERS_H
 
 #include "employee.h"
+#include "window.h"
 
-Employee* get_employee(const char* const* params, Employee* employee);
+void handlers_get(const char* const* params);
+
+Employee* handlers_get_id(Window* win, Employee* employee);
+
+void handlers_post(const char* const* params);
+
+void handlers_put(const char* const* params);
+
+void handlers_delete(const char* const* params);
+
 #endif
 

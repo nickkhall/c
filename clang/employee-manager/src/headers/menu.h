@@ -1,35 +1,29 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <string.h>
-
 #include "window.h"
 
+extern char* main_menu_items[];
+
 typedef struct m {
-  const char** items;
   short int highlighted;
   short int state;
+  char** items;
 } Menu;
 
-void render_main_menu(Window *window, Menu *menu, const char** items, const int* items_size);
+Menu* menu_create(char** menu_items, const int menu_items_size);
 
-Menu* update_state(Menu *menu, int state);
+Menu* menu_create_main_menu();
 
-void handle_navigation(Menu *menu, int key_code, int items_size);
+void menu_update(Menu* menu, int key_code, int items_size);
 
-// search
-void handle_search(Window* win);
+void menu_destroy(Menu* menu);
 
-// create
-// void handle_create();
+void menu_handle_search(Window* win);
 
-// update
-// void handle_update();
+void menu_handle_create();
 
-// remove
-// void handle_remove();
+void menu_handle_update();
 
-// quit
-// void quit();
-
+void menu_handle_remove();
 #endif

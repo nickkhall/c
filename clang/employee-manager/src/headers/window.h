@@ -10,7 +10,13 @@ typedef struct w {
   WINDOW *window;
 } Window;
 
-void clear_screen(Window *window);
+Window* window_create();
+
+void window_refresh(Window* win);
+
+void window_clear(Window *window);
+
+void window_destroy(Window* win);
 
 #endif
 

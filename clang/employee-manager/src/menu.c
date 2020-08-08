@@ -5,57 +5,58 @@
 
 #include "headers/menu.h"
 #include "headers/window.h"
-#include "headers/input.h"
 #include "headers/screen.h"
 #include "headers/handlers.h"
-#include "headers/employee.h"
 
-const short int* get_state(Menu *menu) {
-  return &menu->state;
+char* main_menu_items[] = {
+  "  Search  Employee  " ,
+  "  Create  Employee  ",
+  "  Update  Employee  ",
+  "  Remove  Employee  ",
+  "       Quit         "
 };
 
-Menu* update_state(Menu *menu, int new_state) {
-  menu->state = new_state;
+Menu* menu_create(char** menu_items, const int menu_items_size) {
+  Menu* main_menu = (Menu*) malloc(sizeof(Menu));
+  if (!main_menu || main_menu == NULL) {
+    printf("ERROR::Failure to allocate memory for main in menu_create\n");
+    free(main_menu);
+    // @TODO: Create global clean_up function solution for all memory if failure
+    exit(1);
+  }
+
+  // set default main menu states
+  main_menu->highlighted = 0;
+  main_menu->state = 0;
+  main_menu->items = (char**) malloc(sizeof(char*) * menu_items_size);
+  if (!main_menu->items || main_menu->items == NULL) {
+    printf("ERROR:: Failed to allocate memory for menu items in menu_create");
+    free(main_menu->items);
+    exit(1);
+  }
+
+  for (int m = 0; m < menu_items_size; m++) {
+    *(main_menu->items + m) = (char*) malloc(sizeof(char) * strlen(*(menu_items + m)));
+    strcpy(*(main_menu->items + m), *(menu_items + m));
+  }
+
+  return main_menu;
+}
+
+Menu* menu_create_main_menu() {
+  Menu* menu = menu_create(main_menu_items, 5);
+  if (!menu || menu == NULL) {
+    printf("ERROR:: Failed to assign menu from menu_create in menu_create_main_menu\n");
+    free(menu);
+    exit(1);
+  }
+
   return menu;
-};
+}
 
-void render_main_menu(Window *window,Menu *menu, const char** items, const int* items_size) {
-  int key_code = 0;
-
-  do {
-    refresh();
-    wrefresh(window->window);
-
-    for (int i = 0; i < *items_size; i++) {
-      if (i == menu->highlighted) {
-        wattron(window->window, A_REVERSE);
-      }
-
-      mvwprintw(
-        window->window,
-        window->y_max / 2 + (i + 2),
-        window->x_max / 2 - *items_size,
-        *(items + i)
-      );
-
-      // Turn off reverse attribute
-      wattroff(window->window, A_REVERSE);
-
-      refresh();
-      wrefresh(window->window);
-    }
-
-    refresh();
-    wrefresh(window->window);
-
-    key_code = wgetch(window->window);
-
-    // Update the menu with the currently selected item
-    handle_navigation(menu, key_code, *items_size);
-  } while (key_code != 27 && key_code != 10); // As long as the user does not hit the "Escape" or "Enter" key
-};
-
-void handle_navigation(Menu *menu, int key_code, int items_size) {
+// menu_update
+// Updates the menu states for state and highlighted
+void menu_update(Menu* menu, int key_code, int items_size) {
   switch(key_code) {
     case 74:
     case 106:
@@ -80,25 +81,18 @@ void handle_navigation(Menu *menu, int key_code, int items_size) {
   menu->state = menu->highlighted + 1;
 };
 
-void handle_search(Window* win) {
-  // print search by id/first/last label
-  print_search_label(win, SEARCH_LABEL);
+// menu_handle_search
+void menu_handle_search(Window* win) {
+  screen_print_search_label(win);
 
-  // get user input
-  const char* user_input = get_search_input(win);
-
-  // create query params from user input
-  const char* const* query_params = &user_input;
-
-  // get employee(s) data
   Employee* employee = NULL;
-  employee = get_employee(query_params, employee);
-  if (!employee || employee == NULL) exit(1);
+  employee = handlers_get_id(win, employee); 
 
   // print employee data to screen
-  print_employee(win, employee);
+  screen_print_employee(win, employee);
 
   // wait for user to press "Escape"
+  // @TODO: make me into function
   noecho();
   int key = 0;
   if ((key = getch()) != ERR) {
@@ -107,8 +101,8 @@ void handle_search(Window* win) {
     }
   }
 
-  destroy_employees(employee);
+  employee_destroy(employee);
 
-  clear_screen(win);
-};
+  window_clear(win);
+}
 
