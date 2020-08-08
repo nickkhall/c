@@ -124,7 +124,9 @@ void employee_destroy(Employee* employee) {
  * -----------------------------------------------------------------
  */
 Employee* employee_convert(PGresult* res, const char* const* params, Employee* employee) {
+  // if there are no parameters, error out, something went wrong
   if (!*(params)) {
+    printf("ERROR:: Something went wrong. The query params passed were invalid.\n");
     exit(1);
   }
 
@@ -135,39 +137,40 @@ Employee* employee_convert(PGresult* res, const char* const* params, Employee* e
     return NULL;
   }
   
+  // num of employees returned (row)
   const int rows = PQntuples(res);
+  // num of data items in employee (column)
   const int cols = PQnfields(res);
 
-  unsigned long int employee_size = (sizeof(char*) * rows);
+  // allocate memory for employee data to be used to populate an employee struct
   char*** employee_data = NULL;
-  employee_data = (char***) malloc(employee_size);
-  if (!employee_data || employee_data == NULL) exit(1);
+  employee_data = (char***) malloc((sizeof(char*) * rows));
+  if (!employee_data || employee_data == NULL) {
+    printf("ERROR:: Failed to allocate memory for employee_data in employee_convert\n");
+    free(employee_data);
+    exit(1);
+  }
   
+  // if there are no employees,
+  // return null for soft fail
+  if (rows < 1) {
+    return NULL;
+  }
+
+  // else create data for employees
   for (int r = 0; r < rows; r++) {
     *(employee_data + r) = (char**) malloc(sizeof(char*) * cols);
-    if (!*(employee_data + r) || *(employee_data + r) == NULL) exit(1);
+    if (!*(employee_data + r) || *(employee_data + r) == NULL) {
+      printf("ERROR:: Failed to allocate memory for employee_data array in employee_convert\n");
+      employee_destroy(employee);
+      exit(1);
+    }
 
+    // transfer Postgres response data to Employee struct(s)
     convert_response_to_data(*(employee_data + r), res, r);
 
+    // create or add to employee linked list with current employee struct
     employee = employee_push(employee, *(employee_data + r));
-    if (!employee || employee == NULL) exit(1);
-
-    // if there is a failure, ABORT
-    if (!*(employee_data + r) || *(employee_data + r) == NULL) {
-      printf("ERROR::Failed to allocate memory for data memory for convert employee\n");
-      
-      // free up all data pointer's memory
-      for (int rr = 0; rr < rows; rr++)
-        for (int d = 0; d < 11; d++) {
-          free(*(employee_data + r) + d);
-        }
-
-      // free up data memory
-      free(employee_data);
-
-      PQclear(res);
-      return NULL;
-    }
   }
 
   PQclear(res);

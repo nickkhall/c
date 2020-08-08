@@ -27,15 +27,7 @@ Employee* handlers_get_id(Window* win, Employee* employee) {
 
   // get employee(s) data
   employee = employee_convert(res, query_params, employee);
-
-  if (!employee || employee == NULL) {
-    printf("ERROR:: Failed to assign employee data to employee from get_employee in handlers_get_id\n");
-    PQclear(res);
-    free(employee);
-    free(win);
-    exit(1);
-  }
-  
+ 
   return employee;
 };
 

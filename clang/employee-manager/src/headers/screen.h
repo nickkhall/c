@@ -23,6 +23,8 @@ void screen_print_line(Window* win, const int y);
 // Prints the Employee table header columns
 void screen_print_employee_headers(Window* win);
 
+void screen_print_employee_row_none(Window* win, const int row);
+
 // print_employee_row
 // Prints the Employee table row with Employee data
 void screen_print_employee_row(Window* win, Employee* employee, const int row);

@@ -80,6 +80,15 @@ void screen_print_employee_headers(Window* win) {
   }
 };
 
+void screen_print_employee_row_none(Window* win, const int row) {
+  char no_employees_text[] = "No employees found.";
+
+  screen_print_word(win,
+                    row + 4,
+                    (win->x_max / 2) - (strlen(no_employees_text) / 2),
+                    no_employees_text); 
+}
+
 void screen_print_employee_row(Window* win, Employee* employee, const int row) {
   // allocate memory for first and last name string
   unsigned long int first_size = strlen(employee->first);
@@ -127,13 +136,25 @@ void screen_print_employee(Window* win, Employee* employee) {
 
   screen_print_line(win, 1);
 
+  // if there were no employees found
+  if (employee == NULL) {
+    // print out no users found to table
+    screen_print_employee_row_none(win, cur_row++);
+    return;
+  }
+
+  // if we make it here, have employee data,
+  // so print it to the screen
   while(employee != NULL) {
+    // print employee row with employee data
     screen_print_employee_row(win, employee, cur_row++);
+    // advance the list
     employee = employee->next_employee;
   }
 
   // print helper label text for returning to menu at bottom of screen
   char return_label[] = "Press \"Escape\" to return to the main menu";
+  // print helper label at bottom of the screen
   screen_print_word(win,
             win->y_max - 5,
             (win->x_max / 2) - (strlen(return_label) / 2),
