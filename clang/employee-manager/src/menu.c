@@ -106,3 +106,6 @@ void menu_handle_search(Window* win) {
   window_clear(win);
 }
 
+void menu_handle_create(Window* win) {
+  screen_print_form_labels_create(win);
+}

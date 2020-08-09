@@ -11,6 +11,18 @@
 #include "headers/utils.h"
 
 const char SEARCH_LABEL[] = "Search by ID, First and/or Last name:";
+const char* CREATE_LABELS[] = {
+  "First*    : ",
+  "Last*     : ",
+  "Email*    : ",
+  "Address   : ",
+  "Phone     : ",
+  "Start     : ",
+  "Gender    : ",
+  "Ethnicity : ",
+  "Title*    : ",
+  "Salary*   : "
+};
 
 void screen_print_word(Window* win, const int y, const int x, const char* word) {
   mvwprintw(win->window, y, x, word);
@@ -235,5 +247,28 @@ void screen_print_menu(Window *win, Menu* menu, int menu_items_size) {
     // Update the menu with the currently selected item
     menu_update(menu, key_code, menu_items_size);
   } while (key_code != 27 && key_code != 10);
+}
+
+void screen_print_form_labels(Window* win, char** labels) {
+  
+}
+
+void screen_print_form_labels_create(Window* win) {
+  window_clear(win);
+  int offset = (win->y_max / 11);
+
+  for (int l = 0; l < 11; l++) {
+    char* cur_label = *(CREATE_LABELS + l);
+
+    screen_print_word(win, offset, win->x_max / 7, cur_label);
+    if (l % 1 == 0) {
+      offset++;
+      screen_print_word(win, offset, win->x_max / 7, "-----------");
+    }
+
+    offset += (win->y_max / 11) - 1;
+  }
+
+  window_refresh(win);
 }
 

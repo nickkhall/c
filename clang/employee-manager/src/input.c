@@ -91,3 +91,7 @@ char* input_get_search_input(Window* win) {
   return buffer;
 }
 
+char* input_get_form_input(Window* win, char** data) {
+  
+}
+

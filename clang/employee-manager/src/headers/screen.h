@@ -6,6 +6,7 @@
 #include "menu.h"
 
 extern const char SEARCH_LABEL[];
+extern const char* CREATE_LABELS[];
 
 // print_word
 // Prints a word to the screen with a given x and y axis
@@ -43,7 +44,11 @@ void screen_print_title(Window* window);
 
 // print_menu
 // Prints a menu to the screen
-void screen_print_menu(Window *window, Menu* menu, int menu_items_size);
+void screen_print_menu(Window* win, Menu* menu, int menu_items_size);
+
+void screen_print_form_labels(Window* win, char** labels);
+
+void screen_print_form_labels_create(Window* win);
 
 #endif
 

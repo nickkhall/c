@@ -31,3 +31,7 @@ Employee* handlers_get_id(Window* win, Employee* employee) {
   return employee;
 };
 
+Employee* handlers_post(Window* win, Employee* employee) {
+
+}
+
