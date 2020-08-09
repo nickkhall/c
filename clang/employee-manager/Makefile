@@ -8,7 +8,7 @@ BIN = employee-manager
 BUILD_DIR = bin
 POSTGRES = /usr/include/postgresql
 
-LIBS = -lncurses -lpq
+LIBS = -lncurses -lpq -lform
 INCLUDES_DIR = /usr/include
 INCLUDES = -I$(INCLUDES_DIR) -I$(POSTGRES)
 CFLAGS = -std=c18 -Wall

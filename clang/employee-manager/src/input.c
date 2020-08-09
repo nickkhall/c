@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ncurses.h>
+#include <form.h>
 
 #include "headers/input.h"
 #include "headers/window.h"
@@ -97,7 +98,34 @@ char** input_get_form_input(Window* win, char** data) {
   int y_offset = win->y_max / 11;
   int x_offset = (win->x_max / 7) + 13;
   int current_offset = y_offset;
+
+  FIELD* fields[12];
+  FORM*  create_form;
   int key = 0;
+  int rows = 0;
+  int cols = 0;
+
+  // populate and initialize form fields array
+  for (int f = 0; f < 11; f++) {
+    *(fields + f) = new_field(1, 101,             // height and width
+                              y_offset / (f + 1), // y
+                              x_offset / (f + 1), // x
+                              0,                  // render entire field (no scroll)
+                              *(*(data + f)));    // char buffer
+    
+    // set field type with field validation
+    set_field_type(*(fields + f), TYPE_ALPHA, 101);
+  }
+  // set last index in form field array to NULL
+  *(fields + 11) = NULL;
+
+  // create a new form and post it
+  create_form = new_form(fields);
+
+  scale_form(create_form, &rows, &cols);
+
+  set_form_win(create_form, win->window);
+  // set_form_sub(create_form, );
 
   // enable output and cursor
   echo();
@@ -106,62 +134,40 @@ char** input_get_form_input(Window* win, char** data) {
   mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
   window_refresh(win);
 
-  while(true) {
-    mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
-    // if user pressed "Enter"
-    if (key == 10) {
-      // if we are at end of inputs
-      if (current_offset == 11) {
-        // quit loop
-        return false;
-      }
+   // mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
+   // // if user pressed "Enter"
+   // if (key == 10) {
+   //   // if we are at end of inputs
+   //   if (current_offset == 11) {
+   //     // quit loop
+   //     return false;
+   //   }
 
-      // increment the y offset
-      y_offset += y_offset;
-      // increment the x offset (might be negative)
-      x_offset += (((win->x_max / 7) + 13) - (strlen(buffer)));
+   //   // increment the y offset
+   //   y_offset += y_offset;
+   //   // increment the x offset (might be negative)
+   //   x_offset += (((win->x_max / 7) + 13) - (strlen(buffer)));
 
-      // set buffer data to matched data array index
-      *(data + current_offset) = buffer;
-      
-      // clear buffer
-      memset(buffer, 0, sizeof(char) * 101);
-      window_refresh(win);
-    } else if (key == 9) {
-      // clear buffer
-      memset(buffer, 0, sizeof(char) * 101);
+   //   // set buffer data to matched data array index
+   //   *(data + current_offset) = buffer;
+   //   
+   //   // clear buffer
+   //   memset(buffer, 0, sizeof(char) * 101);
+   //   window_refresh(win);
+   // } else if (key == 9) {
+   //   // clear buffer
+   //   memset(buffer, 0, sizeof(char) * 101);
 
-      // decrement the y offset
-      y_offset -= y_offset;
-      // increment the x offset (might be negative)
-      x_offset += (((win->x_max / 7) + 13) - (strlen(buffer)));
-      window_refresh(win);
-    } else { 
-      mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
-    }
-    
-    window_refresh(win);
-  } 
-
-  switch(key) {
-    // tab
-    case 9:
-
-      break;
-    // enter
-    case 10:
-      // if we are on last form input
-      if (current_offset == 11) {
-        // validate data
-
-        // return data;
-        return data;
-      }
-
-      break;
-    default:
-      break;
-  }
+   //   // decrement the y offset
+   //   y_offset -= y_offset;
+   //   // increment the x offset (might be negative)
+   //   x_offset += (((win->x_max / 7) + 13) - (strlen(buffer)));
+   //   window_refresh(win);
+   // } else { 
+   //   mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
+   // }
+   // 
+   // window_refresh(win);
 
   // disable output and hide cursor
   noecho();
