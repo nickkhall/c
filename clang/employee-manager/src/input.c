@@ -91,7 +91,80 @@ char* input_get_search_input(Window* win) {
   return buffer;
 }
 
-char* input_get_form_input(Window* win, char** data) {
-  
+char** input_get_form_input(Window* win, char** data) {
+  char* buffer = (char*) malloc(sizeof(char) * 101); 
+
+  int y_offset = win->y_max / 11;
+  int x_offset = (win->x_max / 7) + 13;
+  int current_offset = y_offset;
+  int key = 0;
+
+  // enable output and cursor
+  echo();
+  curs_set(1);
+
+  mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
+  window_refresh(win);
+
+  while(true) {
+    mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
+    // if user pressed "Enter"
+    if (key == 10) {
+      // if we are at end of inputs
+      if (current_offset == 11) {
+        // quit loop
+        return false;
+      }
+
+      // increment the y offset
+      y_offset += y_offset;
+      // increment the x offset (might be negative)
+      x_offset += (((win->x_max / 7) + 13) - (strlen(buffer)));
+
+      // set buffer data to matched data array index
+      *(data + current_offset) = buffer;
+      
+      // clear buffer
+      memset(buffer, 0, sizeof(char) * 101);
+      window_refresh(win);
+    } else if (key == 9) {
+      // clear buffer
+      memset(buffer, 0, sizeof(char) * 101);
+
+      // decrement the y offset
+      y_offset -= y_offset;
+      // increment the x offset (might be negative)
+      x_offset += (((win->x_max / 7) + 13) - (strlen(buffer)));
+      window_refresh(win);
+    } else { 
+      mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
+    }
+    
+    window_refresh(win);
+  } 
+
+  switch(key) {
+    // tab
+    case 9:
+
+      break;
+    // enter
+    case 10:
+      // if we are on last form input
+      if (current_offset == 11) {
+        // validate data
+
+        // return data;
+        return data;
+      }
+
+      break;
+    default:
+      break;
+  }
+
+  // disable output and hide cursor
+  noecho();
+  curs_set(0);
 }
 
