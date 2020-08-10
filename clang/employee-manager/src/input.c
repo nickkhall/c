@@ -176,7 +176,7 @@ char** input_get_form_input(Window* win, char** data) {
           break;
       }
 
-      form_driver(create_form, REQ_VALIDATION);
+      //form_driver(create_form, REQ_VALIDATION);
       window_refresh(win);
     }
 
