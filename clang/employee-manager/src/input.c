@@ -118,15 +118,16 @@ char** input_get_form_input(Window* win, char** data) {
 
     // create fields
     *(fields + f) = new_field(1, 25,        // height and width
-                              y_offset + f, // row of upper left corner
-                              x_offset + f, // column of upper left corner
+                              f + 2,
+                              1,
                               0, 0);        // render entire field and idk anymore
     
     // set field type with field validation
+    set_field_back(*(fields + f), A_UNDERLINE);
     set_field_type(*(fields + f), TYPE_ALPHA);
 
-    y_offset += y_offset;
-    x_offset += (((win->x_max / 7) + 13) - (strlen(*(data + f))));
+    // y_offset += y_offset;
+    //x_offset += (((win->x_max / 7) + 13) - (strlen(*(data + f))));
   }
 
   // create a new form and post it
@@ -149,7 +150,7 @@ char** input_get_form_input(Window* win, char** data) {
   curs_set(1);
 
   // start at first input field
-  form_driver(create_form, 0);
+  form_driver(create_form, REQ_FIRST_FIELD);
 
   while((key = wgetch(win->window)) != KEY_F(1)) {
     switch(key) {
