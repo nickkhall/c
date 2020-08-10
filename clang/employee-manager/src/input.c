@@ -93,81 +93,94 @@ char* input_get_search_input(Window* win) {
 }
 
 char** input_get_form_input(Window* win, char** data) {
-  char* buffer = (char*) malloc(sizeof(char) * 101); 
-
   int y_offset = win->y_max / 11;
   int x_offset = (win->x_max / 7) + 13;
   int current_offset = y_offset;
 
   FIELD* fields[12];
   FORM*  create_form;
-  int key = 0;
-  int rows = 0;
-  int cols = 0;
+  int key; 
+  int rows;
+  int cols;
 
-  // populate and initialize form fields array
-  for (int f = 0; f < 11; f++) {
-    *(fields + f) = new_field(1, 101,             // height and width
-                              y_offset / (f + 1), // y
-                              x_offset / (f + 1), // x
-                              0,                  // render entire field (no scroll)
-                              *(*(data + f)));    // char buffer
+  for (int f = 0; f < 12; f++) {
+    if (f == 11) {
+      *(fields + f) = NULL;
+      break;
+    }
+    // allocate memory for data array
+    *(data + f) = (char*) malloc(sizeof(char) * 101);
+    if (!*(data + f) || *(data + f) == NULL) {
+      printf("ERROR:: Failed to allocate memory for data in input_get_form_input\n");
+      free(data);
+      exit(1);
+    }
+
+    // create fields
+    *(fields + f) = new_field(1, 25,        // height and width
+                              y_offset + f, // row of upper left corner
+                              x_offset + f, // column of upper left corner
+                              0, 0);        // render entire field and idk anymore
     
     // set field type with field validation
-    set_field_type(*(fields + f), TYPE_ALPHA, 101);
+    set_field_type(*(fields + f), TYPE_ALPHA);
+
+    y_offset += y_offset;
+    x_offset += (((win->x_max / 7) + 13) - (strlen(*(data + f))));
   }
-  // set last index in form field array to NULL
-  *(fields + 11) = NULL;
 
   // create a new form and post it
   create_form = new_form(fields);
 
   scale_form(create_form, &rows, &cols);
 
-  set_form_win(create_form, win->window);
-  // set_form_sub(create_form, );
+  // set form window and sub-window
+  // set_form_win(create_form, win->window);
+  set_form_sub(create_form, derwin(win->window,
+                                  rows, cols,
+                                  2, 2));
 
+  post_form(create_form);
+  window_refresh(win);
+
+  wmove(win->window, y_offset, x_offset);
   // enable output and cursor
   echo();
   curs_set(1);
 
-  mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
-  window_refresh(win);
+  // start at first input field
+  form_driver(create_form, 0);
 
-   // mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
-   // // if user pressed "Enter"
-   // if (key == 10) {
-   //   // if we are at end of inputs
-   //   if (current_offset == 11) {
-   //     // quit loop
-   //     return false;
-   //   }
+  while((key = wgetch(win->window)) != KEY_F(1)) {
+    switch(key) {
+      case KEY_DOWN:
+  				// go to next field
+  				form_driver(create_form, REQ_NEXT_FIELD);
+  				// go to end of the current buffer
+  				// leaves nicely at the last character
+  				form_driver(create_form, REQ_END_LINE);
+  				break;
+  			case KEY_UP:
+  				// go to previous field
+  				form_driver(create_form, REQ_PREV_FIELD);
+  				form_driver(create_form, REQ_END_LINE);
+  				break;
+  			default:
+          // print character
+  				form_driver(create_form, key);
+  				break;
+  		}
 
-   //   // increment the y offset
-   //   y_offset += y_offset;
-   //   // increment the x offset (might be negative)
-   //   x_offset += (((win->x_max / 7) + 13) - (strlen(buffer)));
+  		form_driver(create_form, REQ_VALIDATION);
+      window_refresh(win);
+  	}
 
-   //   // set buffer data to matched data array index
-   //   *(data + current_offset) = buffer;
-   //   
-   //   // clear buffer
-   //   memset(buffer, 0, sizeof(char) * 101);
-   //   window_refresh(win);
-   // } else if (key == 9) {
-   //   // clear buffer
-   //   memset(buffer, 0, sizeof(char) * 101);
-
-   //   // decrement the y offset
-   //   y_offset -= y_offset;
-   //   // increment the x offset (might be negative)
-   //   x_offset += (((win->x_max / 7) + 13) - (strlen(buffer)));
-   //   window_refresh(win);
-   // } else { 
-   //   mvwgetnstr(win->window, y_offset, x_offset, buffer, 101);
-   // }
-   // 
-   // window_refresh(win);
+	/* Un post form and free the memory */
+	unpost_form(create_form);
+	free_form(create_form);
+  for (int f = 0; f < 11; f++) {
+	  free_field(*(fields + f));
+  }
 
   // disable output and hide cursor
   noecho();

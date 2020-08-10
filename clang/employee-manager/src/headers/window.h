@@ -3,11 +3,12 @@
 
 #include <ncurses.h>
 
-typedef struct w {
+typedef struct {
   unsigned int y_max;
   unsigned int x_max;
 
-  WINDOW *window;
+  WINDOW* window;
+  WINDOW* form_window;
 } Window;
 
 Window* window_create();
