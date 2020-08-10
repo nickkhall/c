@@ -122,14 +122,16 @@ char** input_get_form_input(Window* win, char** data) {
                               (f * y_offset),
                               x_offset,
                               0, 0);        // render entire field and idk anymore
-    
+
+    field_opts_off(*(fields + f), O_AUTOSKIP);
     // set field type with field validation
     set_field_back(*(fields + f), A_UNDERLINE);
-    set_field_type(*(fields + f), TYPE_ALPHA);
-
-    // y_offset += y_offset;
-    //x_offset += (((win->x_max / 7) + 13) - (strlen(*(data + f))));
+    // disable ability to move to next field at filled buffer
+    if (f == 0) field_opts_off(*(fields + f), O_ACTIVE);
   }
+    
+
+  // set_field_type(*(fields + f), TYPE_ALPHA);
 
   // create a new form and post it
   create_form = new_form(fields);
@@ -142,37 +144,54 @@ char** input_get_form_input(Window* win, char** data) {
                                   rows, cols,
                                   y_offset, x_offset));
 
+  // post form
   post_form(create_form);
+
+  // refresh screen
   window_refresh(win);
 
-  wmove(win->window, y_offset, x_offset);
-  // enable output and cursor
-  echo();
+  // disable output
+  noecho();
+  // enable cursor
   curs_set(1);
+
+  set_field_just(*fields, JUSTIFY_LEFT);
 
   // start at first input field
   form_driver(create_form, REQ_FIRST_FIELD);
 
+  // monitor user input
   while((key = wgetch(win->window)) != KEY_F(1)) {
     switch(key) {
       case KEY_DOWN:
           // go to next field
           form_driver(create_form, REQ_NEXT_FIELD);
           // go to end of the current buffer
-          // leaves nicely at the last character
           form_driver(create_form, REQ_END_LINE);
           break;
         case KEY_UP:
           // go to previous field
           form_driver(create_form, REQ_PREV_FIELD);
+          // go to end of the current buffer
           form_driver(create_form, REQ_END_LINE);
           break;
-        case 263:
+        case KEY_BACKSPACE:
+          // delete the previous character
           form_driver(create_form, REQ_DEL_PREV);
+          // go to end of the current buffer
+          form_driver(create_form, REQ_END_LINE);
+          break;
+        // space character
+        case 32:          
+          // inserts blank character at current position
+          form_driver(create_form, REQ_INS_CHAR);
+          // go to next character
+          form_driver(create_form, REQ_NEXT_CHAR); 
           break;
         default:
           // print character
           form_driver(create_form, key);
+          //form_driver(create_form, );
           break;
       }
 
@@ -188,7 +207,6 @@ char** input_get_form_input(Window* win, char** data) {
   }
 
   // disable output and hide cursor
-  noecho();
   curs_set(0);
 }
 
