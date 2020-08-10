@@ -97,6 +97,7 @@ char** input_get_form_input(Window* win, char** data) {
   int x_offset = (win->x_max / 7) + 13;
   int current_offset = y_offset;
 
+  WINDOW* form_win = newwin(0,0,0,0);
   FIELD* fields[12];
   FORM*  create_form;
   int key; 
@@ -117,9 +118,9 @@ char** input_get_form_input(Window* win, char** data) {
     }
 
     // create fields
-    *(fields + f) = new_field(1, 25,        // height and width
-                              f + 2,
-                              1,
+    *(fields + f) = new_field(1, 50,        // height and width
+                              (f * y_offset),
+                              x_offset,
                               0, 0);        // render entire field and idk anymore
     
     // set field type with field validation
@@ -136,10 +137,10 @@ char** input_get_form_input(Window* win, char** data) {
   scale_form(create_form, &rows, &cols);
 
   // set form window and sub-window
-  // set_form_win(create_form, win->window);
+  set_form_win(create_form, form_win);
   set_form_sub(create_form, derwin(win->window,
                                   rows, cols,
-                                  2, 2));
+                                  y_offset, x_offset));
 
   post_form(create_form);
   window_refresh(win);
@@ -166,6 +167,9 @@ char** input_get_form_input(Window* win, char** data) {
   				form_driver(create_form, REQ_PREV_FIELD);
   				form_driver(create_form, REQ_END_LINE);
   				break;
+        case 263:
+          form_driver(create_form, REQ_DEL_PREV);
+          break;
   			default:
           // print character
   				form_driver(create_form, key);
