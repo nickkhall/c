@@ -98,14 +98,14 @@ char** input_get_form_input(Window* win, char** data) {
   int current_offset = y_offset;
 
   WINDOW* form_win = newwin(0,0,0,0);
-  FIELD* fields[12];
+  FIELD* fields[11];
   FORM*  create_form;
   int key; 
   int rows;
   int cols;
 
-  for (int f = 0; f < 12; f++) {
-    if (f == 11) {
+  for (int f = 0; f < 11; f++) {
+    if (f == 10) {
       *(fields + f) = NULL;
       break;
     }
@@ -127,7 +127,7 @@ char** input_get_form_input(Window* win, char** data) {
     // set field type with field validation
     set_field_back(*(fields + f), A_UNDERLINE);
     // disable ability to move to next field at filled buffer
-    if (f == 0) field_opts_off(*(fields + f), O_ACTIVE);
+    // if (f == 0) field_opts_off(*(fields + f), O_ACTIVE);
   }
     
 
@@ -155,14 +155,13 @@ char** input_get_form_input(Window* win, char** data) {
   // enable cursor
   curs_set(1);
 
-  set_field_just(*fields, JUSTIFY_LEFT);
-
   // start at first input field
   form_driver(create_form, REQ_FIRST_FIELD);
 
   // monitor user input
   while((key = wgetch(win->window)) != KEY_F(1)) {
     switch(key) {
+      case 9:
       case KEY_DOWN:
           // go to next field
           form_driver(create_form, REQ_NEXT_FIELD);
