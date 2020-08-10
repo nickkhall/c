@@ -156,35 +156,35 @@ char** input_get_form_input(Window* win, char** data) {
   while((key = wgetch(win->window)) != KEY_F(1)) {
     switch(key) {
       case KEY_DOWN:
-  				// go to next field
-  				form_driver(create_form, REQ_NEXT_FIELD);
-  				// go to end of the current buffer
-  				// leaves nicely at the last character
-  				form_driver(create_form, REQ_END_LINE);
-  				break;
-  			case KEY_UP:
-  				// go to previous field
-  				form_driver(create_form, REQ_PREV_FIELD);
-  				form_driver(create_form, REQ_END_LINE);
-  				break;
+          // go to next field
+          form_driver(create_form, REQ_NEXT_FIELD);
+          // go to end of the current buffer
+          // leaves nicely at the last character
+          form_driver(create_form, REQ_END_LINE);
+          break;
+        case KEY_UP:
+          // go to previous field
+          form_driver(create_form, REQ_PREV_FIELD);
+          form_driver(create_form, REQ_END_LINE);
+          break;
         case 263:
           form_driver(create_form, REQ_DEL_PREV);
           break;
-  			default:
+        default:
           // print character
-  				form_driver(create_form, key);
-  				break;
-  		}
+          form_driver(create_form, key);
+          break;
+      }
 
-  		form_driver(create_form, REQ_VALIDATION);
+      form_driver(create_form, REQ_VALIDATION);
       window_refresh(win);
-  	}
+    }
 
-	/* Un post form and free the memory */
-	unpost_form(create_form);
-	free_form(create_form);
+  /* Un post form and free the memory */
+  unpost_form(create_form);
+  free_form(create_form);
   for (int f = 0; f < 11; f++) {
-	  free_field(*(fields + f));
+    free_field(*(fields + f));
   }
 
   // disable output and hide cursor
