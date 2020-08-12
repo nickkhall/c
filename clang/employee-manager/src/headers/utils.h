@@ -3,7 +3,9 @@
 
 #include <libpq-fe.h>
 
-char** convert_response_to_data(char** data_pointer, PGresult* res, const int row);
+char** utils_convert_pq_res_data(char** data_pointer, PGresult* res, const int row);
+
+char* utils_trim_whitespaces(char* str);
 
 #endif
 

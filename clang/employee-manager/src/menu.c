@@ -110,6 +110,6 @@ void menu_handle_create(Window* win) {
   screen_print_form_labels_create(win);
 
   char** data = (char**) malloc(sizeof(char*) * 11);
-  data = input_get_form_input(win, data);
+  input_get_form_input(win, data);
   free(data);
 }

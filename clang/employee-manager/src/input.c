@@ -4,30 +4,10 @@
 #include <form.h>
 #include <ctype.h>
 
+#include "headers/forms.h"
 #include "headers/input.h"
 #include "headers/window.h"
-
-char* trim_whitespaces(char *str){
-	char *end;
-
-	// trim leading space
-	while(isspace(*str))
-		str++;
-
-	if(*str == 0) // all spaces?
-		return str;
-
-	// trim trailing space
-	end = str + strnlen(str, 101) - 1;
-
-	while(end > str && isspace(*end))
-		end--;
-
-	// write new null terminator
-	*(end + 1) = '\0';
-
-	return str;
-}
+#include "headers/utils.h"
 
 char* input_get_search_input(Window* win) {
   // enable cursor and output
@@ -63,7 +43,7 @@ char* input_get_search_input(Window* win) {
 }
 
 
-void handle_input(Window* win, FORM* create_form, int* key) { 
+void input_handle_input(Window* win, FORM* create_form, int* key) { 
   while((*key = wgetch(win->window)) != 10) {
     switch(*key) {
       // tab character
@@ -102,10 +82,20 @@ void handle_input(Window* win, FORM* create_form, int* key) {
   }
 }
 
-
-
+/*
+ * ----------------------------------------------------
+ * function: input_get_form_input
+ *
+ * Handles retrieving input from user in a form view.
+ * ----------------------------------------------------
+ * params  :
+ *           > win      - pointer to Window struct
+ *           > data     - data array of strings
+ * ----------------------------------------------------
+ * returns : data array of strings
+ * ----------------------------------------------------
+ */
 char** input_get_form_input(Window* win, char** data) {
-  int current_field_num = 0;
   int y_offset = win->y_max / 11;
   int x_offset = (win->x_max / 7) + 13;
 
@@ -168,7 +158,7 @@ char** input_get_form_input(Window* win, char** data) {
   form_driver(create_form, REQ_FIRST_FIELD);
 
   // monitor user input
-  handle_input(win, create_form, &key);
+  input_handle_input(win, create_form, &key);
 
   for (int d = 0; d < 10; d++) {
     // if we are on the first two fields (first and last name)
@@ -179,20 +169,26 @@ char** input_get_form_input(Window* win, char** data) {
         char* last = field_buffer(*(fields + 1), 0);
 
         // trim whitespaces
-        trim_whitespaces(first);
-        trim_whitespaces(last);
+        utils_trim_whitespaces(first);
+        utils_trim_whitespaces(last);
 
         // copy first and last name into data array
         strcpy(*data, first);
         strcpy(*(data + 1), last);
+        // finish loop after adding first and last name
+        continue;
       }
 
-
-      char* cur_field = field_buffer(*(fields + d), 0);
-      char* cur_str = *(data + d);
-      trim_whitespaces(cur_field);
-      strcpy(cur_str, cur_field);
+      // skip first name
+      continue;
     }
+
+    // else, we are not in first or last, so just continue appending
+    // field data to data array
+    char* cur_field = field_buffer(*(fields + d), 0);
+    char* cur_str = *(data + d);
+    cur_field = utils_trim_whitespaces(cur_field);
+    strcpy(cur_str, cur_field);
   }
 
   window_clear(win);
