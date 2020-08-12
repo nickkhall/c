@@ -186,9 +186,8 @@ char** input_get_form_input(Window* win, char** data) {
     // else, we are not in first or last, so just continue appending
     // field data to data array
     char* cur_field = field_buffer(*(fields + d), 0);
-    char* cur_str = *(data + d);
     cur_field = utils_trim_whitespaces(cur_field);
-    strcpy(cur_str, cur_field);
+    strcpy(*(data + d), cur_field);
   }
 
   window_clear(win);
