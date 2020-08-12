@@ -2,9 +2,32 @@
 #include <string.h>
 #include <ncurses.h>
 #include <form.h>
+#include <ctype.h>
 
 #include "headers/input.h"
 #include "headers/window.h"
+
+char* trim_whitespaces(char *str){
+	char *end;
+
+	// trim leading space
+	while(isspace(*str))
+		str++;
+
+	if(*str == 0) // all spaces?
+		return str;
+
+	// trim trailing space
+	end = str + strnlen(str, 101) - 1;
+
+	while(end > str && isspace(*end))
+		end--;
+
+	// write new null terminator
+	*(end + 1) = '\0';
+
+	return str;
+}
 
 char* input_get_search_input(Window* win) {
   // enable cursor and output
@@ -40,7 +63,7 @@ char* input_get_search_input(Window* win) {
 }
 
 
-void handle_input(Window* win, FORM* create_form, FIELD* fields, int* key, int* current_field_num) {
+void handle_input(Window* win, FORM* create_form, int* key) { 
   while((*key = wgetch(win->window)) != 10) {
     switch(*key) {
       // tab character
@@ -48,16 +71,12 @@ void handle_input(Window* win, FORM* create_form, FIELD* fields, int* key, int* 
       case KEY_DOWN:
           // go to next field
           form_driver(create_form, REQ_NEXT_FIELD);
-          set_field_buffer(fields, 0, "");
-          *current_field_num++;
           // go to end of the current buffer
           //form_driver(create_form, REQ_END_LINE);
           break;
         case KEY_UP:
           // go to previous field
           form_driver(create_form, REQ_PREV_FIELD);
-          set_field_buffer(fields, 0, "");
-          *current_field_num--;
           // go to end of the current buffer
           form_driver(create_form, REQ_END_LINE);
           break;
@@ -149,25 +168,40 @@ char** input_get_form_input(Window* win, char** data) {
   form_driver(create_form, REQ_FIRST_FIELD);
 
   // monitor user input
-  handle_input(win, create_form, *(fields + current_field_num), &key, &current_field_num);
+  handle_input(win, create_form, &key);
 
   for (int d = 0; d < 10; d++) {
-    char* cur_field = field_buffer(*(fields + d), d);
-    char* cur_str = *(data + d);
-    strcpy(cur_str, cur_field);
+    // if we are on the first two fields (first and last name)
+    if (d < 2) {
+      if (d == 1) {
+        // get first and last name for concatenation
+        char* first = field_buffer(*fields, 0); 
+        char* last = field_buffer(*(fields + 1), 0);
+
+        // trim whitespaces
+        trim_whitespaces(first);
+        trim_whitespaces(last);
+
+        // copy first and last name into data array
+        strcpy(*data, first);
+        strcpy(*(data + 1), last);
+      }
+
+
+      char* cur_field = field_buffer(*(fields + d), 0);
+      char* cur_str = *(data + d);
+      trim_whitespaces(cur_field);
+      strcpy(cur_str, cur_field);
+    }
   }
 
   window_clear(win);
   // un-post form and free the memory
   unpost_form(create_form);
   free_form(create_form);
-  for (int f = 0; f < 11; f++) {
+  for (int f = 0; f < 10; f++) {
     free_field(*(fields + f));
   }
-
-  // not sure how this will react,
-  // need to finish leaving this loop first
-  endwin();
 
   // hide cursor
   curs_set(0);

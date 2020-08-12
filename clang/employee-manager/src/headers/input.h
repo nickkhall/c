@@ -3,6 +3,8 @@
 
 #include "window.h"
 
+char* trim_whitespace(char* str);
+
 char** input_create(Window *window, const char** form_labels, const int *num_of_fields);
 
 char* input_get_search_input(Window* win);
