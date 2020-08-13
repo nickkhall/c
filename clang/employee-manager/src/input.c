@@ -13,7 +13,6 @@ char* input_get_search_input(WINDOW* win) {
   int y_max = 0;
   int x_max = 0;
   getmaxyx(win, y_max, x_max);
-  //
   // enable cursor and output
   curs_set(1);
   echo();
@@ -28,11 +27,13 @@ char* input_get_search_input(WINDOW* win) {
   }
 
   // get label for search (max 100 chars)
-  mvwgetnstr(win,
-             y_max / 2,
-             x_max / 2 + (33 / 2) + 3,
-             buffer,
-             101);
+  mvwgetnstr(
+      win,
+      y_max / 2,
+      x_max / 2 + (33 / 2) + 3,
+      buffer,
+      101
+    );
 
   // disable cursor and output
   curs_set(0);
@@ -97,44 +98,45 @@ void input_handle_input(WINDOW* win, FORM* create_form, int* key) {
  * returns : data array of strings
  * ----------------------------------------------------
  */
-char** input_get_form_input(WINDOW* win, char** data) {
-  int render_y = 0;
-  int render_x = 0;
-  getmaxyx(win, render_y, render_x);
+char** input_get_form_input(Window* win, char** data) {
+  int y_offset = win->y_max / 11;
+  int x_offset = (win->x_max / 7) + 13;
 
-  int y_offset = render_y / 11;
-  int x_offset = (render_x / 7) + 13;
-
-  FIELD* fields[11];
+  FIELD* fields[21];
   FORM*  create_form;
   int key; 
   int rows;
   int cols;
 
-  for (int f = 0; f < 11; f++) {
-    if (f == 10) {
+  for (int f = 0; f < 21; f++) {
+    if (f == 20) {
       *(fields + f) = NULL;
       break;
     }
-    // allocate memory for data array
-    *(data + f) = (char*) malloc(sizeof(char) * 101);
-    if (!*(data + f) || *(data + f) == NULL) {
-      printf("ERROR:: Failed to allocate memory for data in input_get_form_input\n");
-      free(data);
-      exit(1);
+
+    if (f % 1 == 0) {
+
+    } else {
+      // allocate memory for data array
+      *(data + f) = (char*) malloc(sizeof(char) * 101);
+      if (!*(data + f) || *(data + f) == NULL) {
+        printf("ERROR:: Failed to allocate memory for data in input_get_form_input\n");
+        free(data);
+        exit(1);
+      }
+
+      // create fields
+      *(fields + f) = new_field(1, 50,          // height and width
+                                (f * y_offset), // start y
+                                x_offset,       // start x
+                                0, 10);         // render entire field and amount of buffers
+
+      set_field_buffer(*(fields + f), 0, *(data + f));
+
+      set_field_back(*(fields + f), A_UNDERLINE);
+
+      field_opts_off(*(fields + f), O_AUTOSKIP);
     }
-
-    // create fields
-    *(fields + f) = new_field(1, 50,          // height and width
-                              (f * y_offset), // start y
-                              x_offset,       // start x
-                              0, 10);         // render entire field and amount of buffers
-
-    field_opts_off(*(fields + f), O_AUTOSKIP);
-    // set field type with field validation
-    set_field_back(*(fields + f), A_UNDERLINE);
-
-    set_field_buffer(*(fields + f), f, *(data + f));
   }
     
   // create a new form and post it
@@ -142,13 +144,7 @@ char** input_get_form_input(WINDOW* win, char** data) {
 
   scale_form(create_form, &rows, &cols);
 
-  // set form window and sub-window
-  set_form_win(create_form, win);
-  set_form_sub(create_form, derwin(win,
-                                   render_y,
-                                   render_x,
-                                   render_y / 11,
-                                   (render_x / 7) + 13));
+  set_form_win(create_form, win->render_window);
 
   // post form
   post_form(create_form);
@@ -167,6 +163,8 @@ char** input_get_form_input(WINDOW* win, char** data) {
   // monitor user input
   input_handle_input(win, create_form, &key);
 
+  // once we get here, the user pressed "Enter"
+  // parse the fields and retrieve the data
   for (int d = 0; d < 10; d++) {
     // if we are on the first two fields (first and last name)
     if (d < 2) {
@@ -190,7 +188,6 @@ char** input_get_form_input(WINDOW* win, char** data) {
       continue;
     }
 
-    // else, we are not in first or last, so just continue appending
     // field data to data array
     char* cur_field = field_buffer(*(fields + d), 0);
     cur_field = utils_trim_whitespaces(cur_field);
