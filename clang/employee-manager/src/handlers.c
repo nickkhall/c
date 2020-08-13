@@ -10,7 +10,7 @@
 #include "headers/screen.h"
 #include "headers/window.h"
 
-Employee* handlers_get_id(Window* win, Employee* employee) {
+Employee* handlers_get_id(WINDOW* win, Employee* employee) {
   // get user input
   const char* user_input = input_get_search_input(win);
 
@@ -30,8 +30,4 @@ Employee* handlers_get_id(Window* win, Employee* employee) {
  
   return employee;
 };
-
-Employee* handlers_post(Window* win, Employee* employee) {
-
-}
 

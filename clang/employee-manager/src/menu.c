@@ -82,7 +82,7 @@ void menu_update(Menu* menu, int key_code, int items_size) {
 };
 
 // menu_handle_search
-void menu_handle_search(Window* win) {
+void menu_handle_search(WINDOW* win) {
   screen_print_search_label(win);
 
   Employee* employee = NULL;
@@ -95,7 +95,7 @@ void menu_handle_search(Window* win) {
   // @TODO: make me into function
   noecho();
   int key = 0;
-  if ((key = getch()) != ERR) {
+  if ((key = wgetch(win)) != ERR) {
     while(key != 27) {
       key = getch();
     }

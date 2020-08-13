@@ -9,7 +9,11 @@
 #include "headers/window.h"
 #include "headers/utils.h"
 
-char* input_get_search_input(Window* win) {
+char* input_get_search_input(WINDOW* win) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
+  //
   // enable cursor and output
   curs_set(1);
   echo();
@@ -24,13 +28,11 @@ char* input_get_search_input(Window* win) {
   }
 
   // get label for search (max 100 chars)
-  mvwgetnstr(
-      win,
-      win->y_max / 2,
-      win->x_max / 2 + (33 / 2) + 3,
-      buffer,
-      101
-    );
+  mvwgetnstr(win,
+             y_max / 2,
+             x_max / 2 + (33 / 2) + 3,
+             buffer,
+             101);
 
   // disable cursor and output
   curs_set(0);
@@ -95,15 +97,10 @@ void input_handle_input(WINDOW* win, FORM* create_form, int* key) {
  * returns : data array of strings
  * ----------------------------------------------------
  */
-char** input_get_form_input(WINDOW* win, char** data) {
-  int y_max = 0;
-  int x_max = 0;
-  getmaxyx(win, y_max, x_max);
+char** input_get_form_input(Window* win, char** data) {
+  int y_offset = win->y_max / 11;
+  int x_offset = (win->x_max / 7) + 13;
 
-  int y_offset = y_max / 11;
-  int x_offset = (x_max / 7) + 13;
-
-  WINDOW* win_form = derwin(win, 0, 0, 0, 0);
   FIELD* fields[11];
   FORM*  create_form;
   int key; 
@@ -142,8 +139,8 @@ char** input_get_form_input(WINDOW* win, char** data) {
   scale_form(create_form, &rows, &cols);
 
   // set form window and sub-window
-  set_form_win(create_form, win_form);
-  set_form_sub(create_form, derwin(win,
+  set_form_win(create_form, win->render_window);
+  set_form_sub(create_form, derwin(win->render_window,
                                   rows, cols,
                                   y_offset, x_offset));
 

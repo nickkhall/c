@@ -30,31 +30,6 @@ void screen_print_word(WINDOW* win, const int y, const int x, const char* word) 
   window_refresh(win);
 }
 
-void screen_print_border(Window* win) {
-  for (int y = 0; y < win->y_max; y++) {
-    for (int x = 0; x < win->x_max; x++) {
-      if (y > 0) {
-        // print corners
-        if ((y == 1 && x == 2)
-          || (y == 1 && x == win->x_max - 3)
-          || (y == win->y_max - 2 && x == 2)
-          || (y == win->y_max - 2 && x == win->x_max - 3)
-        ) { 
-          screen_print_word(win->main_window, y, x, "+");
-          // print vertical borders
-        } else if (y > 1 && y < win->y_max - 2 && (x == 2 || x == win->x_max - 3)) {
-          screen_print_word(win->main_window, y, x, "|");
-          // print horizontal borders
-        } else if (x > 2 && x < (win->x_max - 3) && (y == 1 || y == win->y_max - 2)) {
-          screen_print_word(win->main_window, y, x, "-");
-        }
-      }
-    }
-  }
-
-  window_refresh(win);
-};
-
 void screen_print_line(WINDOW* win, const int y) {
   int y_max = 0;
   int x_max = 0;
@@ -163,6 +138,7 @@ void screen_print_employee(WINDOW* win, Employee* employee) {
 
   int cur_row = 0;
   window_clear(win);
+  box(win, 0, 0);
 
   screen_print_employee_headers(win);
 
@@ -203,17 +179,17 @@ void screen_print_search_label(WINDOW* win) {
 
   // clear screen
   window_clear(win);
+  box(win, 0, 0);
 
   // print search form label
   screen_print_word(
     win,
     y_max / 2,
-    ((x_max / 2) - ((label_len / 2) - 1)),
+    (x_max / 2) - label_len - 1,
     SEARCH_LABEL
   );
 
-  refresh();
-  wrefresh(win);
+  window_refresh(win);
 };
 
 void screen_print_title(WINDOW* win) {
@@ -262,7 +238,7 @@ void screen_print_menu(WINDOW* win, Menu* menu, int menu_items_size) {
 
       screen_print_word(
         win,
-        y_max / 2 + (i + 2),
+        ((y_max / 2) + i) - 2,
         (x_max / 2) - (strlen(*(menu->items + i)) / 2),
         *(menu->items + i)
       );
@@ -287,6 +263,7 @@ void screen_print_form_labels_create(WINDOW* win) {
   getmaxyx(win, y_max, x_max);
 
   window_clear(win);
+  box(win, 0, 0);
   int offset = (y_max / 11);
 
   for (int l = 0; l < 11; l++) {
