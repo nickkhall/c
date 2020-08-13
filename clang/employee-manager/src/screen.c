@@ -24,8 +24,8 @@ const char* CREATE_LABELS[] = {
   "Salary*   : "
 };
 
-void screen_print_word(Window* win, const int y, const int x, const char* word) {
-  mvwprintw(win->window, y, x, word);
+void screen_print_word(WINDOW* win, const int y, const int x, const char* word) {
+  mvwprintw(win, y, x, word);
   
   window_refresh(win);
 }
@@ -40,13 +40,13 @@ void screen_print_border(Window* win) {
           || (y == win->y_max - 2 && x == 2)
           || (y == win->y_max - 2 && x == win->x_max - 3)
         ) { 
-          mvwprintw(win->window, y, x, "+");
+          screen_print_word(win->main_window, y, x, "+");
           // print vertical borders
         } else if (y > 1 && y < win->y_max - 2 && (x == 2 || x == win->x_max - 3)) {
-          mvwprintw(win->window, y, x, "|");
+          screen_print_word(win->main_window, y, x, "|");
           // print horizontal borders
         } else if (x > 2 && x < (win->x_max - 3) && (y == 1 || y == win->y_max - 2)) {
-          mvwprintw(win->window, y, x, "-");
+          screen_print_word(win->main_window, y, x, "-");
         }
       }
     }
@@ -55,17 +55,21 @@ void screen_print_border(Window* win) {
   window_refresh(win);
 };
 
-void screen_print_line(Window* win, const int y) {
+void screen_print_line(WINDOW* win, const int y) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
+
   // render a horizonal line for data separation
-  char* screen_print_line = (char*) malloc((sizeof(char) * win->x_max) - 4);
+  char* screen_print_line = (char*) malloc((sizeof(char) * x_max) - 4);
   if (!screen_print_line || screen_print_line == NULL) exit(1); 
-  for (int s = 0; s < win->x_max - 1; s++) {
+  for (int s = 0; s < x_max - 1; s++) {
     *(screen_print_line + s) = '-';
   }
 
   // print horizontal line
   screen_print_word(win,
-                    ((win->y_max + 1) - win->y_max + 2),
+                    ((y_max + 1) - y_max + 2),
                     y,
                     screen_print_line
   );
@@ -74,8 +78,12 @@ void screen_print_line(Window* win, const int y) {
   free(screen_print_line);
 };
 
-void screen_print_employee_headers(Window* win) {
-  const unsigned long int word_offset = (win->x_max / 7);
+void screen_print_employee_headers(WINDOW* win) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
+
+  const unsigned long int word_offset = (x_max / 7);
 
   // keep track of current x axis offset for n value
   unsigned int offset = word_offset;
@@ -92,16 +100,24 @@ void screen_print_employee_headers(Window* win) {
   }
 };
 
-void screen_print_employee_row_none(Window* win, const int row) {
+void screen_print_employee_row_none(WINDOW* win, const int row) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
+
   char no_employees_text[] = "No employees found.";
 
   screen_print_word(win,
                     row + 4,
-                    (win->x_max / 2) - (strlen(no_employees_text) / 2),
+                    (x_max / 2) - (strlen(no_employees_text) / 2),
                     no_employees_text); 
 }
 
-void screen_print_employee_row(Window* win, Employee* employee, const int row) {
+void screen_print_employee_row(WINDOW* win, Employee* employee, const int row) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
+
   // allocate memory for first and last name string
   unsigned long int first_size = strlen(employee->first);
   unsigned long int last_size = strlen(employee->last);
@@ -125,7 +141,7 @@ void screen_print_employee_row(Window* win, Employee* employee, const int row) {
                         employee->title};
 
   // keep track of offset that labels should render apart from eachother (x axis)
-  unsigned long int word_offset = (win->x_max / 7);
+  unsigned long int word_offset = (x_max / 7);
 
   // keep track of current x axis offset for n value
   unsigned int offset = (word_offset - strlen(*(temp_data)) / 2);
@@ -140,7 +156,11 @@ void screen_print_employee_row(Window* win, Employee* employee, const int row) {
   free(name);
 };
 
-void screen_print_employee(Window* win, Employee* employee) {
+void screen_print_employee(WINDOW* win, Employee* employee) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
+
   int cur_row = 0;
   window_clear(win);
 
@@ -168,12 +188,16 @@ void screen_print_employee(Window* win, Employee* employee) {
   char return_label[] = "Press \"Escape\" to return to the main menu";
   // print helper label at bottom of the screen
   screen_print_word(win,
-            win->y_max - 5,
-            (win->x_max / 2) - (strlen(return_label) / 2),
+            y_max - 5,
+            (x_max / 2) - (strlen(return_label) / 2),
             return_label);
 };
 
-void screen_print_search_label(Window* win) {
+void screen_print_search_label(WINDOW* win) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
+
   // get length of search form label
   int label_len = strlen(SEARCH_LABEL);
 
@@ -183,16 +207,20 @@ void screen_print_search_label(Window* win) {
   // print search form label
   screen_print_word(
     win,
-    win->y_max / 2,
-    ((win->x_max / 2) - ((label_len / 2) - 1)),
+    y_max / 2,
+    ((x_max / 2) - ((label_len / 2) - 1)),
     SEARCH_LABEL
   );
 
   refresh();
-  wrefresh(win->window);
+  wrefresh(win);
 };
 
-void screen_print_title(Window *win) {
+void screen_print_title(WINDOW* win) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
+
   const char* header[] = {
     " ______                 _                         __  __",
     "|  ____|               | |                       |  \\/  |",
@@ -208,7 +236,7 @@ void screen_print_title(Window *win) {
     screen_print_word(
       win,
       i + 10,
-      ((win->x_max / 2) - (91 / 2) + 2),
+      ((x_max / 2) - (91 / 2) + 2),
       *(header + i)
     );
   }
@@ -216,7 +244,11 @@ void screen_print_title(Window *win) {
   window_refresh(win);
 };
 
-void screen_print_menu(Window *win, Menu* menu, int menu_items_size) {
+void screen_print_menu(WINDOW* win, Menu* menu, int menu_items_size) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
+
   int key_code = 0;
 
   do {
@@ -225,48 +257,48 @@ void screen_print_menu(Window *win, Menu* menu, int menu_items_size) {
     for (int i = 0; i < menu_items_size; i++) {
       if (i == menu->highlighted) {
         // reverse colors to denote highlight
-        wattron(win->window, A_REVERSE);
+        wattron(win, A_REVERSE);
       }
 
       screen_print_word(
         win,
-        win->y_max / 2 + (i + 2),
-        (win->x_max / 2) - menu_items_size,
+        y_max / 2 + (i + 2),
+        (x_max / 2) - menu_items_size,
         *(menu->items + i)
       );
 
       // Turn off reverse attribute
-      wattroff(win->window, A_REVERSE);
+      wattroff(win, A_REVERSE);
     }
 
     // refresh window
     window_refresh(win);
 
-    key_code = wgetch(win->window);
+    key_code = wgetch(win);
 
     // Update the menu with the currently selected item
     menu_update(menu, key_code, menu_items_size);
   } while (key_code != 27 && key_code != 10);
 }
 
-void screen_print_form_labels(Window* win, char** labels) {
-  
-}
+void screen_print_form_labels_create(WINDOW* win) {
+  int y_max = 0;
+  int x_max = 0;
+  getmaxyx(win, y_max, x_max);
 
-void screen_print_form_labels_create(Window* win) {
   window_clear(win);
-  int offset = (win->y_max / 11);
+  int offset = (y_max / 11);
 
   for (int l = 0; l < 11; l++) {
     char* cur_label = *(CREATE_LABELS + l);
 
-    screen_print_word(win, offset, win->x_max / 7, cur_label);
+    screen_print_word(win, offset, x_max / 7, cur_label);
     if (l % 1 == 0) {
       offset++;
-      screen_print_word(win, offset, win->x_max / 7, "-----------");
+      screen_print_word(win, offset, x_max / 7, "-----------");
     }
 
-    offset += (win->y_max / 11) - 1;
+    offset += (y_max / 11) - 1;
   }
 
   window_refresh(win);

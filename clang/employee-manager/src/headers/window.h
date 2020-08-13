@@ -13,13 +13,7 @@ typedef struct {
   WINDOW* stats_window;
 } Window;
 
-void window_create_main_window();
-
-void window_create_menu_window();
-
-void window_create_render_window();
-
-void window_create_stats_window();
+void window_initialize_windows();
 
 void window_refresh(WINDOW* win);
 
