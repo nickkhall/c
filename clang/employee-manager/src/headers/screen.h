@@ -50,5 +50,14 @@ void screen_print_form_labels(Window* win, char** labels);
 
 void screen_print_form_labels_create(Window* win);
 
+// RENDER
+void screen_render_main_window(Window* win);
+
+void screen_render_menu_window(Window* win);
+
+void screen_render_render_window(Window* win);
+
+void screen_render_stats_window(Window* win);
+
 #endif
 
