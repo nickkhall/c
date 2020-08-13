@@ -27,15 +27,15 @@ Window* window_initialize_windows(Window* win) {
 
   win->menu_window = derwin(win->main_window,
                             win->y_max - 17,
-                            (win->x_max / 4),
+                            (win->x_max / 5),
                             2,
                             2);
 
   win->render_window = derwin(win->main_window,
                               win->y_max - 17,
-                              ((win->x_max / 2) + (win->x_max / 4)) - 2,
+                              (win->x_max) - (win->x_max / 5) - 4,
                               2,
-                              (win->x_max / 4) + 2);
+                              (win->x_max / 5) + 2);
 
   win->stats_window = derwin(win->main_window,
                              14,
@@ -59,6 +59,10 @@ Window* window_initialize_windows(Window* win) {
   window_refresh(win->stats_window);
 
   return win;
+};
+
+void window_print_to_window(WINDOW* win, int y, int x, char* word) {
+  mvwprintw(win, y, x, word);
 };
 
 void window_clear(WINDOW* win) {

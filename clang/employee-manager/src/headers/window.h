@@ -15,6 +15,8 @@ typedef struct {
 
 Window* window_initialize_windows(Window* win);
 
+void window_print_to_window(WINDOW* win, int y, int x, char* word);
+
 void window_refresh(WINDOW* win);
 
 void window_clear(WINDOW* win);

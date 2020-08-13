@@ -235,7 +235,7 @@ void screen_print_title(WINDOW* win) {
   for (short int i = 0; i < 8; i++) {
     screen_print_word(
       win,
-      i + 10,
+      ((y_max / 2) + i) - 4,
       ((x_max / 2) - (91 / 2) + 2),
       *(header + i)
     );
@@ -263,7 +263,7 @@ void screen_print_menu(WINDOW* win, Menu* menu, int menu_items_size) {
       screen_print_word(
         win,
         y_max / 2 + (i + 2),
-        (x_max / 2) - menu_items_size,
+        (x_max / 2) - (strlen(*(menu->items + i)) / 2),
         *(menu->items + i)
       );
 

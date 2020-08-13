@@ -5,16 +5,14 @@
 int app(Window* win, Menu* main_menu) {
   // run employee-manager until user quits
   do {
-    screen_print_border(win);
-
     switch(main_menu->state) {
       // main menu idle
       case 0: {
         // print title to screen
-        screen_print_title(win);
+        screen_print_title(win->render_window);
 
         // print main menu
-        screen_print_menu(win, main_menu, 5);
+        screen_print_menu(win->menu_window, main_menu, 5);
         break;
       }
       // search employee
