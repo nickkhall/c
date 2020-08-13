@@ -9,7 +9,7 @@
 int main() {
   // create window
   Window* main_win = NULL;
-  window_initialize_windows(main_win);
+  main_win = window_initialize_windows(main_win);
   if (!main_win || main_win == NULL) {
     free(main_win);
     return 1;
