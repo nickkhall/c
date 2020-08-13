@@ -217,6 +217,7 @@ void screen_print_title(WINDOW* win) {
     );
   }
 
+  box(win, 0, 0);
   window_refresh(win);
 };
 
@@ -255,6 +256,9 @@ void screen_print_menu(WINDOW* win, Menu* menu, int menu_items_size) {
     // Update the menu with the currently selected item
     menu_update(menu, key_code, menu_items_size);
   } while (key_code != 27 && key_code != 10);
+
+  // refresh window
+  window_refresh(win);
 }
 
 void screen_print_form_labels_create(WINDOW* win) {
@@ -272,7 +276,6 @@ void screen_print_form_labels_create(WINDOW* win) {
     screen_print_word(win, offset, x_max / 7, cur_label);
     if (l % 1 == 0) {
       offset++;
-      screen_print_word(win, offset, x_max / 7, "-----------");
     }
 
     offset += (y_max / 11) - 1;

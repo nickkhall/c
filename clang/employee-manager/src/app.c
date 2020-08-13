@@ -29,7 +29,10 @@ int app(Window* win, Menu* main_menu) {
       }
       // create employee
       case 2: {
-        menu_handle_create(win);
+        // clear render window
+        window_clear(win->render_window);
+
+        menu_handle_create(win->render_window);
 
         main_menu->state = 0;
         break;

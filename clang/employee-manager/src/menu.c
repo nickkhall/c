@@ -95,7 +95,7 @@ void menu_handle_search(WINDOW* win) {
   // @TODO: make me into function
   noecho();
   int key = 0;
-  if ((key = wgetch(win)) != ERR) {
+  if ((key = getch()) != ERR) {
     while(key != 27) {
       key = getch();
     }
@@ -106,8 +106,8 @@ void menu_handle_search(WINDOW* win) {
   window_clear(win);
 }
 
-void menu_handle_create(Window* win) {
-  screen_print_form_labels_create(win);
+void menu_handle_create(WINDOW* win) {
+  screen_print_form_create(win);
 
   char** data = (char**) malloc(sizeof(char*) * 11);
   input_get_form_input(win, data);

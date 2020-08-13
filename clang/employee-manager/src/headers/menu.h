@@ -21,7 +21,7 @@ void menu_destroy(Menu* menu);
 
 void menu_handle_search(WINDOW* win);
 
-void menu_handle_create();
+void menu_handle_create(WINDOW* win);
 
 void menu_handle_update();
 

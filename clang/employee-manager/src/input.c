@@ -97,9 +97,13 @@ void input_handle_input(WINDOW* win, FORM* create_form, int* key) {
  * returns : data array of strings
  * ----------------------------------------------------
  */
-char** input_get_form_input(Window* win, char** data) {
-  int y_offset = win->y_max / 11;
-  int x_offset = (win->x_max / 7) + 13;
+char** input_get_form_input(WINDOW* win, char** data) {
+  int render_y = 0;
+  int render_x = 0;
+  getmaxyx(win, render_y, render_x);
+
+  int y_offset = render_y / 11;
+  int x_offset = (render_x / 7) + 13;
 
   FIELD* fields[11];
   FORM*  create_form;
@@ -139,10 +143,12 @@ char** input_get_form_input(Window* win, char** data) {
   scale_form(create_form, &rows, &cols);
 
   // set form window and sub-window
-  set_form_win(create_form, win->render_window);
-  set_form_sub(create_form, derwin(win->render_window,
-                                  rows, cols,
-                                  y_offset, x_offset));
+  set_form_win(create_form, win);
+  set_form_sub(create_form, derwin(win,
+                                   render_y,
+                                   render_x,
+                                   render_y / 11,
+                                   (render_x / 7) + 13));
 
   // post form
   post_form(create_form);
