@@ -38,7 +38,7 @@ void screen_print_line(WINDOW* win, const int y) {
   // render a horizonal line for data separation
   char* screen_print_line = (char*) malloc((sizeof(char) * x_max) - 4);
   if (!screen_print_line || screen_print_line == NULL) exit(1); 
-  for (int s = 0; s < x_max - 1; s++) {
+  for (int s = 0; s < x_max - 2; s++) {
     *(screen_print_line + s) = '-';
   }
 
@@ -71,7 +71,7 @@ void screen_print_employee_headers(WINDOW* win) {
     screen_print_word(win, 1, offset, current_label);
 
     // increase the x axis offset for next label
-    offset += word_offset + current_label_length;
+    offset += word_offset + (current_label_length / 2);
   }
 };
 
@@ -124,8 +124,8 @@ void screen_print_employee_row(WINDOW* win, Employee* employee, const int row) {
   for (int e = 0; e < 5; e++) {
     char * cur_value = *(temp_data + e);
     screen_print_word(win, (row + 4), offset, cur_value); 
-
-    offset += word_offset + (strlen(cur_value) / 2);
+    
+    offset += word_offset + strlen(cur_value) / 2;
   }
 
   free(name);

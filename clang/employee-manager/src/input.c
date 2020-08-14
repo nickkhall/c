@@ -30,7 +30,7 @@ char* input_get_search_input(WINDOW* win) {
   mvwgetnstr(
       win,
       y_max / 2,
-      x_max / 2 + (33 / 2) + 3,
+      x_max / 2,
       buffer,
       101
     );
