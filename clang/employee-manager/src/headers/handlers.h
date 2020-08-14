@@ -8,7 +8,7 @@ void handlers_get(const char* const* params);
 
 Employee* handlers_get_id(WINDOW* win, Employee* employee);
 
-Employee* handlers_post(Window* win, Employee* employee);
+Employee* handlers_post(WINDOW* win, Employee* employee);
 
 void handlers_put(const char* const* params);
 

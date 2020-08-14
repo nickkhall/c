@@ -20,23 +20,23 @@ char** utils_convert_pq_res_data(char** data_pointer, PGresult* res, const int r
 };
 
 char* utils_trim_whitespaces(char* str){
-	char* end;
-
-	// trim leading space
-	while(isspace(*str))
-		str++;
-
-	if(*str == 0) // all spaces?
-		return str;
-
-	// trim trailing space
-	end = str + strnlen(str, 101) - 1;
-
-	while(end > str && isspace(*end))
-		end--;
-
-	// write new null terminator
-	*(end + 1) = '\0';
-
-	return str;
+  char* end;
+  
+  // trim leading space
+  while(isspace(*str))
+  	str++;
+  
+  if(*str == 0) // all spaces?
+  	return str;
+  
+  // trim trailing space
+  end = str + strnlen(str, 101) - 1;
+  
+  while(end > str && isspace(*end))
+  	end--;
+  
+  // write new null terminator
+  *(end + 1) = '\0';
+  
+  return str;
 }

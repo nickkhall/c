@@ -97,7 +97,43 @@ PGresult* db_query_by_id(PGresult* res, const char* const* query_params) {
   }
 
   return res;
-}
+};
+
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+PGresult* db_query_post(PGresult* res, const char* const* query_params) {
+  PGconn* conn = PQconnectdb(SQL_INFO);
+
+  if (!conn || conn == NULL) {
+    printf("ERROR:: Failed to connect to postgres db\n");
+    exit(1);
+  }
+
+  if (!query_params || query_params == NULL) {
+    printf("ERROR:: Query data is invalid in db_query_post");
+    db_disconnect(conn);
+    exit(1);
+  }
+
+  res = db_query(conn,
+                res, SEARCH_BY_ID_QUERY,
+                query_params, 1);
+
+  if (!res || res == NULL) {
+    printf("ERROR:: Failed to get PQ response from db_query in db_query_post\n");
+    PQclear(res);
+    free(res);
+    db_disconnect(conn);
+    exit(1);
+  }
+
+  return res;
+};
 
 /*
  * ---------------------------------------
@@ -110,7 +146,7 @@ PGresult* db_query_by_id(PGresult* res, const char* const* query_params) {
  */
 void db_disconnect(PGconn* conn) {
   PQfinish(conn);
-}
+};
 
 /*
  * ------------------------------------------
@@ -127,4 +163,4 @@ void db_disconnect(PGconn* conn) {
 void db_clean_up(PGconn* conn, PGresult* res) {
   PQclear(res);
   db_disconnect(conn);
-}
+};

@@ -31,3 +31,22 @@ Employee* handlers_get_id(WINDOW* win, Employee* employee) {
   return employee;
 };
 
+Employee* handlers_post(WINDOW* win, Employee* employee) {
+  char** data = (char**) malloc(sizeof(char*) * 11);
+  const char** user_input = input_get_form_input(win, data);
+
+  const char* const* query_params = &user_input;
+  if (!query_params || query_params == NULL) {
+    printf("ERROR:: Failure to assign query_params for input_get_form_input in handlers_post\n");
+    free(data);
+    exit(1);
+  }
+
+  PGresult* res = NULL;
+  res = db_query_post(res, query_params);
+
+  employee = employee_convert(res, query_params, employee);
+  
+  return employee;
+};
+

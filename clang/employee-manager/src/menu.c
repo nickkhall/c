@@ -107,7 +107,6 @@ void menu_handle_search(WINDOW* win) {
 }
 
 void menu_handle_create(WINDOW* win) {
-  char** data = (char**) malloc(sizeof(char*) * 11);
-  input_get_form_input(win, data);
-  free(data);
+  Employee* employee = NULL;
+  employee = handlers_post(win, employee);
 }
