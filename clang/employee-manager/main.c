@@ -8,10 +8,10 @@
 
 int main() {
   // create window
-  Window* win = NULL;
-  win = window_create();
-  if (!win || win == NULL) {
-    free(win);
+  Window* main_win = NULL;
+  main_win = window_initialize_windows(main_win);
+  if (!main_win || main_win == NULL) {
+    free(main_win);
     return 1;
   }
 
@@ -24,11 +24,11 @@ int main() {
 
   // run application
   while (main_menu->state > -1) {
-    app(win, main_menu);
+    app(main_win, main_menu);
   }
 
   // destroy window
-  window_destroy(win);
+  window_destroy(main_win);
   free(main_menu);
   return 0;
 }

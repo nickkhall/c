@@ -3,18 +3,23 @@
 
 #include <ncurses.h>
 
-typedef struct w {
+typedef struct {
   unsigned int y_max;
   unsigned int x_max;
 
-  WINDOW *window;
+  WINDOW* main_window;
+  WINDOW* menu_window;
+  WINDOW* render_window;
+  WINDOW* stats_window;
 } Window;
 
-Window* window_create();
+Window* window_initialize_windows(Window* win);
 
-void window_refresh(Window* win);
+void window_print_to_window(WINDOW* win, int y, int x, char* word);
 
-void window_clear(Window *window);
+void window_refresh(WINDOW* win);
+
+void window_clear(WINDOW* win);
 
 void window_destroy(Window* win);
 

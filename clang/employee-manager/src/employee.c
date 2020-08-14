@@ -167,7 +167,7 @@ Employee* employee_convert(PGresult* res, const char* const* params, Employee* e
     }
 
     // transfer Postgres response data to Employee struct(s)
-    convert_response_to_data(*(employee_data + r), res, r);
+    utils_convert_pq_res_data(*(employee_data + r), res, r);
 
     // create or add to employee linked list with current employee struct
     employee = employee_push(employee, *(employee_data + r));

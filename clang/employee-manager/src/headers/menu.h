@@ -19,9 +19,9 @@ void menu_update(Menu* menu, int key_code, int items_size);
 
 void menu_destroy(Menu* menu);
 
-void menu_handle_search(Window* win);
+void menu_handle_search(WINDOW* win);
 
-void menu_handle_create();
+void menu_handle_create(WINDOW* win);
 
 void menu_handle_update();
 
