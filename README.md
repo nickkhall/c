@@ -2,6 +2,8 @@
 ### Employee Manager (WIP)
 An application using Ncurses and Postgres to manager employees through an active terminal graphical user interface.
 
+![image](https://user-images.githubusercontent.com/30413161/89721564-ad163880-d9a4-11ea-892f-796557065df6.png)
+
 ----
 
 ## C++
