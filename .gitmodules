@@ -1,0 +1,9 @@
+[submodule "clang/employee-manager/employee-manager-ui"]
+	path = clang/employee-manager/employee-manager-ui
+	url = git@github.com:nickkhall/employee-manager-ui.git
+[submodule "clang/employee-manager/employee-manager-rest"]
+	path = clang/employee-manager/employee-manager-rest
+	url = git@github.com:nickkhall/employee-manager-rest.git
+[submodule "clang/employee-manager/employee-manager-rpc"]
+	path = clang/employee-manager/employee-manager-rpc
+	url = git@github.com:nickkhall/employee-manager-rpc.git
