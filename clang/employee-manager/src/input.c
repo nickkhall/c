@@ -47,7 +47,9 @@ char* input_get_search_input(WINDOW* win) {
 
 
 void input_handle_input(WINDOW* win, FORM* create_form, int* key) { 
-  while((*key = wgetch(win)) != 10) {
+  *key = wgetch(win);
+
+  while(*key != 10) {
     switch(*key) {
       // tab character
       case 9:
@@ -82,7 +84,11 @@ void input_handle_input(WINDOW* win, FORM* create_form, int* key) {
 
     form_driver(create_form, REQ_VALIDATION);
     window_refresh(win);
+
+    *key = wgetch(win);
   }
+  
+  window_refresh(win);
 }
 
 /*
@@ -98,45 +104,45 @@ void input_handle_input(WINDOW* win, FORM* create_form, int* key) {
  * returns : data array of strings
  * ----------------------------------------------------
  */
-char** input_get_form_input(Window* win, char** data) {
-  int y_offset = win->y_max / 11;
-  int x_offset = (win->x_max / 7) + 13;
+char** input_get_form_input(WINDOW* win, char** data) {
+  int y_offset = 0;
+  int x_offset = 0;
+  getmaxyx(win, y_offset, x_offset);
 
-  FIELD* fields[21];
+  y_offset = y_offset / 15;
+  x_offset = x_offset / 5;
+
+  FIELD* fields[11];
   FORM*  create_form;
   int key; 
   int rows;
   int cols;
 
-  for (int f = 0; f < 21; f++) {
-    if (f == 20) {
+  for (int f = 0; f < 11; f++) {
+    if (f == 10) {
       *(fields + f) = NULL;
       break;
     }
-
-    if (f % 1 == 0) {
-
-    } else {
-      // allocate memory for data array
-      *(data + f) = (char*) malloc(sizeof(char) * 101);
-      if (!*(data + f) || *(data + f) == NULL) {
-        printf("ERROR:: Failed to allocate memory for data in input_get_form_input\n");
-        free(data);
-        exit(1);
-      }
-
-      // create fields
-      *(fields + f) = new_field(1, 50,          // height and width
-                                (f * y_offset), // start y
-                                x_offset,       // start x
-                                0, 10);         // render entire field and amount of buffers
-
-      set_field_buffer(*(fields + f), 0, *(data + f));
-
-      set_field_back(*(fields + f), A_UNDERLINE);
-
-      field_opts_off(*(fields + f), O_AUTOSKIP);
+    // allocate memory for data array
+    *(data + f) = (char*) malloc(sizeof(char) * 101);
+    if (!*(data + f) || *(data + f) == NULL) {
+      printf("ERROR:: Failed to allocate memory for data in input_get_form_input\n");
+      free(data);
+      exit(1);
     }
+
+    // create fields
+    *(fields + f) = new_field(1, 55,  // height and width
+                              (f * y_offset),
+                              2,      // start x
+                              0, 10); // render entire field and amount of buffers
+
+    set_field_buffer(*(fields + f), 0, *(data + f));
+
+    field_opts_on(*(fields + f), O_ACTIVE | O_EDIT);
+    field_opts_off(*(fields + f), O_AUTOSKIP);
+
+    set_field_back(*(fields + f), A_UNDERLINE);
   }
     
   // create a new form and post it
@@ -144,13 +150,11 @@ char** input_get_form_input(Window* win, char** data) {
 
   scale_form(create_form, &rows, &cols);
 
-  set_form_win(create_form, win->render_window);
+  set_form_win(create_form, win);
+  set_form_sub(create_form, win);
 
   // post form
   post_form(create_form);
-
-  // refresh screen
-  window_refresh(win);
 
   // disable output
   noecho();

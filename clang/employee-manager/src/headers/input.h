@@ -9,7 +9,7 @@ char* input_get_search_input(WINDOW* win);
 
 void input_handle_input(WINDOW* win, FORM* form, int* key);
 
-char** input_form_create(Window* win, char** data);
+char** input_form_create(WINDOW* win, char** data);
 
 #endif
 
