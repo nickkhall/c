@@ -5,6 +5,10 @@ An application using Ncurses and Postgres to manager employees through an active
 
 ![image](https://user-images.githubusercontent.com/30413161/90209482-26e96000-ddb1-11ea-90dd-36d3557a598c.png)
 
+### LCD Clock using binary
+A script I wrote to learn and practice bitwise operations. The task was to display the current time in the style of an LCD screen, and I wanted to use bitmasks and bitwise operations to achieve it.
+![image](https://user-images.githubusercontent.com/30413161/90209321-ba6e6100-ddb0-11ea-9150-a87bc99df7e8.png)
+
 
 ----
 
