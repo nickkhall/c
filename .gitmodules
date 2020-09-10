@@ -7,3 +7,6 @@
 [submodule "clang/employee-manager/employee-manager-rpc"]
 	path = clang/employee-manager/employee-manager-rpc
 	url = git@github.com:nickkhall/employee-manager-rpc.git
+[submodule "clang/libs/serlibc"]
+	path = clang/libs/serlibc
+	url = git@github.com:nickkhall/serlibc.git
