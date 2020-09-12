@@ -1,21 +1,18 @@
-[submodule "clang/employee-manager/employee-manager-ui"]
-	path = clang/employee-manager/employee-manager-ui
+[submodule "clang/libs/libserc"]
+	path = clang/libs/libserc
+	url = git@github.com:nickkhall/libserc.git
+[submodule "clang/libs/libsockc"]
+	path = clang/libs/libsockc
+	url = git@github.com:nickkhall/libsockc.git
+[submodule "clang/libs/libdbc"]
+	path = clang/libs/libdbc
+	url = git@github.com:nickkhall/libdbc.git
+[submodule "clang/apps/employee-manager/employee-manager-ui"]
+	path = clang/apps/employee-manager/employee-manager-ui
 	url = git@github.com:nickkhall/employee-manager-ui.git
-[submodule "clang/employee-manager/employee-manager-rest"]
-	path = clang/employee-manager/employee-manager-rest
-	url = git@github.com:nickkhall/employee-manager-rest.git
-[submodule "clang/employee-manager/employee-manager-rpc"]
-	path = clang/employee-manager/employee-manager-rpc
-	url = git@github.com:nickkhall/employee-manager-rpc.git
-[submodule "clang/libs/serlibc"]
-	path = clang/libs/serlibc
-	url = git@github.com:nickkhall/serlibc.git
 [submodule "clang/apps/employee-manager/employee-manager-rpc"]
 	path = clang/apps/employee-manager/employee-manager-rpc
 	url = git@github.com:nickkhall/employee-manager-rpc.git
 [submodule "clang/apps/employee-manager/employee-manager-rest"]
 	path = clang/apps/employee-manager/employee-manager-rest
 	url = git@github.com:nickkhall/employee-manager-rest.git
-[submodule "clang/apps/employee-manager/employee-manager-ui"]
-	path = clang/apps/employee-manager/employee-manager-ui
-	url = git@github.com:nickkhall/employee-manager-ui.git
