@@ -19,3 +19,15 @@
 [submodule "clang/apps/employee-manager/employee-manager-ui"]
 	path = clang/apps/employee-manager/employee-manager-ui
 	url = git@github.com:nickkhall/employee-manager-ui.git
+[submodule "clang/libs/sockc"]
+	path = clang/libs/sockc
+	url = git@github.com:nickkhall/sockc.git
+[submodule "clang/libs/libserc"]
+	path = clang/libs/libserc
+	url = git@github.com:nickkhall/libserc.git
+[submodule "clang/libs/libsockc"]
+	path = clang/libs/libsockc
+	url = git@github.com:nickkhall/libsockc.git
+[submodule "clang/libs/libdbc"]
+	path = clang/libs/libdbc
+	url = git@github.com:nickkhall/libdbc.git
