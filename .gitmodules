@@ -1,12 +1,3 @@
-[submodule "clang/apps/employee-manager/employee-manager-rpc"]
-	path = clang/apps/employee-manager/employee-manager-rpc
-	url = git@github.com:nickkhall/employee-manager-rpc.git
-[submodule "clang/apps/employee-manager/employee-manager-rest"]
-	path = clang/apps/employee-manager/employee-manager-rest
-	url = git@github.com:nickkhall/employee-manager-rest.git
-[submodule "clang/apps/employee-manager/employee-manager-ui"]
-	path = clang/apps/employee-manager/employee-manager-ui
-	url = git@github.com:nickkhall/employee-manager-ui.git
 [submodule "clang/libs/libserc"]
 	path = clang/libs/libserc
 	url = git@github.com:nickkhall/libserc.git
