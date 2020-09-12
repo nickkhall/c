@@ -7,3 +7,15 @@
 [submodule "clang/libs/libdbc"]
 	path = clang/libs/libdbc
 	url = git@github.com:nickkhall/libdbc.git
+[submodule "clang/apps/employee-manager/--force"]
+	path = clang/apps/employee-manager/--force
+	url = git@github.com:nickkhall/employee-manager-ui.git
+[submodule "clang/apps/employee-manager/employee-manager-ui"]
+	path = clang/apps/employee-manager/employee-manager-ui
+	url = git@github.com:nickkhall/employee-manager-ui.git
+[submodule "clang/apps/employee-manager/employee-manager-rpc"]
+	path = clang/apps/employee-manager/employee-manager-rpc
+	url = git@github.com:nickkhall/employee-manager-rpc.git
+[submodule "clang/apps/employee-manager/employee-manager-rest"]
+	path = clang/apps/employee-manager/employee-manager-rest
+	url = git@github.com:nickkhall/employee-manager-rest.git
